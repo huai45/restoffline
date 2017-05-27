@@ -1,0 +1,49 @@
+body{
+    font-family:Microsoft Yahei;
+}
+
+.title_btn{
+    float:right;line-height:41px;cursor:pointer;margin-right:20px;width:90px;border:solid 0px #000;
+}
+.title_btn_image{
+    float:left;width:24px;height:24px;margin-top:9px;margin-right:8px;color:#000;
+}
+.title_btn:hover{
+    font-size:18px;color:#D24726;
+}
+
+.btn_m{
+   height:40px;line-height:40px;width:200px;background-color:#D24726;color:#FFF;font-size:14px;font-weight:bold;
+   border:solid 1px #D24726;text-align:center;cursor:pointer;
+}
+
+.btn_s{
+   height:40px;line-height:40px;width:200px;background-color:#FFF;color:#D24726;font-size:14px;font-weight:bold;
+   border:solid 1px #CCC;text-align:center;cursor:pointer;
+}
+
+.cust_input{
+    width:300px;height:30px;line-height:30px;font-size:18px;padding-left:5px;
+}
+.err_msg{
+    line-height:30px;margin-left:30px;color:red;font-size:14px;
+}
+
+.btn {
+	 font-weight:normal;
+	 cursor: pointer;
+	 height:32px;
+	 line-height:30px;
+	 over-flow: hidden;
+	 Width:100px;
+	 font-size: 16px; 
+	 background:#E0E0E0;
+	 BORDER:  hidden;
+	 color:#616161;
+	 font-family:'Microsoft YaHei';
+}
+.btn:active {
+	opacity:0.9;
+	-khtml-opacity: .9;
+	-moz-opacity: 0.9;
+   }

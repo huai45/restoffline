@@ -1,0 +1,10 @@
+#earth{
+    margin-top:3px;margin-left:10px;height:32px;width:32px;
+}
+.footBtn{
+    float:right;height:40px;line-height:38px;padding-left:12px;padding-right:12px;background-color:#3A3A40;color:#A9A2A2;
+    cursor:pointer;font-size:12px;
+}
+.footBtn:hover{
+    color:#FFF;
+}

@@ -1,0 +1,260 @@
+.floor_name{
+    height:50px;line-height:50px;width:180px;font-size:24px;color:#FFF;font-weight:bold;margin-left:10px;cursor:pointer;
+}
+.floor_name:hover{
+    color:#CCC;
+}
+.table{
+    height:50px;width:180px;cursor:pointer;margin:0px;
+}
+.table:hover{
+    background:#666;
+}
+.table_icon{
+    float:left;height:30px;width:30px;background:#0196DA;margin-top:10px;margin-left:15px;
+}
+.busy{
+    background:#D0284C;
+}
+.table_name{
+    float:left;line-height:50px;font-size:20px;color:#FFF;margin-left:20px;
+}
+
+
+.smart_table{
+    float:left;height:288px;width:220px;background:#4DA805;border:solid 0px #FFF;
+    position:relative;color:#666;border-radius:0px;text-align:center;font-size:60px;
+    margin-top:0px;margin-left:15px;margin-right:15px;
+    cursor:pointer;display:none;
+}
+
+
+.bigbutton{
+    float:left;height:85px;line-height:85px;width:200px;background:#EFEFEF;border:solid 1px #3A3A40;cursor:pointer;
+    color:#666;border-radius:0px;text-align:center;font-size:20px;margin-top:30px;margin-left:15px;margin-right:15px;
+}
+.bigbutton_sel{
+    background:#3E85EF;border:solid 1px #3E85EF;cursor:pointer;color:#FFF;
+}
+.bigbutton:hover{
+    background:#EFEFEF;border:solid 1px #EFEFEF;cursor:pointer;color:#000;
+}
+.bigbutton_sel:hover{
+    background:#3E85EF;border:solid 1px #3E85EF;color:#FFF;
+}
+
+.billitem{
+    color:#333;;height:40px;line-height:40px;width:230px;font-size:14px;margin-left:10px;margin-right:10px;padding-left:0px;border-bottom:solid 1px #CCC;
+}
+.tablebtn_group{
+    background-color:#F7F7F7;height:60px;width:260px;margin:5px 5px 0px 5px;border:solid 1px #CCC;color:#777;font-size:18px;font-family:'Microsoft YaHei';
+}
+.tablebtn{
+    float:left;ackground-color:#F7F7F7;height:50px;line-height:50px;width:77px;text-align:center;
+    margin:5px 0px 0px 5px;border:solid 0px #111;cursor:pointer;
+}
+.tablebtn_split{
+    float:left;ackground-color:#F7F7F7;height:30px;width:0px;margin-top:15px;margin-left:3px;border-left:solid 1px #CCC;
+}
+
+.table_info_south_btn{
+    float:left;height:40px;line-height:40px;text-align:center;width:40px;position:relative;
+    margin-top:10px;margin-left:30px;cursor:pointer;color:#fff;
+}
+.tableinfo_south_btn_image{
+    height:40px;width:40px;position:absolute;top:0px;left:0px;
+}
+.table_info_south_btn div{
+    font-size:14px;
+}
+#tableinfo_hidden_input{
+    position:absolute;top:-1500px; height:35px;border:0px;font-size:26px; 
+}
+
+.bill_item_menu{
+    display:none;float:right;height:46px;line-height:46px;text-align:center;width:64px;cursor:pointer;color:#FFF;
+}
+
+.food{
+    position:relative;height:55px;line-height:55px;padding-left:10px;border-bottom:solid 1px #CCC;color:#222;font-size:18px;font-weight:normal;cursor:pointer;
+}
+.food:hover{
+    background:#007AFF;color:#FFF;
+}
+.titleBackBtn{
+    float:left;height:46px;line-height:46px;text-align:center;width:64px;cursor:pointer;color:#FFF;
+}
+#query_food_str{
+    color:#646464;margin-top:5px;line-height:35px;width:381px; height:35px;border:0px;font-size:26px; 
+}
+.foodname{
+    position:absolute;top:2px;left:10px;margin:0px;padding:0px;height:25px;line-height:25px;font-size:18px;font-weight:normal;
+}
+.foodprice{
+    position:absolute;top:32px;right:8px;height:20px;line-height:20px;font-size:12px;
+}
+#addfoodlist{margin-bottom:20px;}
+
+.addfooditem{
+    clear:both;height:50px;line-height:50px;min-width:900px;font-size:14px;color:#444;border-bottom:solid 1px #999;background:#FFF;
+}
+.addfooditem:hover{
+    background:#FBFAB7;
+}
+.addfoodname{
+    float:left;width:350px;padding-left:20px;
+}
+.addfoodprice{
+    float:left;width:90px;
+}
+.countless{
+    float:left;border:solid 1px #777;background:#FFF;color:#777;height:38px;line-height:38px;width:38px;
+    font-size:22px;font-weight:normal;margin-top:6px;margin-right:5px;text-align:center;border-radius:20px;cursor:pointer;
+}
+.countmore{
+    float:left;border:solid 1px #888;background:#FFF;color:#777;height:38px;line-height:38px;width:38px;
+    font-size:22px;font-weight:normal;margin-top:6px;margin-left:10px;text-align:center;border-radius:20px;cursor:pointer;
+}
+.addfoodcount{
+    float:left;border-radius:0px;width:80px;height:40px;line-height:40px;margin-top:5px;margin-left:3px;border:solid 1px #999;
+    font-size:20px;font-weight:normal;color:#111;text-align:center;
+}
+.calltype{
+    float:left;margin-left:40px;height:40px;line-height:40px;width:70px;color:#FFF;
+    text-align:center;margin-top:5px;cursor:pointer;border-radius:0px;
+}
+.hurry{
+    background:#007AFF;
+}
+.wait{
+    background:#888;
+}
+.addfoodnote{
+    float:left;height:40px;line-height:40px;width:80px;margin-left:40px;background:#888;color:#FFF;text-align:center;
+    border-radius:0px;margin-top:5px;cursor:pointer;
+}
+.deleteFood{
+    float:left;height:40px;line-height:40px;width:70px;background:#CB4437;color:#FFF;text-align:center;
+    border-radius:0px;margin-top:5px;margin-left:35px;cursor:pointer;
+}
+
+
+.note_item{
+    float:left;height:40px;line-height:40px;width:80px;text-align:center;margin:20px 0px 0px 20px;background:#ECECEC;color:#111;
+    cursor:pointer;
+}
+.note_item:hover{
+    background:#3366FF;color:#FFF;
+}
+
+.printer{
+    float:left;height:40px;line-height:40px;width:95px;text-align:center;margin:20px 0px 0px 20px;background:#ECECEC;color:#111;
+    cursor:pointer;
+}
+.printer_sel{
+    float:left;height:40px;line-height:40px;width:95px;text-align:center;margin:20px 0px 0px 20px;background:#3366FF;color:#FFF;
+    cursor:pointer;
+}
+.printer:hover{
+    background:#BABABA;color:#FFF;
+}
+
+.item_0 {
+    position:relative;height:80px;width:210px;line-height:80px;color:#fff;border:solid 2px #646464;
+    background:#646464;margin-top:10px;margin-right:10px;cursor:pointer;float:left;
+}
+.item_1 {
+    position:relative;height:80px;width:210px;line-height:80px;color:#fff;border:solid 2px #0196DA;
+    background:#0196DA;margin-top:10px;margin-right:10px;cursor:pointer;float:left;
+}
+.item_2 {
+    position:relative;height:80px;width:210px;line-height:80px;color:#fff;border:solid 2px #4DA805;
+    background:#4DA805;margin-top:10px;margin-right:10px;cursor:pointer;float:left;
+}
+.item_0:hover,.item_1:hover,.item_2:hover {
+    border:solid 2px #E1E1E1;
+}
+.item_0_select {
+    border:solid 2px #E1E1E1;background:#3D3D3D;
+}
+.item_1_select {
+    border:solid 2px #E1E1E1;background:#094AB2;
+}
+.item_2_select {
+    border:solid 2px #E1E1E1;background:#007800;
+}
+.food_name {
+    position:absolute;top:2px;left:7px;margin:0px;padding:0px;height:25px;line-height:25px;width:180px;font-size:18px;
+}
+.item_note {
+    position:absolute;top:59px;left:8px;height:20px;line-height:20px;font-size:12px;
+}
+.item_info {
+    position:absolute;top:59px;right:8px;height:20px;line-height:20px;font-size:12px;
+}
+.leftdirection  
+{  
+    width:0;height:0;  
+    line-height:0;  
+    border-width:10px;  
+    border-style:solid;  
+    border-color: transparent #FFF transparent transparent;  
+}
+.rightdirection  
+{  
+    width:0;height:0;  
+    line-height:0;  
+    border-width:20px;  
+    border-style:solid;  
+    border-color:transparent transparent transparent #A9DBF6;  
+}
+.topdirection  
+{  
+    width:0;height:0;  
+    line-height:0;  
+    border-width:20px;  
+    border-style:solid;  
+    border-color: transparent transparent #A9DBF6 transparent;  
+}
+.bottomdirection  
+{  
+    width:0;height:0;  
+    line-height:0;  
+    border-width:20px;  
+    border-style:solid;  
+    border-color: #A9DBF6 transparent transparent transparent;  
+}
+
+#todayBtn{
+    float:right;height:40px;line-height:38px;padding-left:15px;padding-right:15px;background-color:#444;color:#FFF;cursor:pointer;font-size:14px;
+}
+#todayBtn:hover{
+    background-color:#666;
+}
+
+.vipcard{
+    float:left;height:90px;width:270px;margin:20px;margin-left:0px;background:#3366FF;color:#FFF;position:relative;cursor:pointer;
+    border:solid 2px #2A2A2A;
+}
+.vipcard:hover{
+    border:solid 2px #999;
+}
+
+.credit{
+    float:left;height:90px;width:270px;margin:20px;margin-left:0px;background:#C42140;color:#FFF;position:relative;cursor:pointer;
+    border:solid 2px #2A2A2A;
+}
+.credit:hover{
+    border:solid 2px #999;
+}
+.credit_name{
+    position:absolute;top:10px;left:10px;font-size:16px;
+}
+.credit_limit{
+    position:absolute;bottom:10px;left:10px;font-size:12px;
+}
+.credit_value{
+    position:absolute;bottom:10px;right:10px;font-size:12px;
+}
+
+

@@ -1,0 +1,22 @@
+#logo{
+    float:left;height:40px;line-height:38px;margin-left:10px;padding-left:20px;padding-right:20px;
+    background-color:#262626;color:#FFF;cursor:pointer;font-size:16px;
+}
+#logo:hover{
+    background-color:#444;
+}
+.titleBtn{
+    float:right;height:40px;line-height:38px;padding-left:15px;padding-right:15px;background-color:#262626;color:#FFF;cursor:pointer;font-size:14px;
+}
+.titleBtn:hover{
+    background-color:#444;
+}
+#username{
+    float:right;height:40px;line-height:38px;padding-left:10px;padding-right:10px;color:#D0D2D3;font-size:14px;
+}
+#account{
+    float:right;height:40px;line-height:38px;padding-left:15px;padding-right:15px;background-color:#444;color:#FFF;cursor:pointer;font-size:14px;
+}
+#account:hover{
+    background-color:#666;
+}

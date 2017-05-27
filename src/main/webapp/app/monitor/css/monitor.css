@@ -1,0 +1,111 @@
+.menu {
+    float:left;width:90px;height:32px;line-height:32px;text-align:center;cursor:pointer;color:#B9B9B9;
+}
+.menu_select {
+    color:#FFF;
+}
+.menu:hover {
+    color:#FFF;
+}
+#exit:hover{
+    color:#FFF;
+}
+#username:hover{
+    color:#FFF;
+}
+#searchBtn{
+    height:32px;width:78px;margin-top:17px;background:#F1F1F1 url(/app/sendfood/pic/normal.jpg) no-repeat;
+}
+#searchBtn:hover{
+    background:#F1F1F1 url(/app/sendfood/pic/hover.jpg) no-repeat;
+}
+.alarm{
+    margin-left:0px;font-size:16px;margin-bottom:5px;cursor:pointer;
+}
+.alarm:hover{
+    background:#646464;color:#fff;
+}
+.alarm_food{
+    margin-left:10px;margin-bottom:5px;
+}
+.alarm_table{
+    float:left;font-size:12px;margin-left:5px;
+}
+.alarm_time{
+    float:right;font-size:12px;margin-right:20px;
+}
+.alarm_line{
+    width:230px;margin-left:5px;clear:both;border-top:solid 1px #3D3D3D;
+}
+
+.querybill{
+    height:60px;margin-top:0px;position:relative;cursor:pointer;
+}
+.querybill:hover{
+    background:#F0F0F0;color:#000;
+}
+#billitemtable{
+    margin-left:0px;
+}
+#billitemtable td{
+    width:80px;border-bottom:solid 1px #646464;cursor:pointer;
+}
+.billitemtable_tr_hover{
+    background:#3D3D3D;color:#fff;
+}
+.bill_list_table_id {
+    float:left;height:40px;line-height:40px;width:80px;text-align:center;background:#3985DA;
+		            color:#fff;font-size:20px;margin-top:10px;margin-left:20px;
+}
+.bill_list_recv_fee {
+    position:absolute;top:8px;left:118px;font-weight:bold;font-size:16px;
+}
+.bill_list_time {
+    position:absolute;top:31px;left:120px;font-size:14px;
+}
+#backBtnFromQueryBill{
+    margin-top:10px;margin-left:0px;position:relative;
+}
+.query_foodname{
+    cursor:pointer;font-size:22px;
+}
+.query_foodname:hover{
+    color:#F67824;
+}
+.food_info_item{
+    font-size:14px;margin-top:2px;color:#A4A4A4;
+}
+.food_info_item div{
+    float:left;width:140px;
+}
+.food_info_logo{
+    float:left;height:36px;width:36px;margin-top:5px;margin-right:12px;
+}
+.table{
+    float:left;height:85px;line-height:85px;width:160px;background:#EFEFEF;border:solid 1px #CCC;cursor:pointer;display:none;
+    color:#666;border-radius:3px;text-align:center;font-size:20px;margin-top:30px;margin-left:15px;margin-right:15px;
+}
+.table:hover{
+    background:#EFEFEF;border:solid 1px #666;cursor:pointer;color:#000;
+}
+.table_sel{
+    background:#3E85EF;border:solid 1px #3E85EF;cursor:pointer;color:#FFF;
+}
+.table_sel:hover{
+    background:#3E85EF;border:solid 1px #3E85EF;cursor:pointer;color:#FFF;
+}
+.food{
+    float:left;height:85px;line-height:85px;width:320px;background:#EFEFEF;border:solid 1px #CCC;cursor:pointer;display:none;
+    color:#666;border-radius:3px;text-align:center;font-size:20px;margin-top:30px;margin-left:15px;margin-right:15px;
+}
+.food:hover{
+    background:#EFEFEF;border:solid 1px #666;cursor:pointer;color:#000;
+}
+.food_sel{
+    background:#3E85EF;border:solid 1px #3E85EF;cursor:pointer;color:#FFF;
+}
+.food_sel:hover{
+    background:#3E85EF;border:solid 1px #3E85EF;cursor:pointer;color:#FFF;
+}
+
+
