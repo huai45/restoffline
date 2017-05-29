@@ -166,8 +166,8 @@ public class DelphiAction extends BaseController {
 			staff = staff_info.get("USERNAME").toString();
 			IData param = new IData();
 			User user = new User();
-			user.setRest_id(rest_id);
-			user.setStaff_id(phone);
+			user.setRestId(rest_id);
+			user.setStaffId(phone);
 			user.setStaffname(staff);
 			param.put("rest_id", rest_id);
 			param.put("user", user);
@@ -221,7 +221,7 @@ public class DelphiAction extends BaseController {
 		log.info(" ****************  DelphiController  printBill  ***********************  phone : "+phone+" , table_id : "+table_id);
 		try{
 			User user = new User();
-			user.setRest_id(rest_id);
+			user.setRestId(rest_id);
 			IData param = new IData();
 			param.put("user", user);
 			param.put("table_id", table_id);

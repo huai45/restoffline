@@ -78,10 +78,10 @@ public class QueryServiceImpl implements QueryService {
 	public Map queryTodayData(IData param) {
 		Map result = new HashMap();
 		User user = (User)param.get("user");
-		log.info(" queryTodayData , user.getRest_id() = "+user.getRest_id());
+		log.info(" queryTodayData , user.getRestId() = "+user.getRestId());
 		result.put("success", "true");
 		String sql_recv = " select mode_id,mode_name , sum(fee) recv_fee from tf_bill_fee where rest_id = ?  group by mode_id,mode_name order by  mode_id ";
-		List data_recv = baseDao.jdbcTemplate.queryForList(sql_recv,new Object[]{ user.getRest_id() });
+		List data_recv = baseDao.jdbcTemplate.queryForList(sql_recv,new Object[]{ user.getRestId() });
 		result.put("recv_data", data_recv);
 		
 //		String floor = " select b.floor , sum(a.fee) money from  "+
@@ -92,32 +92,32 @@ public class QueryServiceImpl implements QueryService {
 			" left join " +
 			" ( select  b.floor1 floor, sum(a.recv_fee) money from tf_bill a, td_table b where a.table_id = b.table_id and a.rest_id = ? and a.rest_id = b.rest_id group by b.floor1 ) b " +
 			" on a.floor = b.floor ";
-		List data_floor = baseDao.jdbcTemplate.queryForList(floor,new Object[]{ user.getRest_id(),user.getRest_id() });
+		List data_floor = baseDao.jdbcTemplate.queryForList(floor,new Object[]{ user.getRestId(),user.getRestId() });
 		result.put("floor_data", data_floor);
 		
 		String item_money = " select ifnull(sum(reduce_fee),0) moling_money , ifnull( (sum(bill_fee)-(sum(derate_fee)+sum(reduce_fee)+sum(recv_fee))) ,0) lose_money ," +
 				" ifnull(sum(spay_fee),0) spay_fee, ifnull(sum(derate_fee),0) discount_money, ifnull(sum(recv_fee),0) recv_money, ifnull(sum(nop),0) total_person " +
 				" from tf_bill  where rest_id = ?  ";
-		List data_item = baseDao.jdbcTemplate.queryForList(item_money,new Object[]{ user.getRest_id() });
+		List data_item = baseDao.jdbcTemplate.queryForList(item_money,new Object[]{ user.getRestId() });
 		result.put("item_data", data_item);
 		
 		String bill_count = " select ifnull( sum(case when pay_type = '1' then 1 else 0 end) ,0)  close_count , " +
 				" ifnull( sum(case when pay_type = '0' then 1 else 0 end),0) open_count  from tf_bill  where rest_id = ?   ";
-		List bill_count_data = baseDao.jdbcTemplate.queryForList(bill_count,new Object[]{ user.getRest_id() });
+		List bill_count_data = baseDao.jdbcTemplate.queryForList(bill_count,new Object[]{ user.getRestId() });
 		result.put("bill_count_data", bill_count_data);
 		
 		String unrecv_money = " select ifnull(sum(a.fee),0) money from  "+
 	        " ( select b.bill_id  ,sum(a.price*(a.count-a.back_count-a.free_count)*a.pay_rate/100) -b.reduce_fee fee " +
 	        " from tf_bill_item a , tf_bill b "+
 	        " where a.bill_id = b.bill_id and b.rest_id = ? and a.rest_id = b.rest_id and b.pay_type = '0' group by a.bill_id  ) a ";
-		List data_unrecv = baseDao.jdbcTemplate.queryForList(unrecv_money,new Object[]{ user.getRest_id() });
+		List data_unrecv = baseDao.jdbcTemplate.queryForList(unrecv_money,new Object[]{ user.getRestId() });
 		result.put("unrecv_data",data_unrecv);
 		
 		String category_sql = " select groups category , sum(price*count*pay_rate/100) money ," +
 				"  sum(price*(count-back_count-free_count)*pay_rate/100) real_money from tf_bill_item a where rest_id = ? group by groups " +
 				"  union all select '合计',sum(price*count*pay_rate/100),sum(price*(count-back_count-free_count)*pay_rate/100) " +
 				" from tf_bill_item a where rest_id = ? ";
-		List data_category = baseDao.jdbcTemplate.queryForList(category_sql,new Object[]{ user.getRest_id(),user.getRest_id() });
+		List data_category = baseDao.jdbcTemplate.queryForList(category_sql,new Object[]{ user.getRestId(),user.getRestId() });
 		result.put("category_data",data_category);
 		
 		String package_sql = " select a.*,b.pay_type, c.floor from tf_bill_package a , tf_bill b , td_table c " +
@@ -136,7 +136,7 @@ public class QueryServiceImpl implements QueryService {
 		String category = param.getString("category");
 		String sql = " select  food_name , price , sum(count) count, sum(back_count) back_count,sum(free_count) free_count " +
 				" from tf_bill_item where rest_id = ? and category = ? group by food_name , price order by price desc, count desc ";
-		List list = baseDao.jdbcTemplate.queryForList(sql, new Object[]{ user.getRest_id(),category , });
+		List list = baseDao.jdbcTemplate.queryForList(sql, new Object[]{ user.getRestId(),category , });
 		result.put("categoryData", list);
 		return result;
 	}
@@ -173,7 +173,7 @@ public class QueryServiceImpl implements QueryService {
 		result.put("success", "true");
 		String sql_recv = " select mode_id,mode_name , sum(fee) recv_fee from th_bill_fee a,th_bill b " +
 				" where a.rest_id = ? and a.rest_id = b.rest_id and a.bill_id = b.bill_id and b.open_date >= ? and b.open_date <= ?  group by mode_id,mode_name order by  mode_id ";
-		List data_recv = baseDao.jdbcTemplate.queryForList(sql_recv,new Object[]{ user.getRest_id(),param.get("start_date"), param.get("end_date") });
+		List data_recv = baseDao.jdbcTemplate.queryForList(sql_recv,new Object[]{ user.getRestId(),param.get("start_date"), param.get("end_date") });
 		result.put("recv_data", data_recv);
 		
 		long t2 = System.currentTimeMillis();
@@ -187,7 +187,7 @@ public class QueryServiceImpl implements QueryService {
 			" left join " +
 			" ( select  b.floor1 floor, sum(a.recv_fee) money from th_bill a, td_table b where a.table_id = b.table_id and a.rest_id = ? and a.rest_id = b.rest_id and a.open_date >= ? and a.open_date <= ? group by b.floor1 ) b " +
 			" on a.floor = b.floor ";
-		List data_floor = baseDao.jdbcTemplate.queryForList(floor,new Object[]{ user.getRest_id(),user.getRest_id(),param.get("start_date"), param.get("end_date")});
+		List data_floor = baseDao.jdbcTemplate.queryForList(floor,new Object[]{ user.getRestId(),user.getRestId(),param.get("start_date"), param.get("end_date")});
 		result.put("floor_data", data_floor);
 		
 		long t3 = System.currentTimeMillis();
@@ -196,7 +196,7 @@ public class QueryServiceImpl implements QueryService {
 		String item_money = " select ifnull(sum(reduce_fee),0) moling_money , ifnull( (sum(bill_fee)-(sum(derate_fee)+sum(reduce_fee)+sum(recv_fee))) ,0) lose_money ," +
 				" ifnull(sum(spay_fee),0) spay_fee, ifnull(sum(derate_fee),0) discount_money, ifnull(sum(recv_fee),0) recv_money, ifnull(sum(nop),0) total_person " +
 				" from th_bill  where rest_id = ? and open_date >= ? and open_date <= ? ";
-		List data_item = baseDao.jdbcTemplate.queryForList(item_money,new Object[]{ user.getRest_id(),param.get("start_date"), param.get("end_date") });
+		List data_item = baseDao.jdbcTemplate.queryForList(item_money,new Object[]{ user.getRestId(),param.get("start_date"), param.get("end_date") });
 		result.put("item_data", data_item);
 		
 		long t4 = System.currentTimeMillis();
@@ -204,7 +204,7 @@ public class QueryServiceImpl implements QueryService {
 		
 		String bill_count = " select ifnull( sum(case when pay_type = '1' then 1 else 0 end) ,0)  close_count , " +
 				" ifnull( sum(case when pay_type = '0' then 1 else 0 end),0) open_count  from th_bill  where rest_id = ? and open_date >= ? and open_date <= ?  ";
-		List bill_count_data = baseDao.jdbcTemplate.queryForList(bill_count,new Object[]{ user.getRest_id(),param.get("start_date"), param.get("end_date") });
+		List bill_count_data = baseDao.jdbcTemplate.queryForList(bill_count,new Object[]{ user.getRestId(),param.get("start_date"), param.get("end_date") });
 		result.put("bill_count_data", bill_count_data);
 		
 		long t5 = System.currentTimeMillis();
@@ -214,7 +214,7 @@ public class QueryServiceImpl implements QueryService {
 	        " ( select b.bill_id  ,sum(a.price*(a.count-a.back_count-a.free_count)*a.pay_rate/100) -b.reduce_fee fee " +
 	        " from th_bill_item a , th_bill b "+
 	        " where a.bill_id = b.bill_id and b.rest_id = ? and b.open_date >= ? and b.open_date <= ? and a.rest_id = b.rest_id and b.pay_type = '0' group by a.bill_id  ) a ";
-		List data_unrecv = baseDao.jdbcTemplate.queryForList(unrecv_money,new Object[]{ user.getRest_id(),param.get("start_date"), param.get("end_date") });
+		List data_unrecv = baseDao.jdbcTemplate.queryForList(unrecv_money,new Object[]{ user.getRestId(),param.get("start_date"), param.get("end_date") });
 		result.put("unrecv_data",data_unrecv);
 		
 		long t6 = System.currentTimeMillis();
@@ -225,7 +225,7 @@ public class QueryServiceImpl implements QueryService {
 				"  from th_bill_item a ,th_bill b where a.rest_id = ? and a.rest_id = b.rest_id and a.bill_id = b.bill_id and b.open_date >= ? and b.open_date <= ? group by groups order by category, groups ) u  " +
 				"  union all select '合计',sum(price*count*pay_rate/100),sum(price*(count-back_count-free_count)*pay_rate/100) " +
 				" from th_bill_item a ,th_bill b where a.rest_id = ? and a.bill_id = b.bill_id and a.rest_id = b.rest_id and b.open_date >= ? and b.open_date <= ?  ";
-		List data_category = baseDao.jdbcTemplate.queryForList(category_sql,new Object[]{ user.getRest_id(),param.get("start_date"), param.get("end_date"),user.getRest_id(),param.get("start_date"), param.get("end_date")  });
+		List data_category = baseDao.jdbcTemplate.queryForList(category_sql,new Object[]{ user.getRestId(),param.get("start_date"), param.get("end_date"),user.getRestId(),param.get("start_date"), param.get("end_date")  });
 		result.put("category_data",data_category);
 		
 		long t7 = System.currentTimeMillis();

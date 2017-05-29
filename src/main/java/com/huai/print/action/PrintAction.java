@@ -74,7 +74,7 @@ public class PrintAction extends BaseController {
 		log.info(" localprint  queryBillnfoByTable   table_id = "+table_id);
 		User user = this.getSessionUser(request);
 		IData param = new IData();
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		param.put("table_id", table_id );
 		Map result = printService.queryPrintBillInfoByTable(param);
@@ -88,7 +88,7 @@ public class PrintAction extends BaseController {
 		log.info(" localprint  querybillinfobybillid   bill_id = "+bill_id);
 		User user = this.getSessionUser(request);
 		IData param = new IData();
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		param.put("bill_id", bill_id );
 		Map result = printService.queryPrintBillInfoByBillId(param);

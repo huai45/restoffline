@@ -95,7 +95,7 @@ public class MonitorServiceImpl implements MonitorService {
 		User user = (User)param.get("user");
 		String table_id = param.getString("table_id");
 		List billList = baseDao.jdbcTemplate.queryForList("select * from tf_bill where table_id = ? and rest_id = ? and pay_type = '0' ",
-			new Object[]{ table_id,user.getRest_id() });
+			new Object[]{ table_id,user.getRestId() });
 	    String bill_id = "";
 		if(billList.size()>0){
 			bill_id = ((Map)billList.get(0)).get("BILL_ID").toString();

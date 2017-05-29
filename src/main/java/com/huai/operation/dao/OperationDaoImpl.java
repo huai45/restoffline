@@ -86,7 +86,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		jdbcTemplate.update("insert into tf_bill (bill_id,rest_id,table_id,pay_type,nop,open_staff_id,open_staff_name,open_date,open_time) " +
 				" values (?,?,?,?,?,?,?,?,?) " ,
 				new Object[]{param.get("bill_id"),param.get("rest_id"),param.get("table_id"),"0",param.get("nop"),
-				user.getStaff_id(),user.getStaffname(),ut.currentDate(),ut.currentTime()} );
+				user.getStaffId(),user.getStaffname(),ut.currentDate(),ut.currentTime()} );
 		// 2. 置为占用状态  写入账单id
 		jdbcTemplate.update("update td_table set state = '1'  where table_id = ? and rest_id = ? " ,
 				new Object[]{param.getString("table_id"),param.get("rest_id")} );
@@ -150,7 +150,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 				    pstmt.setString(14, item.getString("COOK_TIME"));
 				    pstmt.setString(15, item.getString("COUNT"));
 				    pstmt.setString(16, now );
-				    pstmt.setString(17, user.getStaff_id());
+				    pstmt.setString(17, user.getStaffId());
 				    pstmt.setString(18, user.getStaffname());
 				    pstmt.setString(19, item.getString("CALL_TYPE").equals("1")?now:"");
 				    pstmt.setString(20, item.containsKey("TRADE_ID")?item.getString("TRADE_ID"):"");
@@ -189,7 +189,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 				    pstmt.setString(17, item.getString("UNIT"));
 				    pstmt.setString(18, item.getString("NOTE"));
 				    pstmt.setString(19, now);
-				    pstmt.setString(20, user.getStaff_id());
+				    pstmt.setString(20, user.getStaffId());
 				    pstmt.setString(21, user.getStaffname());
 				    pstmt.setString(22, item.getString("PRINTER_START"));
 				    pstmt.setString(23, item.getString("PRINTER_HURRY"));
@@ -291,7 +291,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 				    pstmt.setString(17, item.getString("UNIT"));
 				    pstmt.setString(18, item.getString("NOTE"));
 				    pstmt.setString(19, now);
-				    pstmt.setString(20, user.getStaff_id());
+				    pstmt.setString(20, user.getStaffId());
 				    pstmt.setString(21, user.getStaffname());
 				    pstmt.setString(22, item.getString("PRINTER_START"));
 				    pstmt.setString(23, item.getString("PRINTER_HURRY"));
@@ -404,7 +404,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 				    pstmt.setString(17, item.getString("UNIT"));
 				    pstmt.setString(18, item.getString("NOTE"));
 				    pstmt.setString(19, now);
-				    pstmt.setString(20, user.getStaff_id());
+				    pstmt.setString(20, user.getStaffId());
 				    pstmt.setString(21, user.getStaffname());
 				    pstmt.setString(22, item.getString("PRINTER_START"));
 				    pstmt.setString(23, item.getString("PRINTER_HURRY"));
@@ -464,7 +464,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 				    pstmt.setString(17, item.getString("UNIT"));
 				    pstmt.setString(18, item.getString("NOTE"));
 				    pstmt.setString(19, now);
-				    pstmt.setString(20, user.getStaff_id());
+				    pstmt.setString(20, user.getStaffId());
 				    pstmt.setString(21, user.getStaffname());
 				    pstmt.setString(22, item.getString("PRINTER_START"));
 				    pstmt.setString(23, item.getString("PRINTER_HURRY"));
@@ -516,7 +516,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		String now = ut.currentTime();
 		jdbcTemplate.update("insert into tf_bill_fee (charge_id,bill_id,rest_id,mode_id,mode_name,fee,trade_id,user_id,OPER_STAFF_ID,OPER_STAFF_NAME,OPER_TIME) " +
 				" values (?,?,?,?,?,?,?,?,?,?,? ) " ,
-				new Object[]{param.get("charge_id"),param.get("bill_id"),param.get("rest_id"),param.get("mode_id"),param.get("mode_name"),param.get("recvfee"),"","",user.getStaff_id(),user.getStaffname(),now} );
+				new Object[]{param.get("charge_id"),param.get("bill_id"),param.get("rest_id"),param.get("mode_id"),param.get("mode_name"),param.get("recvfee"),"","",user.getStaffId(),user.getStaffname(),now} );
 		return ut.suc("交费成功");
 	}
 
@@ -538,47 +538,47 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		jdbcTemplate.update(" update td_table set STATE = '0' , BILL_ID = ''  where table_id = ? and rest_id = ? " ,
 				new Object[]{bill.get("TABLE_ID"),bill.get("REST_ID")} );
 		
-		List items = this.queryBillItemByBillId(bill.get("BILL_ID").toString(),bill.get("REST_ID").toString());
-		for(int i=0;i<items.size();i++){
-			Map item = (Map)items.get(i);
-			double cost_f = 0;
-			List cost = jdbcTemplate.queryForList("select * from td_food_cost where rest_id = ? and food_id = ? ",
-				new Object[]{user.getRest_id(),item.get("food_id")});
-		    double total = 0;
-			for(int j=0;j<cost.size();j++){
-				Map rel = (Map)cost.get(j);
-				Double count = Double.parseDouble(rel.get("count").toString());
-				List materials = jdbcTemplate.queryForList("select * from td_material where material_id = ? and rest_id = ? ",
-					new Object[]{rel.get("material_id"),user.getRest_id()});
-			    if(materials.size()>0){
-			    	Map material = (Map)materials.get(0);
-			    	ut.log("material="+material);
-			    	double price_m = 0;
-			    	//ut.log(material);
-			    	List cost2 = jdbcTemplate.queryForList("select * from td_material_cost where rest_id = ? and material_id = ? ",
-			    		new Object[]{user.getRest_id(),material.get("material_id")});
-					if(cost2.size()>0){
-						Map rel2 = (Map)cost2.get(0);
-						List stocks = jdbcTemplate.queryForList("select * from ts_stock where stock_id = ? ",new Object[]{rel2.get("stock_id")});
-						int count1 = Integer.parseInt(rel2.get("count1").toString());
-						int count2 = Integer.parseInt(rel2.get("count2").toString());
-						if(cost.size()>0){
-				        	Map stock = (Map)stocks.get(0);
-				        	ut.log("stock="+stock);
-				        	Double price = Double.parseDouble(stock.get("price").toString());
-				        	price_m = price * count2 / count1;
-				        }
-					}
-			    	ut.log("price_m = "+price_m);
-			    	cost_f = cost_f + count*price_m;
-			    }
-			}
-			ut.log("cost_f = "+cost_f);
-			item.put("cost",ut.getDoubleString(cost_f));
-			
-			jdbcTemplate.update("update tf_bill_item set cost = ? , cost_str = ?  where item_id = ? and rest_id = ? ",
-				new Object[]{item.get("cost"),"cost",item.get("item_id"),user.getRest_id()});
-		}
+//		List items = this.queryBillItemByBillId(bill.get("BILL_ID").toString(),bill.get("REST_ID").toString());
+//		for(int i=0;i<items.size();i++){
+//			Map item = (Map)items.get(i);
+//			double cost_f = 0;
+//			List cost = jdbcTemplate.queryForList("select * from td_food_cost where rest_id = ? and food_id = ? ",
+//				new Object[]{user.getRestId(),item.get("food_id")});
+//		    double total = 0;
+//			for(int j=0;j<cost.size();j++){
+//				Map rel = (Map)cost.get(j);
+//				Double count = Double.parseDouble(rel.get("count").toString());
+//				List materials = jdbcTemplate.queryForList("select * from td_material where material_id = ? and rest_id = ? ",
+//					new Object[]{rel.get("material_id"),user.getRestId()});
+//			    if(materials.size()>0){
+//			    	Map material = (Map)materials.get(0);
+//			    	ut.log("material="+material);
+//			    	double price_m = 0;
+//			    	//ut.log(material);
+//			    	List cost2 = jdbcTemplate.queryForList("select * from td_material_cost where rest_id = ? and material_id = ? ",
+//			    		new Object[]{user.getRestId(),material.get("material_id")});
+//					if(cost2.size()>0){
+//						Map rel2 = (Map)cost2.get(0);
+//						List stocks = jdbcTemplate.queryForList("select * from ts_stock where stock_id = ? ",new Object[]{rel2.get("stock_id")});
+//						int count1 = Integer.parseInt(rel2.get("count1").toString());
+//						int count2 = Integer.parseInt(rel2.get("count2").toString());
+//						if(cost.size()>0){
+//				        	Map stock = (Map)stocks.get(0);
+//				        	ut.log("stock="+stock);
+//				        	Double price = Double.parseDouble(stock.get("price").toString());
+//				        	price_m = price * count2 / count1;
+//				        }
+//					}
+//			    	ut.log("price_m = "+price_m);
+//			    	cost_f = cost_f + count*price_m;
+//			    }
+//			}
+//			ut.log("cost_f = "+cost_f);
+//			item.put("cost",ut.getDoubleString(cost_f));
+//
+//			jdbcTemplate.update("update tf_bill_item set cost = ? , cost_str = ?  where item_id = ? and rest_id = ? ",
+//				new Object[]{item.get("cost"),"cost",item.get("item_id"),user.getRestId()});
+//		}
 		
 		return "";
 	}
@@ -590,7 +590,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 //		String now = ut.currentTime();
 //		jdbcTemplate.update("insert into tf_bill_fee (charge_id,bill_id,rest_id,mode_id,mode_name,fee,trade_id,user_id,OPER_STAFF_ID,OPER_STAFF_NAME,OPER_TIME) " +
 //				" values (?,?,?,?,?,?,?,?,?,?,? ) " ,
-//				new Object[]{param.get("charge_id"),param.get("bill_id"),param.get("rest_id"),param.get("mode_id"),param.get("mode_name"),param.get("recvfee"),"",param.get("user_id"),user.getStaff_id(),user.getStaffname(),now} );
+//				new Object[]{param.get("charge_id"),param.get("bill_id"),param.get("rest_id"),param.get("mode_id"),param.get("mode_name"),param.get("recvfee"),"",param.get("user_id"),user.getStaffId(),user.getStaffname(),now} );
 //		return ut.suc("交费成功");
 //	}
 //
@@ -601,7 +601,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 //		String now = ut.currentTime();
 //		jdbcTemplate.update("insert into tf_bill_fee (charge_id,bill_id,rest_id,mode_id,mode_name,fee,trade_id,user_id,OPER_STAFF_ID,OPER_STAFF_NAME,OPER_TIME) " +
 //				" values (?,?,?,?,?,?,?,?,?,?,? ) " ,
-//				new Object[]{param.get("charge_id"),param.get("bill_id"),param.get("rest_id"),param.get("mode_id"),param.get("mode_name"),param.get("recvfee"),"",param.get("user_id"),user.getStaff_id(),user.getStaffname(),now} );
+//				new Object[]{param.get("charge_id"),param.get("bill_id"),param.get("rest_id"),param.get("mode_id"),param.get("mode_name"),param.get("recvfee"),"",param.get("user_id"),user.getStaffId(),user.getStaffname(),now} );
 //		return ut.suc("交费成功");
 //	}
 	
@@ -609,7 +609,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 	public String payByCust(IData param) {
 		User user = (User)param.get("user");
 		
-		String rest_id = user.getRest_id();
+		String rest_id = user.getRestId();
 		if(rest_id.equals("mt")){
 			rest_id = "kh";
 		}
@@ -622,7 +622,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		jdbcTemplate.update("insert into tf_bill_fee (charge_id,bill_id,rest_id,mode_id,mode_name,fee,trade_id,user_id,OPER_STAFF_ID,OPER_STAFF_NAME,OPER_TIME) " +
 				" values (?,?,?,?,?,?,?,?,?,?,? ) " ,
 				new Object[]{param.get("charge_id"),param.get("bill_id"),param.get("rest_id"),param.get("mode_id"),param.get("mode_name"),
-				    param.get("recvfee"),"",param.get("user_id"),user.getStaff_id(),user.getStaffname(),now} );
+				    param.get("recvfee"),"",param.get("user_id"),user.getStaffId(),user.getStaffname(),now} );
 		//2. 更新账户余额
 		jdbcTemplate.update(" update tf_user set money = ? where user_id = ? and rest_id = ? " ,
 				new Object[]{cust.get("NEW_MONEY"),cust.get("USER_ID"),rest_id} );
@@ -630,7 +630,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		jdbcTemplate.update("insert into tf_user_fee (charge_id,user_id,rest_id,type,fee,old_money,new_money,out_trade_id,OPER_STAFF_ID,OPER_STAFF_NAME,OPER_TIME,REMARK) " +
 				" values (?,?,?,?,?,?,?,?,?,?,?,? ) " ,
 				new Object[]{param.get("charge_id"),cust.get("USER_ID"),param.get("rest_id"),type,param.get("recvfee"),
-				cust.get("MONEY"),cust.get("NEW_MONEY"),param.get("bill_id"),user.getStaff_id(),user.getStaffname(),now,remark} );
+				cust.get("MONEY"),cust.get("NEW_MONEY"),param.get("bill_id"),user.getStaffId(),user.getStaffname(),now,remark} );
 		return ut.suc("交费成功");
 	}
 
@@ -641,10 +641,10 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		final String now = ut.currentTime();
 		//1. 更新餐台状态
 		jdbcTemplate.update(" update td_table set state = '1' where table_id = ? and rest_id = ? " ,
-				new Object[]{bill.get("TABLE_ID"),user.getRest_id()} );
+				new Object[]{bill.get("TABLE_ID"),user.getRestId()} );
 		//2. 更新账单状态
 		jdbcTemplate.update(" update tf_bill set pay_type = '0' , reopen = '1' , param1 = ? where bill_id = ? and rest_id = ? " ,
-				new Object[]{now,bill.get("BILL_ID"),user.getRest_id()} );
+				new Object[]{now,bill.get("BILL_ID"),user.getRestId()} );
 		return ut.suc("账单已激活！");
 	}
 
@@ -678,11 +678,11 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 	public String backupPrintLog(IData param) {
 		User user = (User)param.get("user");
 		long t1 = System.currentTimeMillis();
-		jdbcTemplate.update(" insert into th_print_log select * from tf_print_log where rest_id = ? ",new Object[]{user.getRest_id()});
-		jdbcTemplate.update(" insert into th_print_bill_log select * from tf_print_bill_log where rest_id = ? ",new Object[]{user.getRest_id()});
+		jdbcTemplate.update(" insert into th_print_log select * from tf_print_log where rest_id = ? ",new Object[]{user.getRestId()});
+		jdbcTemplate.update(" insert into th_print_bill_log select * from tf_print_bill_log where rest_id = ? ",new Object[]{user.getRestId()});
 		long t2 = System.currentTimeMillis();
-		jdbcTemplate.update(" delete from tf_print_log where rest_id = ? ",new Object[]{user.getRest_id()});
-		jdbcTemplate.update(" delete from tf_print_bill_log where rest_id = ? ",new Object[]{user.getRest_id()});
+		jdbcTemplate.update(" delete from tf_print_log where rest_id = ? ",new Object[]{user.getRestId()});
+		jdbcTemplate.update(" delete from tf_print_bill_log where rest_id = ? ",new Object[]{user.getRestId()});
 		long t3 = System.currentTimeMillis();
 		log.info(" backupPrintLog  time1 = "+(t2-t1));
 		log.info(" backupPrintLog  time2 = "+(t3-t2));
@@ -692,15 +692,15 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 	public String backupTodayBill(IData param) {
 		User user = (User)param.get("user");
 		long t1 = System.currentTimeMillis();
-		jdbcTemplate.update(" insert into th_bill select * from tf_bill where rest_id = ? ",new Object[]{user.getRest_id()});
-		jdbcTemplate.update(" insert into th_bill_fee select * from tf_bill_fee where rest_id = ? ",new Object[]{user.getRest_id()});
-		jdbcTemplate.update(" insert into th_bill_item select * from tf_bill_item where rest_id = ? ",new Object[]{user.getRest_id()});
+		jdbcTemplate.update(" insert into th_bill select * from tf_bill where rest_id = ? ",new Object[]{user.getRestId()});
+		jdbcTemplate.update(" insert into th_bill_fee select * from tf_bill_fee where rest_id = ? ",new Object[]{user.getRestId()});
+		jdbcTemplate.update(" insert into th_bill_item select * from tf_bill_item where rest_id = ? ",new Object[]{user.getRestId()});
 		long t2 = System.currentTimeMillis();
-		jdbcTemplate.update(" delete from tf_bill where rest_id = ? ",new Object[]{user.getRest_id()});
-		jdbcTemplate.update(" delete from tf_bill_fee where rest_id = ? ",new Object[]{user.getRest_id()});
-		jdbcTemplate.update(" delete from tf_bill_item where rest_id = ? ",new Object[]{user.getRest_id()});
+		jdbcTemplate.update(" delete from tf_bill where rest_id = ? ",new Object[]{user.getRestId()});
+		jdbcTemplate.update(" delete from tf_bill_fee where rest_id = ? ",new Object[]{user.getRestId()});
+		jdbcTemplate.update(" delete from tf_bill_item where rest_id = ? ",new Object[]{user.getRestId()});
 		long t3 = System.currentTimeMillis();
-		jdbcTemplate.update(" update td_table set state = '0' ,bill_id = '' where rest_id = ? ",new Object[]{user.getRest_id()});
+		jdbcTemplate.update(" update td_table set state = '0' ,bill_id = '' where rest_id = ? ",new Object[]{user.getRestId()});
 		log.info(" backupTodayBill  time1 = "+(t2-t1));
 		log.info(" backupTodayBill  time2 = "+(t3-t2));
 		return "";
@@ -708,7 +708,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 
 	public String backupUserMoney(IData param) throws Exception {
 		User user = (User)param.get("user");
-		String path = GetBean.getContext().getServletContext().getRealPath("/")+"backup\\"+user.getRest_id()+"\\";
+		String path = GetBean.getContext().getServletContext().getRealPath("/")+"backup\\"+user.getRestId()+"\\";
 		File restdoc = new File(path);
 		if(!restdoc.exists()){
 			restdoc.mkdirs();
@@ -716,7 +716,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		String fileName = "custmoney_"+ut.currentFileTime()+".bak";
         File file = new File(path+fileName);
 		List result = jdbcTemplate.queryForList("select * from tf_user where rest_id = ? order by user_type,(0+user_id) ", 
-			new Object[]{ user.getRest_id() });
+			new Object[]{ user.getRestId() });
 		FileWriter fileWriter=new FileWriter(file);
 		for(int i=0;i<result.size();i++){
 			Map cust = (Map)result.get(i);
@@ -735,20 +735,20 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 			Map item = (Map)items.get(i);
 			double cost_f = 0;
 			List cost = jdbcTemplate.queryForList("select * from td_food_cost where rest_id = ? and food_id = ? ",
-				new Object[]{user.getRest_id(),item.get("food_id")});
+				new Object[]{user.getRestId(),item.get("food_id")});
 		    double total = 0;
 			for(int j=0;j<cost.size();j++){
 				Map rel = (Map)cost.get(j);
 				Double count = Double.parseDouble(rel.get("count").toString());
 				List materials = jdbcTemplate.queryForList("select * from td_material where material_id = ? and rest_id = ? ",
-					new Object[]{rel.get("material_id"),user.getRest_id()});
+					new Object[]{rel.get("material_id"),user.getRestId()});
 			    if(materials.size()>0){
 			    	Map material = (Map)materials.get(0);
 			    	ut.log("material="+material);
 			    	double price_m = 0;
 			    	//ut.log(material);
 			    	List cost2 = jdbcTemplate.queryForList("select * from td_material_cost where rest_id = ? and material_id = ? ",
-			    		new Object[]{user.getRest_id(),material.get("material_id")});
+			    		new Object[]{user.getRestId(),material.get("material_id")});
 					if(cost2.size()>0){
 						Map rel2 = (Map)cost2.get(0);
 						List stocks = jdbcTemplate.queryForList("select * from ts_stock where stock_id = ? ",new Object[]{rel2.get("stock_id")});
@@ -769,7 +769,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 			item.put("cost",ut.getDoubleString(cost_f));
 			
 			jdbcTemplate.update("update tf_bill_item set cost = ? , cost_str = ?  where item_id = ? and rest_id = ? ",
-				new Object[]{item.get("cost"),"cost",item.get("item_id"),user.getRest_id()});
+				new Object[]{item.get("cost"),"cost",item.get("item_id"),user.getRestId()});
 		}
 		return "";
 	}
@@ -781,7 +781,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 
 	public String backupSysParam(IData param) throws Exception {
 		User user = (User)param.get("user");
-		String path = GetBean.getContext().getServletContext().getRealPath("/")+"backup\\"+user.getRest_id()+"\\";
+		String path = GetBean.getContext().getServletContext().getRealPath("/")+"backup\\"+user.getRestId()+"\\";
 		File restdoc = new File(path);
 		if(!restdoc.exists()){
 			restdoc.mkdirs();
@@ -789,7 +789,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		String fileName = "table_"+ut.currentFileTime()+".bak";
         File file = new File(path+fileName);
 		List result = jdbcTemplate.queryForList("select * from td_table where rest_id = ? order by 0+table_id ", 
-			new Object[]{ user.getRest_id() });
+			new Object[]{ user.getRestId() });
 		FileWriter fileWriter=new FileWriter(file);
 		for(int i=0;i<result.size();i++){
 			Map cust = (Map)result.get(i);
@@ -802,7 +802,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		fileName = "food_"+ut.currentFileTime()+".bak";
         file = new File(path+fileName);
 		result = jdbcTemplate.queryForList("select * from td_food where rest_id = ? order by food_id ", 
-			new Object[]{ user.getRest_id() });
+			new Object[]{ user.getRestId() });
 		fileWriter=new FileWriter(file);
 		for(int i=0;i<result.size();i++){
 			Map food = (Map)result.get(i);
@@ -815,7 +815,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		fileName = "restinfo_"+ut.currentFileTime()+".bak";
         file = new File(path+fileName);
 		result = jdbcTemplate.queryForList("select * from td_restaurant where rest_id = ? ", 
-			new Object[]{ user.getRest_id() });
+			new Object[]{ user.getRestId() });
 		fileWriter=new FileWriter(file);
 		for(int i=0;i<result.size();i++){
 			Map info = (Map)result.get(i);
@@ -828,7 +828,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		fileName = "restparam_"+ut.currentFileTime()+".bak";
         file = new File(path+fileName);
 		result = jdbcTemplate.queryForList("select * from td_restaurant_para where rest_id = ? ", 
-			new Object[]{ user.getRest_id() });
+			new Object[]{ user.getRestId() });
 		fileWriter=new FileWriter(file);
 		for(int i=0;i<result.size();i++){
 			Map info = (Map)result.get(i);

@@ -54,7 +54,7 @@ public class OperationAction extends BaseController {
 //		log.info(" queryAllTableState  ");
 		User user = this.getSessionUser(request);
 		IData param = new IData();
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		Map result = operationService.queryAllTableState(param);
 		return result;
 	}
@@ -66,10 +66,10 @@ public class OperationAction extends BaseController {
 		log.info(" checkTableState  ");
 		User user = this.getSessionUser(request);
 		String table_id = request.getParameter("table_id");
-		log.info(" table_id = "+table_id+" , rest_id = "+user.getRest_id());
+		log.info(" table_id = "+table_id+" , rest_id = "+user.getRestId());
 		IData param = new IData();
 		param.put("table_id", table_id);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		Map result = operationService.checkTableState(param);
 		return result;
 	}
@@ -82,7 +82,7 @@ public class OperationAction extends BaseController {
 		String bill_id = request.getParameter("bill_id");
 		IData param = new IData();
 		param.put("bill_id", bill_id);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		IData bill = operationService.queryBillById(param);
 		Map result = new HashMap();
@@ -108,7 +108,7 @@ public class OperationAction extends BaseController {
 		IData param = new IData();
 		param.put("table_id", table_id);
 		param.put("nop", nop);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.openTable(param);
 		return result;
@@ -125,7 +125,7 @@ public class OperationAction extends BaseController {
 		IData param = new IData();
 		param.put("bill_id", bill_id);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.addBillItems(param);
 		return result;
@@ -142,7 +142,7 @@ public class OperationAction extends BaseController {
 		IData param = new IData();
 		param.put("bill_id", bill_id);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.addTempFood(param);
 		return result;
@@ -161,7 +161,7 @@ public class OperationAction extends BaseController {
 		param.put("bill_id", bill_id);
 		param.put("count", count);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.cancelFood(param);
 		ut.p(result);
@@ -181,7 +181,7 @@ public class OperationAction extends BaseController {
 		param.put("bill_id", bill_id);
 		param.put("count", count);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.presentFood(param);
 		return result;
@@ -200,7 +200,7 @@ public class OperationAction extends BaseController {
 		param.put("bill_id", bill_id);
 		param.put("count", count);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.derateFood(param);
 		return result;
@@ -219,7 +219,7 @@ public class OperationAction extends BaseController {
 		param.put("bill_id", bill_id);
 		param.put("table_id", count);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.changeTable(param);
 		return result;
@@ -236,7 +236,7 @@ public class OperationAction extends BaseController {
 		IData param = new IData();
 		param.put("bill_id", bill_id);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.startCook(param);
 		return result;
@@ -253,7 +253,7 @@ public class OperationAction extends BaseController {
 		IData param = new IData();
 		param.put("bill_id", bill_id);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.hurryCook(param);
 		return result;
@@ -270,7 +270,7 @@ public class OperationAction extends BaseController {
 		IData param = new IData();
 		param.put("bill_id", bill_id);
 		param.put("item_str", item_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.finishCook(param);
 		return result;
@@ -289,7 +289,7 @@ public class OperationAction extends BaseController {
 		param.put("bill_id", bill_id);
 		param.put("mode_id", mode_id);
 		param.put("recvfee", recvfee);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.payFee(param);
 		return result;
@@ -306,7 +306,7 @@ public class OperationAction extends BaseController {
 		IData param = new IData();
 		param.put("bill_id", bill_id);
 		param.put("reducefee", reducefee);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.reduceFee(param);
 		return result;
@@ -321,7 +321,7 @@ public class OperationAction extends BaseController {
 		log.info(" bill_id = "+bill_id);
 		IData param = new IData();
 		param.put("bill_id", bill_id);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.closeBill(param);
 		return result;
@@ -343,7 +343,7 @@ public class OperationAction extends BaseController {
 		param.put("user_id", user_id);
 		param.put("card_no", card_no);
 		param.put("recvfee", recvfee);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.payByVipCard(param);
 		return result;
@@ -369,7 +369,7 @@ public class OperationAction extends BaseController {
 		param.put("bill_id", bill_id);
 		param.put("user_id", user_id);
 		param.put("recvfee", recvfee);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.payByCreditUser(param);
 		return result;
@@ -384,7 +384,7 @@ public class OperationAction extends BaseController {
 		String bill_id = request.getParameter("bill_id");
 		IData param = new IData();
 		param.put("bill_id", bill_id);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.reopenBill(param);
 		return result;
@@ -402,7 +402,7 @@ public class OperationAction extends BaseController {
 //			e.printStackTrace();
 //		}
 		IData param = new IData();
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = operationService.finishToday(param);
 		return result;

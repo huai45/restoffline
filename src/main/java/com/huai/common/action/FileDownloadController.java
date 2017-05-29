@@ -47,7 +47,7 @@ public class FileDownloadController extends BaseController {
 		String sql_category = " select distinct category from td_food where rest_id = ? order by category desc ";
 		User user = this.getSessionUser(request);
 		JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{ user.getRest_id() });
+		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{ user.getRestId() });
 		try {
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
 			String fileName = "菜品类别表.txt";
@@ -78,7 +78,7 @@ public class FileDownloadController extends BaseController {
 		    " from td_food a where a.rest_id = ?  order by a.FOOD_ID ";
 		User user = this.getSessionUser(request);
 		JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{ user.getRest_id() });
+		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{ user.getRestId() });
 		Map categoryMap = new HashMap();
 		for(int i=0;i<category_list.size();i++){
 			String index = i>9?""+(i+1):"0"+(i+1);
@@ -86,7 +86,7 @@ public class FileDownloadController extends BaseController {
 			categoryMap.put(category.get("CATEGORY").toString(),index);
 		}
 		ut.log("categoryMap:"+categoryMap);
-		List food_list = jdbcTemplate.queryForList(sql_food, new Object[]{ user.getRest_id() });
+		List food_list = jdbcTemplate.queryForList(sql_food, new Object[]{ user.getRestId() });
 		try {
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
 			String fileName = "菜品表.txt";
@@ -142,7 +142,7 @@ public class FileDownloadController extends BaseController {
 		sql = sql +  " and OPER_TIME >= ? and OPER_TIME <= ? "+
 		        " group by food_name ,unit , category order by sum(count) desc ";
 		ut.log(" sql :" +sql);
-		List datas = jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id(),param.get("start_date")+" 00:00:00",param.get("end_date")+" 23:59:59"});
+		List datas = jdbcTemplate.queryForList(sql,new Object[]{user.getRestId(),param.get("start_date")+" 00:00:00",param.get("end_date")+" 23:59:59"});
 		Map categoryMap = new HashMap();
 		for(int i=0;i<datas.size();i++){
 			Map data = (Map)datas.get(i);
@@ -263,7 +263,7 @@ public class FileDownloadController extends BaseController {
     		+ " group by c.floor1 , a.category order by a.category ,c.floor1  )) tmp "
     		+"  order by tmp.groups,tmp.floor ";
 		ut.log(" sql :" +sql);
-		List datas =jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id(),user.getRest_id(),user.getRest_id(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRest_id(),user.getRest_id(),user.getRest_id(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
+		List datas =jdbcTemplate.queryForList(sql,new Object[]{user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
 		
 		ut.log(" datas :" +datas.size());
 		HSSFWorkbook wb = new HSSFWorkbook();
@@ -329,7 +329,7 @@ public class FileDownloadController extends BaseController {
 	          +"order by tmp.groups ";
 	            
 	           ut.log(" sql :" +sql2);
-	   		   List datas2 = jdbcTemplate.queryForList(sql2,new Object[]{user.getRest_id(),user.getRest_id(),user.getRest_id(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRest_id(),user.getRest_id(),user.getRest_id(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
+	   		   List datas2 = jdbcTemplate.queryForList(sql2,new Object[]{user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
 	   		   ut.log(" datas2 :" +datas2.size());
 	            
 	          //创建第二分页 begin
@@ -432,7 +432,7 @@ public class FileDownloadController extends BaseController {
                     +"   group by c.floor1 , a.category ,a.FOOD_NAME )) tmp "
                     +"order by tmp.floors asc,tmp.groups asc, tmp.money desc,tmp.fcount desc,tmp.fname asc ";
 		ut.log(" sql :" +sql);
-		List datas =jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id(),user.getRest_id(),user.getRest_id(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRest_id(),user.getRest_id(),user.getRest_id(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
+		List datas =jdbcTemplate.queryForList(sql,new Object[]{user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
 		
 		Map floorsMap = new Hashtable();
 		for(int i=0;i<datas.size();i++){

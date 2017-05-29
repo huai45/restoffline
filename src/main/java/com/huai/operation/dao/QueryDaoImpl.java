@@ -17,13 +17,13 @@ public class QueryDaoImpl extends BaseDao implements QueryDao {
 	public IData queryCustById(IData param) {
 		User user = (User)param.get("user");
 		
-		String rest_id = user.getRest_id();
-		if(rest_id.equals("mt")){
-			rest_id = "kh";
+		String restId = user.getRestId();
+		if(restId.equals("mt")){
+			restId = "kh";
 		}
 		
-		String sql = " select * from tf_user where user_id = ? and rest_id = ? ";
-		List data = jdbcTemplate.queryForList(sql,new Object[]{ param.getString("user_id") , rest_id });
+		String sql = " select * from tf_user where user_id = ? and restId = ? ";
+		List data = jdbcTemplate.queryForList(sql,new Object[]{ param.getString("user_id") , restId });
 		if(data.size()>0){
 			return new IData((Map)data.get(0));
 		}
@@ -33,13 +33,13 @@ public class QueryDaoImpl extends BaseDao implements QueryDao {
 	public IData queryCustByCardNo(IData param) {
 		User user = (User)param.get("user");
 		
-		String rest_id = user.getRest_id();
-		if(rest_id.equals("mt")){
-			rest_id = "kh";
+		String restId = user.getRestId();
+		if(restId.equals("mt")){
+			restId = "kh";
 		}
 		
-		String sql = " select * from tf_user where card_no = ? and rest_id = ? and user_type = 'C'  ";
-		List data = jdbcTemplate.queryForList(sql,new Object[]{ param.getString("card_no") , rest_id });
+		String sql = " select * from tf_user where card_no = ? and restId = ? and user_type = 'C'  ";
+		List data = jdbcTemplate.queryForList(sql,new Object[]{ param.getString("card_no") , restId });
 		if(data.size()>0){
 			return new IData((Map)data.get(0));
 		}
@@ -49,18 +49,18 @@ public class QueryDaoImpl extends BaseDao implements QueryDao {
 	public List queryCustList(IData param) {
 		User user = (User)param.get("user");
 		
-		String rest_id = user.getRest_id();
-		if(rest_id.equals("mt")){
-			rest_id = "kh";
+		String restId = user.getRestId();
+		if(restId.equals("mt")){
+			restId = "kh";
 		}
 		
 		List data = null;
-		String sql = " select * from tf_user where rest_id = ? and user_type = ? order by  user_id ";
+		String sql = " select * from tf_user where restId = ? and user_type = ? order by  user_id ";
 		if(param.has("user_type")){
-			data = jdbcTemplate.queryForList(sql,new Object[]{ user.getRest_id(),param.get("user_type") });
+			data = jdbcTemplate.queryForList(sql,new Object[]{ user.getRestId(),param.get("user_type") });
 		}else{
-			data = jdbcTemplate.queryForList(" select * from tf_user where rest_id = ? order by  user_id",
-				new Object[]{ rest_id });
+			data = jdbcTemplate.queryForList(" select * from tf_user where restId = ? order by  user_id",
+				new Object[]{ restId });
 		}
 		return data;
 	}

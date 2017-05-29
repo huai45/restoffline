@@ -66,7 +66,7 @@ public class CustAction extends BaseController {
 		param.put("phone", phone );
 		param.put("credit", credit );
 		param.put("remark", remark==null?"":remark );
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		Map result = custService.addCreditUser(param);
 		return result;
@@ -93,7 +93,7 @@ public class CustAction extends BaseController {
 		param.put("phone", phone );
 		param.put("credit", credit );
 		param.put("remark", remark==null?"":remark );
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		Map result = custService.updateCreditUser(param);
 		return result;
@@ -122,7 +122,7 @@ public class CustAction extends BaseController {
 		IData param = new IData();
 		param.put("user_id", user_id );
 		param.put("recvfee", recvfee );
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		Map result = custService.payfeeForCredit(param);
 		return result;
@@ -140,7 +140,7 @@ public class CustAction extends BaseController {
 		}
 		IData param = new IData();
 		param.put("query_str", query_str.trim() );
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		Map result = custService.queryVipCardList(param);
 		return result;
@@ -172,7 +172,7 @@ public class CustAction extends BaseController {
 		param.put("phone", phone );
 		param.put("money", money );
 		param.put("remark", remark );
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		Map result = custService.addVipCard(param);
 		return result;
@@ -198,7 +198,7 @@ public class CustAction extends BaseController {
 		param.put("custname", custname );
 		param.put("phone", phone );
 		param.put("remark", remark==null?"":remark );
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		Map result = custService.updateVipCard(param);
 		return result;
@@ -227,7 +227,7 @@ public class CustAction extends BaseController {
 		IData param = new IData();
 		param.put("user_id", user_id );
 		param.put("recvfee", recvfee );
-		param.put("rest_id", user.getRest_id());
+		param.put("restId", user.getRestId());
 		param.put("user", user);
 		Map result = custService.payfeeForVipCard(param);
 		return result;

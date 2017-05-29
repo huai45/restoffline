@@ -56,20 +56,20 @@ public class LoginController extends BaseController {
 					log.info("用户名或密码错误");
 				} else {
 					IData param = new IData();
-					param.put("rest_id", user.getRest_id());
+					param.put("rest_id", user.getRestId());
 					IData info = commonService.queryRestInfo(param);
 					IData p = commonService.queryRestParam(param);
 					user.setInfo(info);
 					user.setParam(p);
 					setSessionUser(request, user);
 					log.info("登录成功");
-					if(user.getRole_id().equals("2")){
+					if(user.getRestId().equals("2")){
 						return new ModelAndView(new RedirectView("/operation/loading.html"));
 					}
-					if(user.getRole_id().equals("3")){
+					if(user.getRestId().equals("3")){
 						return new ModelAndView(new RedirectView("/monitor/loading.html"));
 					}
-					if(user.getRole_id().equals("4")){
+					if(user.getRestId().equals("4")){
 						return new ModelAndView(new RedirectView("/query/index.html"));
 					}
 					return new ModelAndView(new RedirectView("/index.html"));
@@ -77,10 +77,10 @@ public class LoginController extends BaseController {
 			}
 		} else {
 			log.info("用户已经登录");
-			if(user.getRole_id().equals("2")){
+			if(user.getRestId().equals("2")){
 				return new ModelAndView(new RedirectView("/operation/loading.html"));
 			}
-			if(user.getRole_id().equals("3")){
+			if(user.getRestId().equals("3")){
 				return new ModelAndView(new RedirectView("/monitor/loading.html"));
 			}
 			return new ModelAndView(new RedirectView("/index.html"));

@@ -60,7 +60,7 @@ public class MonitorAction extends BaseController {
 		log.info(" queryAllBill  ");
 		User user = this.getSessionUser(request);
 		IData param = new IData();
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		List bills = monitorService.queryAllBill(param);
 		List items = monitorService.queryAllBillItem(param);
@@ -80,7 +80,7 @@ public class MonitorAction extends BaseController {
 		ut.p("submit_str:"+submit_str);
 		IData param = new IData();
 		param.put("submit_str", submit_str);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = monitorService.sendSubmit(param);
 		return result;
@@ -94,7 +94,7 @@ public class MonitorAction extends BaseController {
 		log.info(" queryTableBill  table_id = "+table_id);
 		IData param = new IData();
 		param.put("table_id", table_id);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = monitorService.queryTableBill(param);
     	return result;
@@ -107,7 +107,7 @@ public class MonitorAction extends BaseController {
 		log.info(" querybillformonitor  bill_id = "+bill_id);
 		IData param = new IData();
 		param.put("bill_id", bill_id);
-		param.put("rest_id", user.getRest_id());
+		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		IData bill = null;
 		if(!ut.isEmpty(bill_id)){
