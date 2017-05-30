@@ -6,6 +6,7 @@
         xmlns:aop="http://www.springframework.org/schema/aop"
         xmlns:tx="http://www.springframework.org/schema/tx"
         xmlns:util="http://www.springframework.org/schema/util"
+        xmlns:task="http://www.springframework.org/schema/task"
         xsi:schemaLocation="http://www.springframework.org/schema/beans   
            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
            http://www.springframework.org/schema/aop
@@ -15,7 +16,9 @@
            http://www.springframework.org/schema/util
            http://www.springframework.org/schema/util/spring-util-4.0.xsd
            http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+           http://www.springframework.org/schema/task
+           http://www.springframework.org/schema/task/spring-task-4.0.xsd">
           
        <!-- 自动扫描bean，把作了注解的类转换为bean -->  
       <context:annotation-config />
@@ -24,6 +27,10 @@
 		  <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
       -->
 	  </context:component-scan>
+
+      <task:annotation-driven scheduler="pqScheduler" mode="proxy"/>
+      <task:scheduler id="pqScheduler" pool-size="10"/>
+
 
       <aop:aspectj-autoproxy />
       <import resource="spring-mysql.xml"/>

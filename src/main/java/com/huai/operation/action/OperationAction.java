@@ -51,8 +51,9 @@ public class OperationAction extends BaseController {
 	@RequestMapping(value = "/queryAllTableState.html")
 	@ResponseBody
     public Object queryAllTableState(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-//		log.info(" queryAllTableState  ");
+
 		User user = this.getSessionUser(request);
+		log.info(" queryAllTableState  user = "+user);
 		IData param = new IData();
 		param.put("rest_id", user.getRestId());
 		Map result = operationService.queryAllTableState(param);

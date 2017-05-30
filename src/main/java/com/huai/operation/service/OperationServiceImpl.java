@@ -726,7 +726,7 @@ public class OperationServiceImpl implements OperationService {
 		if(checkFinish(param)){
 			try{
 				// 1. 计算今日营收数据  入统计结果表
-				operationDao.calculateData(param);
+//				operationDao.calculateData(param);
 				// 2. 备份账单数据，清空账单表内数据
 				operationDao.backupTodayBill(param);
 				// 3. 备份打印数据，清空打印日志表内数据
