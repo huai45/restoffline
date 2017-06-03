@@ -18,9 +18,6 @@ import com.huai.common.util.*;
 public class PrintServiceImpl implements PrintService {
 
 	private static final Logger log = Logger.getLogger(PrintServiceImpl.class);
-	
-	@Resource(name="baseDao")
-	public BaseDao baseDao;
 
 	@Resource(name="printDao")
 	public PrintDao printDao;

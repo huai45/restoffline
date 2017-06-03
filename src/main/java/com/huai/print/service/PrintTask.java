@@ -2,6 +2,7 @@ package com.huai.print.service;
 
 import com.huai.common.util.ut;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -15,29 +16,25 @@ public class PrintTask {
 
     private static final Logger log = Logger.getLogger(PrintTask.class);
 
-    @Resource(name="printService")
+    @Autowired
     public PrintService printService;
+
+    @Autowired
+    public PrintFoodService printFoodService;
+
+    @Autowired
+    public PrintBillService printBillService;
 
     @Scheduled(cron = "* * * * * *")
     public void printBill(){
         System.out.println(" printBill  time = "+ ut.currentTime());
-        // 1. 查询待打印账单
-
-        // 2. 打印账单
-
-        // 3. 更新账单打印状态
-
-
+        printBillService.printOneBill();
     }
 
     @Scheduled(cron = "* * * * * *")
     public void printFood(){
         System.out.println(" printFood  time = "+ ut.currentTime());
-        // 1. 查询待打印菜品
-
-        // 2. 打印菜品
-
-        // 3. 更新菜品打印状态
+        printFoodService.printOneFood();
     }
 
 }

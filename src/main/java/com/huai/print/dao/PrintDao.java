@@ -15,6 +15,9 @@ public interface PrintDao {
 	List queryBillPrintList(IData param);
 
 	IData quqryPrintRestInfo(IData bill);
-	
+
+	public boolean printBillFinish(String printId ,String status);
+
+	public boolean printFoodFinish(String printId ,String status);
 	
 }

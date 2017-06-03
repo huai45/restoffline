@@ -51,8 +51,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 	}
 	
 	public IData queryBillByBillId(String bill_id, String rest_id) {
-		List bills = jdbcTemplate.queryForList("select * from tf_bill where bill_id = ? and rest_id = ? order by bill_id desc ", 
-				new Object[]{ bill_id,rest_id });
+		List bills = jdbcTemplate.queryForList("select * from tf_bill where bill_id = ?  ", new Object[]{ bill_id });
 		if(bills.size()==0){
 			return null;
 		}
@@ -649,7 +648,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 	}
 
 	public IData queryBillInfo(IData bill) {
-		if(bill!=null&&bill.containsKey("BILL_ID")&&bill.containsKey("REST_ID")){
+		if(bill!=null&&bill.containsKey("BILL_ID")){
 			List items =  this.queryBillItemByBillId(bill.getString("BILL_ID"), bill.getString("REST_ID"));
 			List fees =   this.queryBillFeeByBillId(bill.getString("BILL_ID"), bill.getString("REST_ID"));
 			bill.put("FEELIST", fees);
