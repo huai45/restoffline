@@ -15,5 +15,8 @@ public interface PrintService {
 	public Map queryPrintBillInfoByTable(IData param);
 
 	public Map queryPrintBillInfoByBillId(IData param);
-	
+
+	public Map printBill(String bill_id);
+
+    Map printBillByBillId(String bill_id);
 }

@@ -139,7 +139,52 @@ public class PrintServiceImpl implements PrintService {
 //		log.info("bill:"+bill);
 		return result;
 	}
-	
+
+	@Override
+	public Map printBill(String table_id) {
+		Map result = new HashMap();
+		result.put("success", "true");
+		IData param = new IData();
+		IData bill = operationDao.queryBillByTable(null,table_id);
+
+		log.info(" printBill  bill = "+bill);
+
+		param.put("table_id", bill.getString("table_id"));
+		Map table = tableDao.queryTableById(null,table_id);
+
+		log.info(" printBill  table = "+table);
+		param.put("bill_id", bill.get("BILL_ID"));
+		param.put("printer", table.get("PRINTER"));
+		int n = printDao.addPrintBillLog(param);
+		if(n == 0){
+			result.put("success", "false");
+			result.put("msg", "打印账单异常");
+		}
+		return result;
+	}
+
+	@Override
+	public Map printBillByBillId(String bill_id) {
+		Map result = new HashMap();
+		result.put("success", "true");
+		IData param = new IData();
+		IData bill = operationDao.queryBillByBillId(bill_id,null);
+		log.info(" printBill  bill = "+bill);
+
+		param.put("table_id", bill.getString("TABLE_ID"));
+		Map table = tableDao.queryTableById(null,bill.getString("TABLE_ID"));
+
+		log.info(" printBill  table = "+table);
+		param.put("bill_id", bill.get("BILL_ID"));
+		param.put("printer", table.get("PRINTER"));
+		int n = printDao.addPrintBillLog(param);
+		if(n == 0){
+			result.put("success", "false");
+			result.put("msg", "打印账单异常");
+		}
+		return result;
+	}
+
 
 }
 

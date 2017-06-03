@@ -37,12 +37,12 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		" ( (select nextval('print_id')) ,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? ) ";
 
 	public List queryTableBills(String rest_id, String table_id) {
-		List bills = jdbcTemplate.queryForList("select * from tf_bill where table_id = ? and rest_id = ? order by bill_id desc ", new Object[]{ table_id,rest_id });
+		List bills = jdbcTemplate.queryForList("select * from tf_bill where table_id = ?  order by bill_id desc ", new Object[]{ table_id });
 		return bills;
 	}
 	
 	public IData queryBillByTable(String rest_id, String table_id) {
-		List bills = jdbcTemplate.queryForList("select * from tf_bill where table_id = ? and rest_id = ? and pay_type = '0' order by bill_id desc ", new Object[]{ table_id,rest_id });
+		List bills = jdbcTemplate.queryForList("select * from tf_bill where table_id = ? and pay_type = '0' order by bill_id desc ", new Object[]{ table_id });
 		if(bills.size()==0){
 			return null;
 		}

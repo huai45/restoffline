@@ -15,7 +15,7 @@ import com.huai.common.util.*;
 public class TableDaoImpl extends BaseDao implements TableDao {
 
 	public IData queryTableById(String rest_id, String table_id) {
-		List list = jdbcTemplate.queryForList("select * from td_table where table_id = ? and rest_id = ? ", new Object[]{ table_id,rest_id });
+		List list = jdbcTemplate.queryForList("select * from td_table where table_id = ?  ", new Object[]{ table_id  });
 		IData table = null;
 		if(list.size()>0) {
         	table = new IData((Map)list.get(0));

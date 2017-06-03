@@ -36,7 +36,7 @@ public class PrintBillServiceImpl implements PrintBillService {
         if(bills.size()==0){
         	return false;
 		}
-		IData bill = (IData)bills.get(0);
+		IData bill = new IData((Map)bills.get(0));
         String printId = bill.getString("PRINT_ID");
 		String printer = bill.getString("PRINTER");
 		bill = operationDao.queryBillByBillId(bill.getString("BILL_ID"),null);
@@ -50,6 +50,7 @@ public class PrintBillServiceImpl implements PrintBillService {
 		boolean result = printBill(bill);
 		//3. 更新打印结果
 		if(result){
+			log.info(" 打印账单成功 bill = "+bill);
 			printDao.printBillFinish(printId,"1");
 		}else{
 			printDao.printBillFinish(printId,"9");
@@ -61,12 +62,13 @@ public class PrintBillServiceImpl implements PrintBillService {
 	private boolean printBill(IData bill) {
 		log.info(" 正在打印账单 bill = "+bill);
 		boolean result = false;
-		if(bill.getString("PAY_TYPE").equals("1")){
-			result = printFinishBill(bill);
-		}else{
-			result = printQueryBill(bill);
-		}
-		return result;
+//		if(bill.getString("PAY_TYPE").equals("1")){
+//			result = printFinishBill(bill);
+//		}else{
+//			result = printQueryBill(bill);
+//		}
+		return true;
+//		return result;
 	}
 
 	/**

@@ -1,22 +1,19 @@
 package com.huai.print.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.huai.common.domain.User;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import com.huai.common.dao.BaseDao;
 import com.huai.common.domain.IData;
-import com.huai.common.domain.User;
 import com.huai.common.util.*;
 
 @Component("printDao")
 public class PrintDaoImpl extends BaseDao implements PrintDao {
+
+	private static final Logger log = Logger.getLogger(PrintDaoImpl.class);
 
 	public IData queryRestByAppId(String appid) {
 		List result = jdbcTemplate.queryForList("select * from td_restaurant where appid = ? ", new Object[]{ appid });
@@ -46,6 +43,27 @@ public class PrintDaoImpl extends BaseDao implements PrintDao {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public int addPrintBillLog(IData param) {
+		User user = new User();
+		if(param.containsKey("user")&&param.get("user")!=null){
+			user = (User)param.get("user");
+		}else{
+			user.setStaffId("");
+			user.setStaffname("");
+		}
+		log.info(" addPrintBillLog  user = "+user);
+		String print_sql = "insert into tf_print_bill_log " +
+				" (PRINT_ID,STATE,PRINTER,BILL_ID,OPER_TIME,OPER_STAFF_ID,OPER_STAFF_NAME)  values ( ?,'0',?,?,?,?,?) ";
+		String print_id = getNewID("print_id");
+		log.info(" addPrintBillLog  print_id = "+print_id);
+		log.info(" addPrintBillLog  param = "+param);
+
+		int n = jdbcTemplate.update(print_sql , new Object[]{print_id,param.get("printer"),
+				param.get("bill_id"),ut.currentTime(),user.getStaffId(),user.getStaffname()});
+		return n;
 	}
 
 	public List queryBillPrintList(final IData param) {

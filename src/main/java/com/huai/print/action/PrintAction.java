@@ -32,6 +32,15 @@ public class PrintAction extends BaseController {
     public ModelAndView loadingPage(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
     	return new ModelAndView("/print/index_print");
     }
+
+	@RequestMapping(value = "/printBill")
+	@ResponseBody
+	public Object printBill(HttpServletRequest request, HttpServletResponse response)  {
+		String table_id = request.getParameter("table_id");
+		log.info(" printBill  table_id = "+table_id);
+		Map result = printService.printBill(table_id);
+		return result;
+	}
 	
 	@RequestMapping(value = "/queryfoodprint.html")
 	@ResponseBody

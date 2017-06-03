@@ -5,9 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+
+import com.huai.print.service.PrintService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +43,9 @@ public class OperationServiceImpl implements OperationService {
     
 	@Resource(name="queryDao")
 	public QueryDao queryDao;
-	
-	
+
+	@Autowired
+	public PrintService printService;
 	
 	
 	public Map checkTableState(IData param) {
@@ -583,6 +587,9 @@ public class OperationServiceImpl implements OperationService {
 		        }
 				result.put("bill", bill);
 				result.put("msg", "封单成功！");
+
+				printService.printBillByBillId(bill.getString("BILL_ID"));
+
 			}else{
 				result.put("success", "false");
 				result.put("msg", bill.get("REMARK"));

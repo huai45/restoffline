@@ -27,13 +27,13 @@ public class PrintTask {
 
     @Scheduled(cron = "* * * * * *")
     public void printBill(){
-        System.out.println(" printBill  time = "+ ut.currentTime());
+//        System.out.println(" printBill  time = "+ ut.currentTime());
         printBillService.printOneBill();
     }
 
     @Scheduled(cron = "* * * * * *")
     public void printFood(){
-        System.out.println(" printFood  time = "+ ut.currentTime());
+//        System.out.println(" printFood  time = "+ ut.currentTime());
         printFoodService.printOneFood();
     }
 

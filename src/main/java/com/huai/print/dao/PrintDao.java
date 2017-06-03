@@ -19,5 +19,6 @@ public interface PrintDao {
 	public boolean printBillFinish(String printId ,String status);
 
 	public boolean printFoodFinish(String printId ,String status);
-	
+
+    int addPrintBillLog(IData param);
 }

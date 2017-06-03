@@ -771,33 +771,6 @@ function closeBill(bill_id,table_id) {
                 Ext.getCmp('viewport').getLayout().setActiveItem('deskpage');
                 $("#smart_str")[0].focus();
                 $("#table_icon_"+table_id).removeClass("busy");
-                if(obj.bill==""){
-                    return false;
-                }
-                var data = {};
-			    data.type="printbill";
-			    data.bill = obj.bill;
-			    data.bill.PRINTER = default_printer;
-			    var socket = new WebSocket(socketurl); 
-				    // 打开Socket 
-					socket.onopen = function(event) { 
-						// 发送一个初始化消息
-						socket.send(JSON.stringify(data)); 
-						// 监听消息
-						socket.onmessage = function(event) { 
-						    var card_no = event.data;
-						    socket.close();
-					}; 
-					// 监听Socket的关闭
-					socket.onclose = function(event) { 
-					    //alert("Client notified socket has closed");
-					};
-					socket.onerror = function(event) { 
-					    //alert(" onerror  ");
-					    socket.close();
-					};
-			    };
-			    
 			}else{
 			    alert(obj.msg);	
 			}
@@ -1064,34 +1037,13 @@ function printBill(table_id){
         return false;
     }
     ajax_flag = 1;
-    $.post("/localprint/querybillinfobytable.html", {
+    $.post("/localprint/printBill.html", {
 	        table_id : table_id
 	    }, function (result) {
 			var obj = $.parseJSON(result);
-			ajax_flag = 0;   
+			ajax_flag = 0;
 			if (obj.success == "true") {
-			    var data = {};
-			    data.type="printbill";
-			    data.bill = obj.bill;
-			    data.bill.PRINTER = default_printer;
-			    var socket = new WebSocket(socketurl); 
-				    // 打开Socket 
-					socket.onopen = function(event) { 
-						// 发送一个初始化消息
-						socket.send(JSON.stringify(data)); 
-						// 监听消息
-						socket.onmessage = function(event) { 
-						    socket.close();
-					}; 
-					// 监听Socket的关闭
-					socket.onclose = function(event) { 
-					    //alert("Client notified socket has closed");
-					};
-					socket.onerror = function(event) { 
-					    //alert(" onerror  ");
-					    //socket.close();
-					};
-			    };
+
 			}else{
 			    alert(obj.msg);
 			}
