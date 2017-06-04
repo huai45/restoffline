@@ -217,5 +217,4 @@ public class PrintFoodServiceImpl implements PrintFoodService {
 		return str;
 	}
 
-
 }
