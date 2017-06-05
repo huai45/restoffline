@@ -36,8 +36,26 @@ public class TestAction {
     public Object testjson(HttpServletRequest request, HttpServletResponse response,
     		ModelMap modelMap)  {
 		log.info(" testjson  jdbcTemplate2 = "+jdbcTemplate2);
+
+
+
+		//
+
+
 		List tables = jdbcTemplate2.queryForList(" SELECT name FROM sqlite_master WHERE type='table' ");
 		log.info(" testjson  tables = "+tables.size());
+		if(tables.size()==0){
+			log.info(" create table user  ");
+			jdbcTemplate2.update(" create table user (name varchar(20), salary int); ");
+		}
+        for(int i=0;i<tables.size();i++){
+        	Map table = (Map)tables.get(i);
+			if("user".equals(table.get("name"))){
+				log.info(" add a  user ");
+				jdbcTemplate2.update(" insert into user (name ,  salary ) values ('haha',20); ");
+			}
+		}
+
         Map map = new HashMap();
         map.put("succes", true);
         map.put("msg", "hello");
