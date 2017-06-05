@@ -5,6 +5,13 @@ import java.util.Map;
 
 public class CC
 {
+
+	public static final String ROLE_ADMIN = "1";
+	public static final String ROLE_CASHIER = "2";
+	public static final String ROLE_MONITOR = "3";
+	public static final String ROLE_QUERY = "4";
+
+
     public static final String USER_CONTEXT = "user";
     public static final int PAGE_SIZE = 3;
     public static final Map PAY_MODE = new HashMap();

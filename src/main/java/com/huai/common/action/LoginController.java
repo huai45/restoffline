@@ -35,58 +35,48 @@ public class LoginController extends BaseController {
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
     	User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
 		Map<String, Object> model_return = new HashMap<String, Object>();
-//		log.info(" login.action , user = "+user);
 		setSessionUser(request, null);
-		String nextPage = "";
+		String nextPage = "/login/login";
 		if (user == null) {
 			String staff_id = request.getParameter("username");
 			String pwd = request.getParameter("password");
-			log.info("userName: " + staff_id + "\tPassword: " + pwd);
+			log.info("userName: " + staff_id + "  Password: " + pwd);
 			if (null == staff_id || "".equals(staff_id) || null == pwd || "".equals(pwd)) {
 				// 密码错误
-				nextPage = "/login/login";
 				model_return.put("err_info", "用户名或密码为空");
 				log.info("用户名或密码为空");
-				ut.p(" 1 1");
-			} else {
-				user = userService.getMatchMember(staff_id.trim(), pwd.trim());
-				if (null == user) {
-					nextPage = "/login/login";
-					model_return.put("err_info", "用户名或密码错误");
-					log.info("用户名或密码错误");
-				} else {
-					IData param = new IData();
-					param.put("rest_id", user.getRestId());
-					IData info = commonService.queryRestInfo(param);
-					IData p = commonService.queryRestParam(param);
-					user.setInfo(info);
-					user.setParam(p);
-					setSessionUser(request, user);
-					log.info("登录成功");
-					if(user.getRestId().equals("2")){
-						return new ModelAndView(new RedirectView("/operation/loading.html"));
-					}
-					if(user.getRestId().equals("3")){
-						return new ModelAndView(new RedirectView("/monitor/loading.html"));
-					}
-					if(user.getRestId().equals("4")){
-						return new ModelAndView(new RedirectView("/query/index.html"));
-					}
-					return new ModelAndView(new RedirectView("/index.html"));
-				}
+				return new ModelAndView(nextPage, model_return);
 			}
-		} else {
-			log.info("用户已经登录");
-			if(user.getRestId().equals("2")){
-				return new ModelAndView(new RedirectView("/operation/loading.html"));
+			user = userService.getMatchMember(staff_id.trim(), pwd.trim());
+			if (null == user) {
+				model_return.put("err_info", "用户名或密码错误");
+				log.info("用户名或密码错误");
+				return new ModelAndView(nextPage, model_return);
 			}
-			if(user.getRestId().equals("3")){
-				return new ModelAndView(new RedirectView("/monitor/loading.html"));
-			}
+			IData param = new IData();
+			param.put("rest_id", user.getRestId());
+			IData info = commonService.queryRestInfo(param);
+			IData p = commonService.queryRestParam(param);
+			user.setInfo(info);
+			user.setParam(p);
+		}
+		setSessionUser(request, user);
+		log.info("登录成功 user="+user);
+		if(user.getRoleId().equals(CC.ROLE_ADMIN)){
 			return new ModelAndView(new RedirectView("/index.html"));
 		}
-		ModelAndView mav = new ModelAndView(nextPage, model_return);
-		return mav;
+		if(user.getRoleId().equals(CC.ROLE_CASHIER)){
+			return new ModelAndView(new RedirectView("/operation/loading.html"));
+		}
+		if(user.getRoleId().equals(CC.ROLE_MONITOR)){
+			return new ModelAndView(new RedirectView("/monitor/loading.html"));
+		}
+		if(user.getRoleId().equals(CC.ROLE_QUERY)){
+			return new ModelAndView(new RedirectView("/query/index.html"));
+		}
+		model_return.put("err_info", "无效用户");
+		log.info("无效用户");
+		return new ModelAndView(nextPage, model_return);
     }
     
     @RequestMapping(value = "/index.html")   
@@ -107,7 +97,6 @@ public class LoginController extends BaseController {
     	if(msg==null){
     		msg="";
     	}
-//    	ut.p("msg"+msg);
     	try {
     		msg = new String(msg.getBytes("ISO-8859-1"),"utf-8");
 //			ut.p("msg"+new String(msg.getBytes("utf-8"),"gbk"));
@@ -130,8 +119,6 @@ public class LoginController extends BaseController {
     
     @RequestMapping(value = "/waiting")   
     public ModelAndView waitingPage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap)  {
-    	
-    	log.info(" waiting ");
     	return new ModelAndView("/waiting", modelMap);
     }
     

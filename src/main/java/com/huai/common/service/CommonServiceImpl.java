@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommonServiceImpl implements CommonService {
 
-	@Resource(name="baseDao")
-	public BaseDao baseDao;
-	
 	@Resource(name="commonDao")
 	public CommonDao commonDao;
 
@@ -26,9 +23,6 @@ public class CommonServiceImpl implements CommonService {
 		IData data = commonDao.queryRestInfoById(param);
 		return data;
 	}
-
-
-	
 
 }
 
