@@ -2,7 +2,6 @@
 <%@ page language="java" import="org.springframework.jdbc.core.JdbcTemplate"%>
 <%@ page language="java" import="com.huai.common.domain.*"%>
 <%@ page language="java" import="com.huai.common.util.*"%>
-<%@ page language="java" import="com.huai.common.service.*"%>
 <%@ page language="java" import="net.sf.json.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -12,7 +11,7 @@ User user = (User)session.getAttribute( CC.USER_CONTEXT );
 String rest_id = user.getRestId();
 String today = ut.currentDate();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-CommonService commonService = (CommonService)GetBean.getBean("commonService");
+
 List tables = jdbcTemplate.queryForList(" select * from td_table where rest_id = ? and use_tag= '1' order by 0+table_id ",new Object[]{rest_id});
 ut.p("tables = "+tables.size());
 JSONArray ja = JSONArray.fromObject(tables);
@@ -89,7 +88,7 @@ Ext.onReady(function(){
 
 <div id="deskpage_north" class="" style="display:none;">
     <div id="logo" style="font-family:Microsoft Yahei;">收银台</div>
-    <div id="" style="font-family:Microsoft Yahei;margin-left:50px;float:left;line-height:40px;color:#FFF;font-size:14px;"><%= today %></div>
+    <div  style="font-family:Microsoft Yahei;margin-left:50px;float:left;line-height:40px;color:#FFF;font-size:14px;"><%= today %></div>
     <div id="logoutBtn" class="titleBtn" style="font-family:Microsoft Yahei;">退出</div>
     <div id="username" style="font-family:Microsoft Yahei;"><%= user.getStaffname() %></div>
     <div id="settingBtn" class="titleBtn" style="font-family:Microsoft Yahei;">设置</div>
@@ -100,8 +99,8 @@ Ext.onReady(function(){
 <div id="deskcenter_north" class="" style="display:none;">
 	<div style="margin:20px;margin-left:100px;" >
 		<div style="position:relative;height:46px;width:500px;background:#FFF;">
-			<input id="smart_str" type="text" placeholder="智能搜索" style="position:absolute;height:46px;width:500px;font-size:20px;padding-left:15px;top:0px;left:0px;" autocomplete="off">
-			<image id="smartBtn" src="/app/operation/image/wh.jpg" style="position:absolute;height:42px;width:42px;top:1px;right:2px;cursor:pointer;">
+			<input id="smart_str" type="text" placeholder="智能搜索" style="position:absolute;height:46px;width:500px;font-size:20px;padding-left:15px;top:0px;left:0px;" autocomplete="off" />
+			<image id="smartBtn" src="/app/operation/image/wh.jpg" style="position:absolute;height:42px;width:42px;top:1px;right:2px;cursor:pointer;" />
 		</div>
 	</div>
 </div>
@@ -113,7 +112,7 @@ Ext.onReady(function(){
 
 
 <div id="quicktablepage_center" class="" style="display:none;">
-    <div id="" style="margin-top:30px;margin-left:100px;margin-bottom:30px;color:#EFEFEF;font-size:14px;">
+    <div  style="margin-top:30px;margin-left:100px;margin-bottom:30px;color:#EFEFEF;font-size:14px;">
         找到<span id="table_count" style="padding-left:5px;padding-right:5px;">0</span>个台位
     </div>
     
@@ -137,14 +136,14 @@ Ext.onReady(function(){
     </div>
     
     <div id="buttonList" style="display:none;float:left;margin:40px;margin-top:0px;">
-        <div id="" style="margin-top:10px;margin-left:20px;color:#EFEFEF;font-size:14px;">常用功能<span style="padding-left:30px;">(按空格键切换)</span></div>
+        <div  style="margin-top:10px;margin-left:20px;color:#EFEFEF;font-size:14px;">常用功能<span style="padding-left:30px;">(按空格键切换)</span></div>
 	    <div>
 	        <div id="quickTableInfoBtn" class="bigbutton bigbutton_sel" index="1" >进入</div>
 	        <div id="quickPayCashBtn" class="bigbutton" index="2" >收现金(shift)</div>
 	        <div id="quickPayByCardBtn" class="bigbutton" index="3" >刷卡</div>
         </div>
         <div style="clear:both;margin-top:10px;">&nbsp;</div>
-        <div id="" style="margin-top:10px;margin-left:20px;color:#EFEFEF;font-size:14px;">其他功能</div>
+        <div  style="margin-top:10px;margin-left:20px;color:#EFEFEF;font-size:14px;">其他功能</div>
         <div id="quickPrintBillBtn" class="bigbutton" index="11" >打单(ctrl)</div>
         <div id="quickAddFoodBtn" class="bigbutton" index="12" >加菜(a~z)</div>
         <div id="quickQueryBillBtn" class="bigbutton" index="13" >今日账单</div>
@@ -168,7 +167,7 @@ Ext.onReady(function(){
 	        border-top:solid 1px #C0C0C0;border-bottom:solid 1px #C0C0C0;background:#FFF;">
 		    <form id="open_table_form" >
 	        <input id="open_table_id" type="hidden" value=""  />
-	        <input id="" type="submit" value="" style="position:absolute;top:-9999px;"  />
+	        <input  type="submit" value="" style="position:absolute;top:-9999px;"  />
 		    <input id="open_table_nopinput" type="text" value="" style="width:300px;height:40px;line-height:40px;
 		          font-size:26px;margin:0px;margin-left:20px;border:solid 0px #C0C0C0;" autocomplete="off"/>
 	        </form>
@@ -187,7 +186,7 @@ Ext.onReady(function(){
 <div id="tableinfo_head" style="display:none;">
 	<div id="backBtnFromTableInfo" style="float:right;height:46px;line-height:46px;text-align:center;width:64px;cursor:pointer;color:#FFF;">关闭</div>
     
-    <div id="" class="" style="float:right;height:20px;line-height:20px;margin-top:13px;margin-left:15px;margin-right:5px;width:0px;border-right:solid 1px #FFF;">
+    <div  class="" style="float:right;height:20px;line-height:20px;margin-top:13px;margin-left:15px;margin-right:5px;width:0px;border-right:solid 1px #FFF;">
     </div>
     
     <div id="addTempFoodBtn" onselectstart='return false' style="float:right;height:46px;line-height:46px;text-align:center;width:74px;cursor:pointer;color:#FFF;">
@@ -202,7 +201,7 @@ Ext.onReady(function(){
     
     <div id="allpick" onselectstart='return false' style="float:right;height:46px;line-height:46px;text-align:center;width:64px;cursor:pointer;color:#FFF;">全选</div>
     
-    <div id="" class="" style="float:right;height:20px;line-height:20px;margin-top:13px;margin-left:15px;margin-right:15px;width:0px;border-right:solid 1px #FFF;">
+    <div  class="" style="float:right;height:20px;line-height:20px;margin-top:13px;margin-left:15px;margin-right:15px;width:0px;border-right:solid 1px #FFF;">
     </div>
     
     <div id="changeFoodTableBtn" class="bill_item_menu" onselectstart='return false'>
@@ -228,7 +227,7 @@ Ext.onReady(function(){
         color:#EEE;font-size:16Px;">
         已选定  <span id="select_item_count" ></span>  个菜品 , 请选择 ：
     </div>
-    <div id="" class="bill_item_menu" style="float:right;height:20px;line-height:20px;margin-top:13px;margin-left:15px;margin-right:25px;width:0px;border-right:solid 1px #FFF;">
+    <div  class="bill_item_menu" style="float:right;height:20px;line-height:20px;margin-top:13px;margin-left:15px;margin-right:25px;width:0px;border-right:solid 1px #FFF;">
     </div>
 </div>
 <div id="tableinfo_east" style="display:none;">
@@ -284,7 +283,7 @@ Ext.onReady(function(){
 <!-- 点菜页面    start  -->
 <div id="addfood_head" style="display:none;">
     <div id="backBtnFromAddFood" class="titleBackBtn">返回</div>
-    <div id="" class="titleBackBtn" style="width:300px;margin-left:100px;color:#FFF;">当前桌号 ：<span id="addfood_table_name"></span></div>
+    <div  class="titleBackBtn" style="width:300px;margin-left:100px;color:#FFF;">当前桌号 ：<span id="addfood_table_name"></span></div>
     <div id="all_jiaoqi" class="top_nemu" style="float:right;padding-left:20px;padding-right:20px;height:45px;line-height:45px;
         text-align:center;cursor:pointer;color:#FFF;">全部叫起</div>
     <div id="all_jiqi" class="top_nemu" style="float:right;padding-left:20px;padding-right:20px;height:45px;line-height:45px;
@@ -354,7 +353,7 @@ Ext.onReady(function(){
 	        border-top:solid 1px #C0C0C0;border-bottom:solid 1px #C0C0C0;background:#FFF;">
 		      
 	        <input id="pagefrom" type="hidden" value=""  />
-	        <input id="" type="submit" value="" style="position:absolute;top:-9999px;"  />
+	        <input  type="submit" value="" style="position:absolute;top:-9999px;"  />
 		      <input id="note_input" type="text" value="" style="width:680px;height:40px;line-height:40px;
 		          font-size:26px;margin:0px;margin-left:20px;border:solid 0px #C0C0C0;" />
 	        
@@ -405,7 +404,7 @@ Ext.onReady(function(){
 		    <div style="width:100%;height:58px;line-height:58px;border:solid 0px #C0C0C0;margin-top:10px;
 		        border-top:solid 1px #C0C0C0;border-bottom:solid 1px #C0C0C0;background:#FFF;">
 		        <div style="float:left;font-size:20px;margin-left:20px;height:56px;line-height:56px;">￥</div>
-		        <input id="" type="submit" value="" style="position:absolute;top:-9999px;"  />
+		        <input  type="submit" value="" style="position:absolute;top:-9999px;"  />
 			      <input id="recvfeeinput" type="text" value="" autocomplete="off" style="float:left;width:420px;height:56px;line-height:56px;
 			          font-size:38px;margin:0px;padding-left:10px;border:solid 0px #C0C0C0;" />
 		    </div>
@@ -542,7 +541,7 @@ Ext.onReady(function(){
 
 <!-- 会员卡读卡页面    start  -->
 <div id="selectvip_center" style="display:none;">
-    <image id="backFromSelectVipBtn" src="/app/operation/image/back.png" style="position:absolute;top:30px;left:20px;height:40px;width:40px;cursor:pointer;"/ >
+    <image id="backFromSelectVipBtn" src="/app/operation/image/back.png" style="position:absolute;top:30px;left:20px;height:40px;width:40px;cursor:pointer;" />
     <div style="line-height:60px;width:900px;color:#FFF;font-size:20px;border-bottom:solid #FFF 1px;margin:10px 40px 10px 100px;">
     请选择会员卡用户
     </div>
@@ -594,7 +593,7 @@ Ext.onReady(function(){
 
 <!-- 选择挂账用户页面    start  -->
 <div id="selectcredit_center" style="display:none;">
-    <image id="backFromSelectCreditBtn" src="/app/operation/image/back.png" style="position:absolute;top:30px;left:20px;height:40px;width:40px;cursor:pointer;"/ >
+    <image id="backFromSelectCreditBtn" src="/app/operation/image/back.png" style="position:absolute;top:30px;left:20px;height:40px;width:40px;cursor:pointer;" />
     <div style="line-height:60px;width:900px;color:#FFF;font-size:20px;border-bottom:solid #FFF 1px;margin:10px 40px 10px 100px;">
     请选择挂账用户
     </div>
@@ -646,7 +645,7 @@ Ext.onReady(function(){
 <!-- 今日统计页面    start  -->
 <div id="today_west" style="display:none;">
 	<div style="width:100%;line-height:50px;font-size:18px;color:#CCC;text-align:center;margin-top:50px;">
-	    <image class="backToDeskBtn" src="/app/operation/image/back.png" style="height:40px;width:40px;cursor:pointer;"/ >
+	    <image class="backToDeskBtn" src="/app/operation/image/back.png" style="height:40px;width:40px;cursor:pointer;" />
 	</div>
 	<div style="width:100%;line-height:50px;font-size:18px;color:#CCC;text-align:center;margin-top:60px;">
 	    今日统计
@@ -654,11 +653,11 @@ Ext.onReady(function(){
 	<div  class="leftdirection" style="position:absolute;top:182px;right:0px;"></div> 
 </div>
 <div id="today_center" style="display:none;">
-	<div style="height:40px;line-height:40px;width:800px;font-size:16x;color:#111;margin-top:5px;border-bottom:solid 1px #D3D3D3;">
+	<div style="height:40px;line-height:40px;width:800px;font-size:16px;color:#111;margin-top:5px;border-bottom:solid 1px #D3D3D3;">
   	    <span id="todayPageTodayStr" style="margin-left:0px;font-size:18px;"><%= today %></span>
     </div>
     
-    <div id="" style="float:left;margin-left:0px;margin-top:20px;">
+    <div  style="float:left;margin-left:0px;margin-top:20px;">
         <div style="background:#fff;height:40px;line-height:40px;margin-top:10px;margin-left:0px;position:relative;">
 	        <div style="height:35px;line-height:35px;width:240px;color:#00B2F0;
 	        	  font-size:22px;border-bottom:solid 1px #CCC;">
@@ -687,7 +686,7 @@ Ext.onReady(function(){
     </div>
     
     
-    <div id="" style="float:left;margin-left:30px;margin-top:20px;">
+    <div  style="float:left;margin-left:30px;margin-top:20px;">
         <div style="background:#fff;width:300px;height:40px;line-height:40px;margin-top:10px;margin-left:0px;position:relative;">
 	        <div style="height:35px;line-height:35px;width:240px;color:#8B0195;
 	        	  font-size:22px;border-bottom:solid 1px #CCC;">
@@ -700,14 +699,14 @@ Ext.onReady(function(){
             </table> 
             
             <div id="printCategoryBtn" style="height:40px;margin-top:20px;margin-left:0px;font-size:20px;">
-                <div id="" style="height:35px;line-height:35px;width:240px;
+                <div  style="height:35px;line-height:35px;width:240px;
                  text-align:center;background:#8B0195;color:#fff;cursor:pointer;" >打    印</div>
             </div>
               
         </div>
     </div>
     
-    <div id="" style="float:left;margin-left:30px;margin-top:20px;">
+    <div  style="float:left;margin-left:30px;margin-top:20px;">
         <div style="background:#fff;width:240px;height:40px;line-height:40px;margin-top:10px;margin-left:0px;position:relative;">
 	        <div style="height:35px;line-height:35px;width:240px;color:#094AB2;
 	        	  font-size:22px;border-bottom:solid 1px #CCC;">
@@ -765,7 +764,7 @@ Ext.onReady(function(){
                    <td >￥<span id="package_money">0</span></td>
                </tr>
             </table>   
-            <div id="" style="height:40px;margin-top:20px;margin-left:0px;font-size:20px;">
+            <div  style="height:40px;margin-top:20px;margin-left:0px;font-size:20px;">
                 <div id="printTodayMoneyBtn" style="height:35px;line-height:35px;width:240px;
                  text-align:center;background:#094AB2;color:#fff;cursor:pointer;" >打    印</div>
             </div>
@@ -776,8 +775,6 @@ Ext.onReady(function(){
     
 <div>
 <!-- 今日统计页面    end  -->
-
-
 
 </body>
 </html>
