@@ -1,5 +1,6 @@
 package com.huai.common.action;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.huai.common.util.CopyFileUtil;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -55,6 +57,18 @@ public class TestAction {
 				jdbcTemplate2.update(" insert into user (name ,  salary ) values ('haha',20); ");
 			}
 		}
+
+		log.info(" getResource = "+this.getClass().getResource("/"));
+        String path = this.getClass().getResource("/").getPath();
+        String name1 = path+"/db/hehe.db";
+		String name2 = path+"/db/hehe_bak.db";
+		File dbFile = new File(path+"/db/hehe.db");
+		log.info(" dbFile.getPath() = "+dbFile.getPath());
+		log.info(" dbFile.getAbsolutePath() = "+dbFile.getAbsolutePath());
+		log.info(" dbFile.exists() = "+dbFile.exists());
+
+		boolean result = CopyFileUtil.copyFile(name1,name2,true);
+		log.info(" result = "+result);
 
         Map map = new HashMap();
         map.put("succes", true);
