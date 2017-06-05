@@ -99,10 +99,6 @@ public class LoginController extends BaseController {
     	}
     	try {
     		msg = new String(msg.getBytes("ISO-8859-1"),"utf-8");
-//			ut.p("msg"+new String(msg.getBytes("utf-8"),"gbk"));
-//			ut.p("msg"+new String(msg.getBytes("gbk"),"utf-8"));
-//	    	ut.p("msg"+new String(msg.getBytes("ISO-8859-1"),"gbk"));
-//	    	ut.p("msg"+new String(msg.getBytes("ISO-8859-1"),"utf-8"));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

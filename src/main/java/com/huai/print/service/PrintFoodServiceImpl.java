@@ -3,6 +3,7 @@ package com.huai.print.service;
 import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.List;
 import java.util.Map;
 import com.huai.operation.dao.OperationDao;
@@ -10,11 +11,11 @@ import com.huai.print.dao.PrintDao;
 import com.huai.print.util.PrinterUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import com.huai.common.domain.IData;
 import com.huai.common.util.ut;
+import org.springframework.stereotype.Service;
 
-@Component("printFoodService")
+@Service("printFoodService")
 public class PrintFoodServiceImpl implements PrintFoodService {
 
 	private static final Logger log = Logger.getLogger(PrintFoodServiceImpl.class);
@@ -34,6 +35,7 @@ public class PrintFoodServiceImpl implements PrintFoodService {
 			return false;
 		}
 		IData food = new IData((Map)data.get(0));
+		log.info(" printOneFood    food = "+food);
 		String printId = food.getString("PRINT_ID");
 		food.put("REMARK", "");
 		//2. 打印菜品
@@ -49,10 +51,11 @@ public class PrintFoodServiceImpl implements PrintFoodService {
 
 	private boolean printFood(IData food) {
 		log.info(" 正在打印菜单 food = "+food);
+		String printer = "";
 		try{
 			String print_id = food.getString("PRINT_ID");
 			String barcode = food.getString("BARCODE");
-			String printer = food.getString("PRINTER");
+			printer = food.getString("IP");
 			String table_id = food.getString("TABLE_ID");
 			String food_name = food.getString("FOOD_NAME");
 			String nop = food.getString("NOP");
@@ -83,7 +86,7 @@ public class PrintFoodServiceImpl implements PrintFoodService {
 				printCount = 1;
 				printer = food.getString("PRINTER_BACK");
 			}
-
+			log.info(" 正在打印菜单 printer = "+printer);
 			Socket client = new java.net.Socket();
 			client.connect(new InetSocketAddress( printer , 9100),10*1000);
 			PrintWriter socketWriter = new PrintWriter(client.getOutputStream());
@@ -193,6 +196,9 @@ public class PrintFoodServiceImpl implements PrintFoodService {
 			}
 			client.close();
 			log.info(" -----  打印任务  end    ----  ");
+		}catch (SocketTimeoutException e) {
+			log.error("链接打印机失败 ip : " + printer+",printId = "+food.getString("PRINT_ID"),e);
+			return false;
 		}catch (Exception e) {
 			log.error("打印菜品失败 ITEM_ID = "+food.getString("ITEM_ID")+",printId = "+food.getString("PRINT_ID"),e);
 			return false;
