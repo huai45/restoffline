@@ -6,7 +6,7 @@ import com.huai.common.dao.CommonDao;
 import com.huai.common.domain.IData;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("commonService")
 public class CommonServiceImpl implements CommonService {
 
 	@Resource(name="commonDao")

@@ -2,6 +2,7 @@
 <%@ page language="java" import="org.springframework.jdbc.core.JdbcTemplate"%>
 <%@ page language="java" import="com.huai.common.domain.*"%>
 <%@ page language="java" import="com.huai.common.util.*"%>
+<%@ page language="java" import="com.huai.common.service.*"%>
 <%@ page language="java" import="net.sf.json.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -11,7 +12,6 @@ User user = (User)session.getAttribute( CC.USER_CONTEXT );
 String rest_id = user.getRestId();
 String today = ut.currentDate();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-
 List tables = jdbcTemplate.queryForList(" select * from td_table where rest_id = ? and use_tag= '1' order by 0+table_id ",new Object[]{rest_id});
 ut.p("tables = "+tables.size());
 JSONArray ja = JSONArray.fromObject(tables);
