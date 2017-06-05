@@ -130,7 +130,6 @@ public class LoginController extends BaseController {
     		return new ModelAndView("/waiting", modelMap);
     	}
     	return new ModelAndView(page, modelMap);
-        	
     }
     
 }
