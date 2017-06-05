@@ -28,9 +28,6 @@ public class UserServiceImpl implements UserService {
 	public User getMatchMember(String staff_id, String pwd) {
 		User user = staffRepository.checkUserLogin(staff_id,pwd);
 		log.info(" staffRepository     user = "+user);
-		log.info(" staffRepository     getRestId = "+user.getRestId());
-		log.info(" staffRepository     getStaffname = "+user.getStaffname());
-
 //		List result = baseDao.jdbcTemplate.queryForList(" select * from td_staff where staff_id = ? and password = ? ",new Object[]{staff_id,pwd});
 //		if(result.size()==0){
 //			return null;
