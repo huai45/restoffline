@@ -3,10 +3,10 @@ package com.huai.common.action;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +25,10 @@ public class LoginController extends BaseController {
 
 	private static final Logger log = Logger.getLogger(LoginController.class);
 	
-	@Resource(name="userService")
+	@Autowired
 	public UserService userService;
-	
-	@Resource(name="commonService")
+
+	@Autowired
 	public CommonService commonService;
 	
     @RequestMapping(value = "/login.action")   

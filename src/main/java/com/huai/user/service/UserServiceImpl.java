@@ -1,26 +1,15 @@
 package com.huai.user.service;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import com.huai.common.action.LoginController;
 import com.huai.user.dao.StaffRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.huai.common.dao.BaseDao;
 import com.huai.common.domain.User;
+import org.springframework.stereotype.Service;
 
-@Component("userService")
+@Service
 public class UserServiceImpl implements UserService {
 
 	private static final Logger log = Logger.getLogger(UserServiceImpl.class);
-
-	@Resource(name="baseDao")
-	public BaseDao baseDao;
 
 	@Autowired
 	StaffRepository staffRepository;
