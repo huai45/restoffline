@@ -771,10 +771,7 @@ Ext.onReady(function(){
             
         </div>
     </div>
-    
-    
-<div>
+</div>
 <!-- 今日统计页面    end  -->
-
 </body>
 </html>
