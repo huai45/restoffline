@@ -631,5 +631,22 @@ public class ut {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static String fixMumber(String str) {
+//		String str = "er34sd43.re340";
+		String tmpStr="";
+		if(str.length()>0){
+			for(int i=0;i<str.length();i++){
+				String tmp=""+str.charAt(i);
+				if((tmp).matches("[0-9.]")){
+					tmpStr+=tmp;
+				}
+			}
+		}
+		if(isEmpty(tmpStr)){
+			tmpStr = "0";
+		}
+		return tmpStr;
+	}
 	
 }

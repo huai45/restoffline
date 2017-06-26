@@ -137,7 +137,7 @@ public class OperationServiceImpl implements OperationService {
 		        JSONObject item = jsonArr.getJSONObject(i); 
 		        param.put("food_id", item.getString("food_id"));
 		        IData food = operationDao.queryFoodById(param);
-		        food.put("COUNT", item.getString("count"));
+		        food.put("COUNT", ut.fixMumber(item.getString("count")));
 		        food.put("NOTE", item.getString("note"));
 		        food.put("CALL_TYPE", item.getString("call_type"));
 		        items.add(food);
