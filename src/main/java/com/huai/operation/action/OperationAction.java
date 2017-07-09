@@ -52,7 +52,7 @@ public class OperationAction extends BaseController {
 	@ResponseBody
     public Object queryAllTableState(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
 		User user = this.getSessionUser(request);
-		log.info(" queryAllTableState  user = "+user);
+//		log.info(" queryAllTableState  user = "+user);
 		IData param = new IData();
 		Map result = operationService.queryAllTableState(param);
 		return result;
