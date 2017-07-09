@@ -5,21 +5,21 @@ javax.sql.DataSource,com.huai.common.domain.User" pageEncoding="UTF-8"%>
 String table_name = "food";
 User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
 String id = request.getParameter("id");
-String sql = " select * from td_food a  where rest_id = ? and food_id = ?   ";
+String sql = " select * from td_food a  where    food_id = ?   ";
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List orders = jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id(),id});
+List orders = jdbcTemplate.queryForList(sql,new Object[]{ id });
 Map item = new HashMap();
 if(orders.size()>0){
 	item = (Map)orders.get(0);
 }
 
-List categoryList = jdbcTemplate.queryForList("select * from td_food_category a where rest_id = ? and level = 1   ",new Object[]{user.getRest_id()});
+List categoryList = jdbcTemplate.queryForList("select * from td_food_category a where 1 = 1 and level = 1   ",new Object[]{ });
 ut.log(" categoryList.size() :" +categoryList.size());
 
-List groupsList = jdbcTemplate.queryForList("select * from td_food_category a where rest_id = ? and level = 2   ",new Object[]{user.getRest_id()});
+List groupsList = jdbcTemplate.queryForList("select * from td_food_category a where 1 = 1 and level = 2   ",new Object[]{ });
 ut.log(" groupsList.size() :" +groupsList.size());
 
-List printerList = jdbcTemplate.queryForList("select * from td_printer a  where rest_id = ?   order by printer desc ",new Object[]{user.getRest_id()});
+List printerList = jdbcTemplate.queryForList("select * from td_printer a  where 1 = 1 order by printer desc ",new Object[]{ });
 ut.log(" printerList.size() :" +printerList.size());
 
 %>

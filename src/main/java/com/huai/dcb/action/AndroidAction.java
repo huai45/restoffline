@@ -53,12 +53,11 @@ public class AndroidAction extends BaseController {
 	
 	@RequestMapping(value = "/login")   
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String user_id = request.getParameter("user_id");
 		String password = request.getParameter("password");
 		log.info(" ****************  AndroidController  login  ***********************  user_id : "+user_id+" , password : "+password);
 		try{
-			Map user = androidService.getPhoneUser(restId, user_id);
+			Map user = androidService.getPhoneUser(user_id);
 			if(user==null){
 				modelMap.put("msg", ut.err("用户不存在！"));
 				return new ModelAndView("/result", modelMap);
@@ -71,7 +70,6 @@ public class AndroidAction extends BaseController {
 				return new ModelAndView("/result", modelMap);
 			}
 			User user_db = new User();
-			user_db.setRestId(restId);
 			String ban = ut.currentDate();
 			modelMap.put("msg", ut.suc("登录成功！","username",user.get("username").toString(),"ban",ban));
     	}catch(Exception e){
@@ -83,15 +81,11 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/getData")
     public ModelAndView getData(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String phone = request.getParameter("phone");
-		log.info(" ****************  AndroidController  getData  ***********************  restId : "+restId+" , phone : "+phone);
+		log.info(" ****************  AndroidController  getData  ***********************  phone : "+phone);
 		try{
 			User user = new User();
-			user.setRestId(restId);
-
 			IData param = new IData();
-			param.put("restId", restId);
 
 			List tables = operationService.queryTableList(param);
 			List foods = foodService.queryFoodList(param);
@@ -114,15 +108,11 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/checkTableState")
     public ModelAndView checkTableState(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String table_id = request.getParameter("table_id");
-		log.info(" ****************  AndroidController  checkTableState  ***********************  restId : "+restId+" , table_id : "+table_id);
+		log.info(" ****************  AndroidController  checkTableState  *********************** table_id : "+table_id);
 		try{
 			User user = new User();
-			user.setRestId(restId);
-
 			IData param = new IData();
-			param.put("restId", restId);
 			param.put("table_id", table_id);
 
 			Map table = operationService.queryTableById(param);
@@ -147,7 +137,6 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/openTable")
     public ModelAndView openTable(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String table_id = request.getParameter("table_id");
 		String staff = request.getParameter("staff");
 		String nop = request.getParameter("nop");
@@ -156,10 +145,9 @@ public class AndroidAction extends BaseController {
 		log.info(" ****************  AndroidController  openTable  ***********************  table_id : "+table_id+" , user_id : "+user_id);
 		try{
 			IData param = new IData();
-			param.put("restId", restId);
 			param.put("table_id", table_id);
 			User user = new User();
-			Map u =  androidService.getPhoneUser(restId, user_id);
+			Map u =  androidService.getPhoneUser(user_id);
 			log.info("u="+u);
 			user.setStaffId(user_id);
 			user.setStaffname(u.get("username").toString());
@@ -187,7 +175,6 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/saveBillItem")
     public ModelAndView saveBillItem(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String user_id = request.getParameter("user_id");
 		String table_id = request.getParameter("table_id");
 		String trade_id = request.getParameter("trade_id");
@@ -214,11 +201,10 @@ public class AndroidAction extends BaseController {
 //		log.info("  param_str : "+param_str);
 		try{
 			IData param = new IData();
-			param.put("restId", restId);
 			param.put("table_id", table_id);
 
 			User user = new User();
-			Map u =  androidService.getPhoneUser(restId, user_id);
+			Map u =  androidService.getPhoneUser(user_id);
 			log.info("u="+u);
 			user.setStaffId(user_id);
 			user.setStaffname(u.get("username").toString());
@@ -234,7 +220,7 @@ public class AndroidAction extends BaseController {
 				modelMap.put("msg", ut.err("台位状态异常！"));
 				return new ModelAndView("/result", modelMap);
 			}
-			Map staff_info = androidService.getPhoneUser(restId,user_id);
+			Map staff_info = androidService.getPhoneUser(user_id);
 			staff = staff_info.get("username").toString();
 			user.setStaffname(staff);
 			param.put("table_id", table_id);
@@ -341,16 +327,13 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/printBill")
     public ModelAndView printBill(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String username = request.getParameter("username");
 		String table_id = request.getParameter("table_id");
 		log.info(" ****************  AndroidController  printBill  ***********************  table_id : "+table_id);
 		log.info(" username : "+username);
 		try{
 			User user = new User();
-			user.setRestId(restId);
 			IData param = new IData();
-			param.put("restId", restId);
 			param.put("table_id", table_id);
 
 			Map table = operationService.queryTableById(param);
@@ -462,7 +445,6 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/hurrySingleCook")
     public ModelAndView hurrySingleCook(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String username = request.getParameter("username");
 		String bill_id = request.getParameter("bill_id");
 		String item_id = request.getParameter("item_id");
@@ -471,10 +453,8 @@ public class AndroidAction extends BaseController {
 			User user = new User();
 			user.setStaffId(username);
 			user.setStaffname(username);
-			user.setRestId(restId);
 
 			IData param = new IData();
-			param.put("restId", restId);
 			param.put("bill_id", bill_id);
 			param.put("BILL_ID", bill_id);
 			param.put("item_id", item_id);
@@ -511,7 +491,6 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/finishSingleCook")
     public ModelAndView finishSingleCook(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String username = request.getParameter("username");
 		String bill_id = request.getParameter("bill_id");
 		String item_id = request.getParameter("item_id");
@@ -520,10 +499,8 @@ public class AndroidAction extends BaseController {
 			User user = new User();
 			user.setStaffId(username);
 			user.setStaffname(username);
-			user.setRestId(restId);
 
 			IData param = new IData();
-			param.put("restId", restId);
 			param.put("bill_id", bill_id);
 			param.put("BILL_ID", bill_id);
 			param.put("item_id", item_id);
@@ -555,14 +532,11 @@ public class AndroidAction extends BaseController {
 
 	@RequestMapping(value = "/queryTableInfo")
     public ModelAndView queryTableInfo(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
-		String restId = request.getParameter("restId");
 		String table_id = request.getParameter("table_id");
 		log.info(" ****************  AndroidController  queryTableInfo  ***********************  table_id : "+table_id);
 		try{
 			User user = new User();
-			user.setRestId(restId);
 			IData param = new IData();
-			param.put("restId", restId);
 			param.put("table_id", table_id);
 			Map table = operationService.queryTableById(param);
 			JSONArray jsonArr = new JSONArray();

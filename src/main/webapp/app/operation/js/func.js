@@ -66,6 +66,7 @@ function initTableInfoPage(bill) {
 	bill = colBillFee(bill);
 	$("#tableinfo_table_id").text(bill.TABLE_ID);
 	$("#tableinfo_bill_id").text(bill.BILL_ID);
+    $("#show_tableinfo_bill_id").text(bill.BILL_ID.substr(10,6));
 	$("#tableinfo_nop").text(bill.NOP);
 	$("#tableinfo_ban").text(bill.BAN);
 	$("#tableinfo_start_time").text(bill.OPEN_TIME);
@@ -790,7 +791,7 @@ function initTodayPage(data){
         var temp = data.recv_data[i];
         recv_total = recv_total + Number(temp.recv_fee);
         var str = '<tr height="30" >'+
-          '<td width="120"><span style="margin-left:30px;">'+temp.mode_name+'：</span></td>'+
+          '<td width="120"><span style="margin-left:30px;">'+temp.MODE_NAME+'：</span></td>'+
           '<td ><span id="">￥'+temp.recv_fee+'</span></td>'+
           '</tr>';
         $("#recv_table").append(str);

@@ -41,17 +41,14 @@ $(document).ready(function(){
     <div id="indexpage" class="left_menu" url="/setting/index.html" onselectstart='return false'>
   	    <span style="margin-left:20px;">首页</span>
     </div>
-    <div id="bolidcbpage" class="left_menu" url="/setting/bolidcbpage.html" onselectstart='return false'>
-  	    <span style="margin-left:20px;">博立点菜宝</span>
-    </div>
     <div id="foodmanagepage" class="left_menu" url="/transPage?page=/setting/page/food_manage" onselectstart='return false'>
   	    <span style="margin-left:20px;">菜品管理</span>
     </div>
     <div id="foodcategorypage" class="left_menu" url="/transPage?page=/setting/page/food_category" onselectstart='return false'>
   	    <span style="margin-left:20px;">菜品分类管理</span>
     </div>
-    <div id="phoneUsermanagepage" class="left_menu" url="/transPage?page=/setting/page/phone_user_manage" onselectstart='return false'>
-  	    <span style="margin-left:20px;">点菜宝管理</span>
+    <div id="phoneUsermanagepage" class="left_menu" url="/transPage?page=/setting/page/android_user_manage" onselectstart='return false'>
+  	    <span style="margin-left:20px;">手机点菜宝管理</span>
     </div>
     
 </div>  

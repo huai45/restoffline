@@ -7,7 +7,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 
 String food_id = request.getParameter("food_id");
@@ -35,14 +34,14 @@ if(end_date==null){
 
 
 String sql = " select oper_staff_name , price , ROUND(sum(count),2) count, ROUND(sum(back_count),2) back, ROUND(sum(count-back_count),2) real_count, ROUND(sum(price*(count-back_count-free_count)*pay_rate/100),2) real_total "+ 
-  " from th_bill_item a where a.rest_id = ? and food_id = ?   and oper_time >= ? and oper_time <= ? group by oper_staff_name ,price  order by count DESC ; ";
+  " from th_bill_item a where   food_id = ?   and oper_time >= ? and oper_time <= ? group by oper_staff_name ,price  order by count DESC ; ";
 ut.log(" sql :" +sql);
 List details = new ArrayList();
 if(!start_date.equals("")&&!end_date.equals("")&&!food_id.equals("")){
-	details = jdbcTemplate.queryForList(sql,new Object[]{rest_id,food_id,start_date+" 00:00:00",end_date+" 23:59:59"});
+	details = jdbcTemplate.queryForList(sql,new Object[]{food_id,start_date+" 00:00:00",end_date+" 23:59:59"});
 }
-List staffList = jdbcTemplate.queryForList(" select username user_id ,username from td_phone_user where rest_id = ? union  select username user_id,username from td_android_user where rest_id = ? ",
-    new Object[]{rest_id,rest_id} );
+List staffList = jdbcTemplate.queryForList(" select username user_id ,username from td_phone_user where 1 = 1 union  select username user_id,username from td_android_user where 1 = 1 ",
+    new Object[]{} );
 
 %>
 <!DOCTYPE>

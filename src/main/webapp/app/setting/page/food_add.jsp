@@ -7,16 +7,16 @@ String table_name = "food";
 User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 
-List categoryList = jdbcTemplate.queryForList("select * from td_food_category a where rest_id = ? and level = 1 ",
-		new Object[]{user.getRest_id()});
+List categoryList = jdbcTemplate.queryForList("select * from td_food_category a where  level = 1 ",
+		new Object[]{});
 ut.log(" categoryList.size() :" +categoryList.size());
 
-List groupsList = jdbcTemplate.queryForList("select * from td_food_category a where rest_id = ? and level = 2 ",
-		new Object[]{user.getRest_id()});
+List groupsList = jdbcTemplate.queryForList("select * from td_food_category a where  level = 2 ",
+		new Object[]{});
 ut.log(" groupsList.size() :" +groupsList.size());
 
-List printerList = jdbcTemplate.queryForList("select * from td_printer a where rest_id = ? order by ip desc ",
-		new Object[]{user.getRest_id()});
+List printerList = jdbcTemplate.queryForList("select * from td_printer a where 1 = 1 order by ip desc ",
+		new Object[]{});
 ut.log(" printerList.size() :" +printerList.size());
 
 

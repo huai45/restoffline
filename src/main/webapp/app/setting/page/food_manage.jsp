@@ -4,11 +4,10 @@ javax.sql.DataSource,com.huai.common.domain.User" pageEncoding="UTF-8"%>
 <%
 String table_name = "food";
 User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
-String sql = " select * from td_food a where rest_id = ? order by food_id  ";
+String sql = " select * from td_food a where 1 = 1 order by food_id  ";
 ut.log(" sql :" +sql);
-ut.log(" user.getRest_id() :" +user.getRest_id());
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List orders = jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id()});
+List orders = jdbcTemplate.queryForList(sql,new Object[]{ });
 ut.log(" details.size() :" +orders.size());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

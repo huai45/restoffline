@@ -7,7 +7,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
 System.out.println("start_date:"+start_date);
@@ -23,13 +22,13 @@ if(end_date==null){
 	show_end_date = ut.currentDate(-1);
 }
 String sql = " select food_id , food_name, unit, price, sum(count) count,sum(count-back_count) out_count, sum(back_count) back_count,sum(free_count) free_count "+ 
-	" from th_bill_item a , th_bill b where a.bill_id = b.bill_id and b.rest_id = ? and b.open_date >= ? and b.open_date <= ? and a.category = '酒水' "+
+	" from th_bill_item a , th_bill b where a.bill_id = b.bill_id and b.open_date >= ? and b.open_date <= ? and a.category = '酒水' "+
 	" group by food_id,food_name ,unit ,price order by food_id  ";
 ut.log(" sql :" +sql);
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 List details = new ArrayList();
 if(!start_date.equals("")&&!end_date.equals("")){
-	details = jdbcTemplate.queryForList(sql,new Object[]{rest_id,start_date,end_date});
+	details = jdbcTemplate.queryForList(sql,new Object[]{start_date,end_date});
 }
 %>
 <!DOCTYPE>

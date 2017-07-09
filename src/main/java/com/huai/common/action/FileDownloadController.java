@@ -44,10 +44,10 @@ public class FileDownloadController extends BaseController {
 	@RequestMapping(value = "/exportFoodCategoryFile.html")   
     public void exportFoodCategoryFile(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
     	System.out.println("*************************  exportFoodCategoryFile  *************************");
-		String sql_category = " select distinct category from td_food where rest_id = ? order by category desc ";
+		String sql_category = " select distinct category from td_food where 1 = 1 order by category desc ";
 		User user = this.getSessionUser(request);
 		JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{ user.getRestId() });
+		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{  });
 		try {
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
 			String fileName = "菜品类别表.txt";
@@ -73,12 +73,12 @@ public class FileDownloadController extends BaseController {
 	@RequestMapping(value = "/exportFoodFile")   
     public void exportFoodFile(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
     	System.out.println("*************************  exportFoodFile  *************************");
-		String sql_category = " select distinct category from td_food where rest_id = ? order by category desc ";
+		String sql_category = " select distinct category from td_food where 1 = 1 order by category desc ";
 		String sql_food = "select a.FOOD_ID,a.CATEGORY,a.FOOD_NAME,a.PRICE,a.UNIT ,a.ABBR " +
-		    " from td_food a where a.rest_id = ?  order by a.FOOD_ID ";
+		    " from td_food a where 1 = 1  order by a.FOOD_ID ";
 		User user = this.getSessionUser(request);
 		JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{ user.getRestId() });
+		List category_list = jdbcTemplate.queryForList(sql_category, new Object[]{ });
 		Map categoryMap = new HashMap();
 		for(int i=0;i<category_list.size();i++){
 			String index = i>9?""+(i+1):"0"+(i+1);
@@ -86,7 +86,7 @@ public class FileDownloadController extends BaseController {
 			categoryMap.put(category.get("CATEGORY").toString(),index);
 		}
 		ut.log("categoryMap:"+categoryMap);
-		List food_list = jdbcTemplate.queryForList(sql_food, new Object[]{ user.getRestId() });
+		List food_list = jdbcTemplate.queryForList(sql_food, new Object[]{ });
 		try {
 			OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
 			String fileName = "菜品表.txt";
@@ -135,14 +135,14 @@ public class FileDownloadController extends BaseController {
     	param.put("end_date", end_date);
     	ut.log(" param :" +param);
     	String sql = " select  food_name , unit , groups category , sum(count) count , sum(count-back_count) real_count,sum(back_count) back_count ,sum(free_count) free_count "+ 
-		        " from th_bill_item where 1 = 1 and rest_id = ? " ;
+		        " from th_bill_item where 1 = 1  " ;
 		if(param.containsKey("CATEGORY")){
 		sql = sql +  " and CATEGORY = '"+param.get("CATEGORY")+"' ";
 		}
 		sql = sql +  " and OPER_TIME >= ? and OPER_TIME <= ? "+
 		        " group by food_name ,unit , category order by sum(count) desc ";
 		ut.log(" sql :" +sql);
-		List datas = jdbcTemplate.queryForList(sql,new Object[]{user.getRestId(),param.get("start_date")+" 00:00:00",param.get("end_date")+" 23:59:59"});
+		List datas = jdbcTemplate.queryForList(sql,new Object[]{ param.get("start_date")+" 00:00:00",param.get("end_date")+" 23:59:59"});
 		Map categoryMap = new HashMap();
 		for(int i=0;i<datas.size();i++){
 			Map data = (Map)datas.get(i);
@@ -248,7 +248,7 @@ public class FileDownloadController extends BaseController {
     	ut.log(" param :" +param);
     	String sql = "select tmp.groups,tmp.floor,tmp.money from ((select a.groups groups ,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
     		+ "from th_bill_item a, th_bill b , td_table c  "
-    		+ "where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ? "
+    		+ "where a.bill_id = b.bill_id  "
     		+ " and b.table_id = c.table_id "
     		+ " and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?  "
     		+ " and a.groups in ('海鲜','鲍参翅','川菜','粤菜','本地菜','凉菜','烧腊','面点') "
@@ -256,14 +256,14 @@ public class FileDownloadController extends BaseController {
     		+ "UNION ALL "
     		+ "(select a.category groups,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
     		+ "from th_bill_item a, th_bill b , td_table c   "
-    		+ "where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ? "
+    		+ "where a.bill_id = b.bill_id "
     		+ " and b.table_id = c.table_id "
     		+ " and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?   "
     		+ " and a.category in ('酒水') "
     		+ " group by c.floor1 , a.category order by a.category ,c.floor1  )) tmp "
     		+"  order by tmp.groups,tmp.floor ";
 		ut.log(" sql :" +sql);
-		List datas =jdbcTemplate.queryForList(sql,new Object[]{user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
+		List datas =jdbcTemplate.queryForList(sql,new Object[]{ start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date, start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
 		
 		ut.log(" datas :" +datas.size());
 		HSSFWorkbook wb = new HSSFWorkbook();
@@ -311,7 +311,7 @@ public class FileDownloadController extends BaseController {
 	          +"from ((select a.groups  groups ,c.floor1 floor,  "
 	          +"       FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
 	          +"  from th_bill_item a, th_bill b , td_table c   "
-	          +"where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ? "
+	          +"where a.bill_id = b.bill_id  "
 	          +"    and b.table_id = c.table_id "
 	          +"    and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?   "
 	          +"    and a.groups in ('海鲜','鲍参翅','川菜','粤菜','本地菜','凉菜','烧腊','面点') "
@@ -320,7 +320,7 @@ public class FileDownloadController extends BaseController {
 	          +" (select a.category groups,c.floor1 floor,  "
 	          +"        FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
 	          +" from th_bill_item a, th_bill b , td_table c   "
-	          +"where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ? "
+	          +"where a.bill_id = b.bill_id  "
 	          +"     and b.table_id = c.table_id "
 	          +"     and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?  "
 	          +"     and a.category in ('酒水') "
@@ -329,7 +329,7 @@ public class FileDownloadController extends BaseController {
 	          +"order by tmp.groups ";
 	            
 	           ut.log(" sql :" +sql2);
-	   		   List datas2 = jdbcTemplate.queryForList(sql2,new Object[]{user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
+	   		   List datas2 = jdbcTemplate.queryForList(sql2,new Object[]{ start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date, start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
 	   		   ut.log(" datas2 :" +datas2.size());
 	            
 	          //创建第二分页 begin
@@ -417,7 +417,7 @@ public class FileDownloadController extends BaseController {
     	String sql = "select  * from "
                     +"((select c.floor1 floors,a.groups groups,a.FOOD_NAME fname, sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ) money,sum(a.count-a.back_count-a.free_count) fcount , min(a.UNIT) unit "
                     +"from th_bill_item a, th_bill b , td_table c  "
-                    +"where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ?  "
+                    +"where a.bill_id = b.bill_id  "
                     +"  and b.table_id = c.table_id "
                     +"  and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?  "
                     +"  and a.groups in ('海鲜','鲍参翅','川菜','粤菜','本地菜','凉菜','烧腊','面点') "
@@ -425,14 +425,14 @@ public class FileDownloadController extends BaseController {
                     +"union all "
                     +"(select c.floor1 floors,a.category groups,a.FOOD_NAME fname,sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ) money ,sum(a.count-a.back_count-a.free_count) fcount, min(a.UNIT) unit "
                     +" from th_bill_item a, th_bill b , td_table c  "
-                    +" where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ? "
+                    +" where a.bill_id = b.bill_id  "
                     +"   and b.table_id = c.table_id "
                     +"   and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?  "
                     +"   and a.category in ('酒水') "
                     +"   group by c.floor1 , a.category ,a.FOOD_NAME )) tmp "
                     +"order by tmp.floors asc,tmp.groups asc, tmp.money desc,tmp.fcount desc,tmp.fname asc ";
 		ut.log(" sql :" +sql);
-		List datas =jdbcTemplate.queryForList(sql,new Object[]{user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,user.getRestId(),user.getRestId(),user.getRestId(),start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
+		List datas =jdbcTemplate.queryForList(sql,new Object[]{ start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date, start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
 		
 		Map floorsMap = new Hashtable();
 		for(int i=0;i<datas.size();i++){

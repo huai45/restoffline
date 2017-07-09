@@ -7,7 +7,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
 System.out.println("start_date:"+start_date);

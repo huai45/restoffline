@@ -8,9 +8,9 @@ User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
 String id = request.getParameter("id");
 //id = new String(id.getBytes("iso-8859-1"),"UTF-8");  
 ut.log(" id :" +id);
-String sql = " select * from td_food_category  where rest_id = ? and category_id = ?   ";
+String sql = " select * from td_food_category  where category_id = ?   ";
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List orders = jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id(),id});
+List orders = jdbcTemplate.queryForList(sql,new Object[]{id});
 Map item = new HashMap();
 if(orders.size()>0){
 	item = (Map)orders.get(0);

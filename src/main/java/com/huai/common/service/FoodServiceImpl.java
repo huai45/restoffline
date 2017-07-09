@@ -27,7 +27,7 @@ public class FoodServiceImpl implements FoodService {
 	public FoodDao foodDao;
 
 	public IData queryFoodById(IData param) {
-		IData food = foodDao.queryFoodById(param.getString("rest_id"),param.getString("food_id"));
+		IData food = foodDao.queryFoodById(param.getString("food_id"));
 		return food;
 	}
 

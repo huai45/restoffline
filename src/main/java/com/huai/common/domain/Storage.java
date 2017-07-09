@@ -7,8 +7,6 @@ public class Storage {
 
 	private String id;
 	
-	private String rest_id;
-	
 	private String name;
 	
 	private List list = new ArrayList();
@@ -42,11 +40,4 @@ public class Storage {
 		return "---> id : "+this.id+" , name : "+name +" , list.size : "+this.list.size();
 	}
 
-	public String getRest_id() {
-		return rest_id;
-	}
-
-	public void setRest_id(String rest_id) {
-		this.rest_id = rest_id;
-	}
 }

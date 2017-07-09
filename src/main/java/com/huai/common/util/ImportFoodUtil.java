@@ -1,4 +1,4 @@
-package com.huai.test;
+package com.huai.common.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -85,11 +85,9 @@ public class ImportFoodUtil {
 	 */
 	public static void main(String[] args) throws Exception {
 		String table_name = "td_food_pre";
-		String sql = " insert into "+table_name+" (REST_ID,FOOD_ID,FOOD_NAME,ABBR,PRICE,UNIT,CATEGORY,GROUPS,PRINTER,PRINT_COUNT,COOK_TAG," +
+		String sql = " insert into "+table_name+" (FOOD_ID,FOOD_NAME,ABBR,PRICE,UNIT,CATEGORY,GROUPS,PRINTER,PRINT_COUNT,COOK_TAG," +
 				" COOK_TIME,COUNT_TAG,SHOW_TAG,WARNING_TAG,USE_TAG,IMAGE,PRINTER_START,PRINTER_HURRY,PRINTER_BACK,PRINTER_SEC,REMARK) " +
-				" values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ";
-		
-		String rest_id = "kh";
+				" values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); ";
 		
 		// TODO Auto-generated method stub
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -142,7 +140,7 @@ public class ImportFoodUtil {
 	        String image = "";
 	        String remark = "";
 	        try{
-	        	jdbcTemplate.update(sql,new Object[]{rest_id,food_id,food_name,abbr,price,unit,category,groups,printer,print_count,
+	        	jdbcTemplate.update(sql,new Object[]{food_id,food_name,abbr,price,unit,category,groups,printer,print_count,
 	    	        	cook_tag,cook_time,count_tag,show_tag,warning_tag,use_tag,image,printer_start,printer_hurry,printer_back,printer_sec,remark});
 	        }catch(Exception e){
 	        	e.printStackTrace();

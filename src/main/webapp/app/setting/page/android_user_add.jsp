@@ -3,7 +3,7 @@ com.huai.common.util.*,com.mongodb.BasicDBObject,org.springframework.jdbc.core.J
 javax.sql.DataSource,com.huai.common.domain.User" pageEncoding="UTF-8"%>
 <%
 ut.log(" add " );
-String table_name = "phone_user";
+String table_name = "android_user";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -101,15 +101,15 @@ $(document).ready(function(){
 	});	
 	
 	function reloadPage(){
-	    document.location.href = "/app/setting/page/phone_user_manage.jsp";
+	    document.location.href = "/app/setting/page/android_user_manage.jsp";
 	};
 	
     $("#backBtn").click( function(){
-        document.location.href = "/app/setting/page/phone_user_manage.jsp";
+        document.location.href = "/app/setting/page/android_user_manage.jsp";
     });
     
     $("#cancelBtn").click( function(){
-        document.location.href = "/app/setting/page/phone_user_manage.jsp";
+        document.location.href = "/app/setting/page/android_user_manage.jsp";
     });
 	
 	

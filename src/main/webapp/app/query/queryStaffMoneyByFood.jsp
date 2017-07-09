@@ -7,7 +7,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 String staff_name = request.getParameter("staff_name");
 if(staff_name==null){
@@ -27,20 +26,17 @@ if(end_date==null){
 	show_end_date = ut.currentDate(-1);
 }
 String table = "td_android_user";
-if(rest_id.equals("kh")){
-    table = "td_phone_user";
-}
 String sql = "select food_name,price, sum(COUNT)  total , sum(( count-BACK_COUNT-FREE_COUNT)*price) money from th_bill_item "+
-    " where rest_id = ? and oper_time >= ? and oper_time <= ? and OPER_STAFF_NAME = ? "+
+    " where oper_time >= ? and oper_time <= ? and OPER_STAFF_NAME = ? "+
     " group by FOOD_NAME having sum(COUNT) > 0 order by sum(count) desc";  
   
 ut.log(" sql :" +sql);
 List details = new ArrayList();
 if(!start_date.equals("")&&!end_date.equals("")){
-	details = jdbcTemplate.queryForList(sql,new Object[]{rest_id,start_date+" 00:00:00",end_date+" 23:59:59",staff_name});
+	details = jdbcTemplate.queryForList(sql,new Object[]{ start_date+" 00:00:00",end_date+" 23:59:59",staff_name});
 }
-List staffList = jdbcTemplate.queryForList(" select user_id,username from "+table+" where rest_id = ? order by user_id ",
-    new Object[]{rest_id} );
+List staffList = jdbcTemplate.queryForList(" select user_id,username from "+table+" where 1 = 1 order by user_id ",
+    new Object[]{ } );
 
 %>
 <!DOCTYPE>

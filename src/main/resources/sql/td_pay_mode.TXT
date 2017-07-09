@@ -1,0 +1,7 @@
+CREATE TABLE "td_pay_mode" (
+"MODE_ID"  varchar(100) NOT NULL,
+"MODE_NAME"  varchar(100) NOT NULL,
+"ORDER_ID"  varchar(100) DEFAULT '',
+PRIMARY KEY ("MODE_ID" ASC)
+);
+

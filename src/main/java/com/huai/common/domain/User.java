@@ -10,7 +10,6 @@ import java.util.List;
 public class User implements Serializable {
 
 	private String staffId;
-	private String restId;
 	private String roleId;
 	private String password;
 	private String staffname;

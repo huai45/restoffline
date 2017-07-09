@@ -49,27 +49,27 @@ public class OperationServiceImpl implements OperationService {
 	
 	
 	public Map checkTableState(IData param) {
-		IData table = tableDao.queryTableById(param.getString("rest_id"), param.getString("table_id"));
+		IData table = tableDao.queryTableById( param.getString("table_id"));
 		Map result = new HashMap();
 		if(table==null){
 			result.put("success", "false");
 			return result;
 		}
 		String state = table.getString("STATE");
-		IData bill = operationDao.queryBillByTable(param.getString("rest_id"), param.getString("table_id"));
+		IData bill = operationDao.queryBillByTable( param.getString("table_id"));
 		if(bill!=null){
 			state = "1";
 			this.queryBillInfo(bill);
 			result.put("bill", bill);
 			if(!table.getString("STATE").equals("1")){
-				baseDao.jdbcTemplate.update(" update td_table  set state = '1' where rest_id = ? and table_id = ? ",
-					new Object[]{param.getString("rest_id"), param.getString("table_id")});
+				baseDao.jdbcTemplate.update(" update td_table  set state = '1' where table_id = ? ",
+					new Object[]{ param.getString("table_id")});
 			}
 		}else{
 			state = "0";
 			if(!table.getString("STATE").equals("0")){
-				baseDao.jdbcTemplate.update(" update td_table  set state = '0' where rest_id = ? and table_id = ? ",
-					new Object[]{param.getString("rest_id"), param.getString("table_id")});
+				baseDao.jdbcTemplate.update(" update td_table  set state = '0' where  table_id = ? ",
+					new Object[]{ param.getString("table_id")});
 			}
 		}
 		table.put("STATE", state);
@@ -85,7 +85,7 @@ public class OperationServiceImpl implements OperationService {
 	}
     
 	public IData queryBillById(IData param) {
-		IData bill = operationDao.queryBillByBillId(param.getString("BILL_ID"), param.getString("rest_id"));
+		IData bill = operationDao.queryBillByBillId(param.getString("BILL_ID") );
 		if(bill!=null){
 			this.queryBillInfo(bill);
 		}
@@ -95,7 +95,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map openTable(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByTable(param.getString("rest_id"), param.getString("table_id"));
+		IData bill =  operationDao.queryBillByTable( param.getString("table_id"));
 		if(bill==null){
 			String bill_id = baseDao.getNewID("bill_id");
 			param.put("bill_id", bill_id);
@@ -122,7 +122,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map addBillItems(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id") );
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,不能加菜！");
@@ -156,7 +156,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map addTempFood(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id") );
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,不能加菜！");
@@ -190,7 +190,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map cancelFood(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id") );
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -205,7 +205,7 @@ public class OperationServiceImpl implements OperationService {
 			for(int i=0;i<jsonArr.size();i++){ 
 		        JSONObject obj = jsonArr.getJSONObject(i); 
 		        String item_id = obj.getString("item_id");
-		        IData item = operationDao.queryBillItemByItemId(item_id, param.getString("rest_id"));
+		        IData item = operationDao.queryBillItemByItemId(item_id );
 		        double left_count = Double.parseDouble(item.getString("COUNT"))-Double.parseDouble(item.getString("FREE_COUNT"));
 		        if(Double.parseDouble(param.getString("count"))>left_count){
 		        	result.put("success", "false");
@@ -241,7 +241,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map presentFood(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id") );
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -256,7 +256,7 @@ public class OperationServiceImpl implements OperationService {
 			for(int i=0;i<jsonArr.size();i++){ 
 		        JSONObject food = jsonArr.getJSONObject(i); 
 		        String item_id = food.getString("item_id");
-		        IData item = operationDao.queryBillItemByItemId(item_id, param.getString("rest_id"));
+		        IData item = operationDao.queryBillItemByItemId(item_id );
 		        double left_count = Double.parseDouble(item.getString("COUNT"))-Double.parseDouble(item.getString("BACK_COUNT"));
 		        if(Double.parseDouble(param.getString("count"))>left_count){
 		        	result.put("success", "false");
@@ -285,7 +285,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map derateFood(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id") );
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -308,7 +308,7 @@ public class OperationServiceImpl implements OperationService {
 		        String item_id = food.getString("item_id");
 		        IData item = new IData();
 		        item.put("ITEM_ID", item_id);
-//		        IData item = operationDao.queryBillItemByItemId(item_id, param.getString("rest_id"));
+//		        IData item = operationDao.queryBillItemByItemId(item_id);
 		        item.put("PAY_RATE", param.getString("count"));
 		        items.add(item);
 			}
@@ -331,7 +331,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map changeTable(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -346,13 +346,13 @@ public class OperationServiceImpl implements OperationService {
 				result.put("msg", "输入的目标台位[ "+param.getString("table_id")+" ]不能为当前台位！");
 				return result;
 			}
-			IData table = tableDao.queryTableById(param.getString("rest_id"),param.getString("table_id"));
+			IData table = tableDao.queryTableById(param.getString("table_id"));
 			if(table==null){
 				result.put("success", "false");
 				result.put("msg", "输入的目标台位[ "+param.getString("table_id")+" ]不存在！");
 				return result;
 			}
-			IData target_bill = operationDao.queryBillByTable(param.getString("rest_id"), param.getString("table_id"));
+			IData target_bill = operationDao.queryBillByTable(param.getString("table_id"));
 			if(target_bill==null){
 				String new_bill_id = baseDao.getNewID("bill_id");
 				param.put("bill_id", new_bill_id);
@@ -385,7 +385,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map startCook(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -400,7 +400,7 @@ public class OperationServiceImpl implements OperationService {
 			for(int i=0;i<jsonArr.size();i++){ 
 		        JSONObject obj = jsonArr.getJSONObject(i); 
 		        String item_id = obj.getString("item_id");
-		        IData item = operationDao.queryBillItemByItemId(item_id, param.getString("rest_id"));
+		        IData item = operationDao.queryBillItemByItemId(item_id);
 		        if( item.getString("CALL_TYPE").equals("0") && !item.getString("STATE").equals("2") ){
 		        	param.put("food_id", item.getString("FOOD_ID"));
 			        IData food = operationDao.queryFoodById(param);
@@ -429,7 +429,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map hurryCook(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -444,7 +444,7 @@ public class OperationServiceImpl implements OperationService {
 			for(int i=0;i<jsonArr.size();i++){ 
 		        JSONObject obj = jsonArr.getJSONObject(i); 
 		        String item_id = obj.getString("item_id");
-		        IData item = operationDao.queryBillItemByItemId(item_id, param.getString("rest_id"));
+		        IData item = operationDao.queryBillItemByItemId(item_id);
 		        param.put("food_id", item.getString("FOOD_ID"));
 		        IData food = operationDao.queryFoodById(param);
 		        item.put("PRINT_COUNT", food.getString("PRINT_COUNT"));
@@ -470,7 +470,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map finishCook(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		JSONArray jsonArr = null;
 		String now = ut.currentTime();
 		param.put("bill", bill);
@@ -480,7 +480,7 @@ public class OperationServiceImpl implements OperationService {
 			for(int i=0;i<jsonArr.size();i++){ 
 		        JSONObject food = jsonArr.getJSONObject(i); 
 		        String item_id = food.getString("item_id");
-		        IData item = operationDao.queryBillItemByItemId(item_id, param.getString("rest_id"));
+		        IData item = operationDao.queryBillItemByItemId(item_id);
 		        items.add(item);
 			}
 			param.put("items", items);
@@ -499,7 +499,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map payFee(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -534,7 +534,7 @@ public class OperationServiceImpl implements OperationService {
 	public Map reduceFee(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -564,7 +564,7 @@ public class OperationServiceImpl implements OperationService {
 		result.put("success", "true");
 		result.put("bill", "");
 		try {
-			IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+			IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 			if(bill.getString("PAY_TYPE").equals("1")){
 				result.put("msg", "此单已经封单！请关闭！");
 				return result;
@@ -579,7 +579,7 @@ public class OperationServiceImpl implements OperationService {
 				bill.put("RESTNAME", restinfo.getString("RESTNAME"));
 				bill.put("ADDRESS", restinfo.getString("ADDRESS"));
 				bill.put("TELEPHONE", restinfo.getString("TELEPHONE"));
-				IData table = tableDao.queryTableById(bill.getString("REST_ID"),bill.getString("TABLE_ID"));
+				IData table = tableDao.queryTableById(bill.getString("TABLE_ID"));
 				if(table!=null) {
 		        	bill.put("PRINTER", table.get("PRINTER"));
 		        }else{
@@ -606,7 +606,7 @@ public class OperationServiceImpl implements OperationService {
 		Map result = new HashMap();
 		result.put("success", "true");
 		User user = (User)param.get("user");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -670,7 +670,7 @@ public class OperationServiceImpl implements OperationService {
 		Map result = new HashMap();
 		result.put("success", "true");
 		User user = (User)param.get("user");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		if(bill.getString("PAY_TYPE").equals("1")){
 			result.put("success", "false");
 			result.put("msg", "账单已经关闭,操作无效！");
@@ -757,8 +757,7 @@ public class OperationServiceImpl implements OperationService {
 	}
 
 	public boolean checkFinish(IData param) {
-		List bills = baseDao.jdbcTemplate.queryForList(" select * from tf_bill where rest_id = ? and pay_type in ('0') ", 
-			new Object[]{param.get("rest_id")});
+		List bills = baseDao.jdbcTemplate.queryForList(" select * from tf_bill where  pay_type in ('0') ",  new Object[]{ });
 		boolean flag = true;
 		log.info(" checkFinish  bills : "+bills.size());
 		if(bills.size()>0){
@@ -766,7 +765,6 @@ public class OperationServiceImpl implements OperationService {
             	IData bill = new IData((Map)bills.get(i));
             	operationDao.queryBillInfo(bill);
 //            	log.info(bill);
-            	List packages = (List)bill.get("PACKAGELIST");
         		List items = (List)bill.get("ITEMLIST");
         		List fees = (List)bill.get("FEELIST");
         		if(items.size()>0||fees.size()>0){
@@ -774,11 +772,6 @@ public class OperationServiceImpl implements OperationService {
         			break;
         		}
         		log.info("   bill  是空单  : "+bill.getString("BILL_ID"));
-//        		BillUtil.calculateBill(bill);
-//            	if(bill.getString("REDUCE_FEE").equals("0.00")||bill.getString("REDUCE_FEE").equals("0")){
-//            		param.put("bill", bill);
-//            		this.closeBill(param);
-//            	}
             }			
 		}
 		return flag;
@@ -787,9 +780,9 @@ public class OperationServiceImpl implements OperationService {
 	public Map reopenBill(IData param) {
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		param.put("bill", bill);
-		IData table = tableDao.queryTableById(param.getString("rest_id"), bill.getString("TABLE_ID"));
+		IData table = tableDao.queryTableById( bill.getString("TABLE_ID"));
 		if(table.getString("STATE").equals("0")){
 			operationDao.reopenBill(param);
 			result.put("msg", "账单已激活！");
@@ -802,9 +795,9 @@ public class OperationServiceImpl implements OperationService {
 
 	public Map queryTableById(IData param) {
 		log.info(" queryTableById   param : "+param);
-		IData table = tableDao.queryTableById(param.getString("rest_id"), param.getString("table_id"));
+		IData table = tableDao.queryTableById( param.getString("table_id"));
 		log.info(" queryTableById   table : "+table);
-		IData bill = operationDao.queryBillByTable(param.getString("rest_id"), param.getString("table_id"));
+		IData bill = operationDao.queryBillByTable(param.getString("table_id"));
 		log.info(" queryTableById   bill : "+bill);
 		if(bill!=null){
 			table.put("bill_id", bill.get("BILL_ID"));
@@ -816,7 +809,7 @@ public class OperationServiceImpl implements OperationService {
 	}
 
 	public Map queryBillItemByItemId(IData param) {
-		IData item = operationDao.queryBillItemByItemId(param.getString("item_id"), param.getString("rest_id"));
+		IData item = operationDao.queryBillItemByItemId(param.getString("item_id"));
 		return item;
 	}
 

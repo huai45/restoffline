@@ -16,14 +16,14 @@ public class MonitorDaoImpl extends BaseDao implements MonitorDao {
 
 
 	public List queryTodayBills(IData param) {
-		List bills = jdbcTemplate.queryForList("select * from tf_bill where rest_id = ? order by bill_id desc ", new Object[]{  param.getString("rest_id") });
+		List bills = jdbcTemplate.queryForList("select * from tf_bill where 1 = 1 order by bill_id desc ", new Object[]{  });
 		return bills;
 	}
 
 	public List queryTodayBillItems(IData param) {
 		String sql = " select a.* , b.TABLE_ID , b.PAY_TYPE , TIMESTAMPDIFF(MINUTE, a.start_time ,now()) USE_TIME " +
-			" from tf_bill_item a , tf_bill b  where b.rest_id = ? and a.bill_id  = b.bill_id order by USE_TIME desc ";
-		List items = jdbcTemplate.queryForList( sql , new Object[]{  param.getString("rest_id") });
+			" from tf_bill_item a , tf_bill b  where  a.bill_id  = b.bill_id order by USE_TIME desc ";
+		List items = jdbcTemplate.queryForList( sql , new Object[]{   });
 		return items;
 	}
 	

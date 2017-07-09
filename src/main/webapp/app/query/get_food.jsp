@@ -4,9 +4,8 @@ com.huai.common.util.*,com.mongodb.BasicDBObject,org.springframework.jdbc.core.J
 javax.sql.DataSource,com.huai.common.domain.User" pageEncoding="UTF-8"%><%
 try{
 	User user = (User)session.getAttribute( CC.USER_CONTEXT );
-	String rest_id = user.getRest_id();
 	JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-	List foods = jdbcTemplate.queryForList("select * from td_food where rest_id = ? " ,new Object[]{rest_id});
+	List foods = jdbcTemplate.queryForList("select * from td_food where 1 = 1  " ,new Object[]{});
     
 	StringBuffer sb = new StringBuffer();
 	sb.append("[");

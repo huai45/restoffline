@@ -54,7 +54,6 @@ public class LoginController extends BaseController {
 				return new ModelAndView(nextPage, model_return);
 			}
 			IData param = new IData();
-			param.put("rest_id", user.getRestId());
 			IData info = commonService.queryRestInfo(param);
 			IData p = commonService.queryRestParam(param);
 			user.setInfo(info);

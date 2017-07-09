@@ -1,0 +1,15 @@
+CREATE TABLE "tf_user_fee" (
+"CHARGE_ID"  varchar(100) NOT NULL,
+"USER_ID"  varchar(100) NOT NULL,
+"TYPE"  varchar(20) NOT NULL DEFAULT '1',
+"FEE"  varchar(10) NOT NULL,
+"OLD_MONEY"  varchar(10) NOT NULL,
+"NEW_MONEY"  varchar(10) NOT NULL,
+"OUT_TRADE_ID"  varchar(100) DEFAULT '',
+"OPER_STAFF_ID"  varchar(100) NOT NULL DEFAULT '',
+"OPER_STAFF_NAME"  varchar(100) NOT NULL DEFAULT '',
+"OPER_TIME"  varchar(20) NOT NULL DEFAULT '',
+"REMARK"  varchar(500) NOT NULL DEFAULT '',
+PRIMARY KEY ("CHARGE_ID" ASC)
+);
+

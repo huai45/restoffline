@@ -9,7 +9,6 @@
 
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 
 String start_date = request.getParameter("start_date");
@@ -28,7 +27,7 @@ if(end_date==null){
 }
 String sql = "select tmp.groups,tmp.floor,tmp.money from ((select a.groups groups ,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
 		+ "from th_bill_item a, th_bill b , td_table c  "
-		+ "where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ? "
+		+ "where a.bill_id = b.bill_id  "
 		+ " and b.table_id = c.table_id "
 		+ " and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?  "
 		+ " and a.groups in ('海鲜','鲍参翅','川菜','粤菜','本地菜','凉菜','烧腊','面点') "
@@ -36,7 +35,7 @@ String sql = "select tmp.groups,tmp.floor,tmp.money from ((select a.groups group
 		+ "UNION ALL "
 		+ "(select a.category groups,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
 		+ "from th_bill_item a, th_bill b , td_table c   "
-		+ "where a.bill_id = b.bill_id  and a.rest_id = ? and b.rest_id = ? and c.rest_id = ? "
+		+ "where a.bill_id = b.bill_id  "
 		+ " and b.table_id = c.table_id "
 		+ " and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ? "
 		+ " and a.category in ('酒水') "
@@ -47,7 +46,7 @@ if(!start_date.equals("")&&!end_date.equals("")){
 	//start_date = start_date.substring(0,7);
 	System.out.println("start_date:"+start_date);
 	System.out.println("end_date:"+end_date);
-	details = jdbcTemplate.queryForList(sql,new Object[]{rest_id,rest_id,rest_id,start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,rest_id,rest_id,rest_id,start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,});
+	details = jdbcTemplate.queryForList(sql,new Object[]{ start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date, start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date,});
 }
 //System.out.println("sql:"+sql);
 %>

@@ -1,0 +1,7 @@
+CREATE TABLE "td_android_user" (
+"USER_ID"  varchar(100) NOT NULL,
+"USERNAME"  varchar(100) NOT NULL,
+"PASSWORD"  varchar(100) DEFAULT '123',
+"REMARK"  varchar(200) DEFAULT '',
+PRIMARY KEY ("USER_ID" ASC)
+);

@@ -1,6 +1,7 @@
 package com.huai.common.dao;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -21,13 +22,19 @@ public class BaseDao {
 	public JdbcTemplate jdbcTemplate;
 	
 	public String getNewID(String seq_name) {
-		String id = (String)jdbcTemplate.queryForObject(" select nextval('"+seq_name+"') ", String.class);
+		UUID uuid = UUID.randomUUID();
+		String id = System.currentTimeMillis() + uuid.toString().replaceAll("-","");
 		return id;
 	}
 	
 	public List executeSql(String sql) {
 		List list = jdbcTemplate.queryForList(sql);
         return list;
+	}
+
+	public static void main(String[] args) {
+//		UUID uuid = UUID.randomUUID();
+		System.out.println (System.currentTimeMillis());
 	}
 	
 }

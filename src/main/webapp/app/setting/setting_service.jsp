@@ -40,11 +40,11 @@ try{
 		out.print(modifyUser(request));	
 	}else if(trade_type_code.equals("user_delete")){
 		out.print(deleteUser(request));	
-	}else if(trade_type_code.equals("phone_user_add")){
+	}else if(trade_type_code.equals("android_user_add")){
 		out.print(addPhoneuser(request));	
-	}else if(trade_type_code.equals("phone_user_mod")){
+	}else if(trade_type_code.equals("android_user_mod")){
 		out.print(modifyPhoneuser(request));	
-	}else if(trade_type_code.equals("phone_user_delete")){
+	}else if(trade_type_code.equals("android_user_delete")){
 		out.print(deletePhoneuser(request));	
 	}else if(trade_type_code.equals("food_category_add")){
 		out.print(addFoodcategory(request));	
@@ -63,7 +63,7 @@ try{
 	}else if(trade_type_code.equals("ban_mod")){
 		out.print(modifyBanInfo(request));	
 	}else if(trade_type_code.equals("role_right_mod")){
-		out.print(setOrleRight(request));	
+		out.print(setRoleRight(request));
 	}else if(trade_type_code.equals("food_package_add")){
 		out.print(addFoodPackage(request));	
 	}else if(trade_type_code.equals("food_package_start")){
@@ -231,9 +231,8 @@ public String addPhoneuser(HttpServletRequest request){
 	String username = request.getParameter("user_name");
 	String password = request.getParameter("user_password");
 	User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
-	String rest_id = user.getRest_id();
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-	jdbcTemplate.update("insert into td_phone_user (rest_id,user_id,username,password) values (?,?,?,?)",new Object[]{rest_id,user_id,username,password});
+	jdbcTemplate.update("insert into td_android_user (user_id,username,password) values (?,?,?,?)",new Object[]{user_id,username,password});
     return ut.suc("添加成功");	
 }
 
@@ -242,17 +241,15 @@ public String modifyPhoneuser(HttpServletRequest request){
 	String username = request.getParameter("user_name");
 	String password = request.getParameter("user_password");
 	User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
-	String rest_id = user.getRest_id();
-	
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-	jdbcTemplate.update(" update td_phone_user set username = ? , password = ? where user_id = ? and rest_id = ?  ",new Object[]{username,password,user_id,rest_id});
+	jdbcTemplate.update(" update td_android_user set username = ? , password = ? where user_id = ? ",new Object[]{username,password,user_id});
     return ut.suc("修改成功");	
 }
 public String deletePhoneuser(HttpServletRequest request){
 	String jsonStr = request.getParameter("jsonStr");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	final JSONArray jsonArr = JSONArray.fromObject(jsonStr);
-	jdbcTemplate.batchUpdate( " delete  from td_phone_user where user_id  = ? and rest_id = ?" , 
+	jdbcTemplate.batchUpdate( " delete  from td_android_user where user_id  = ? " ,
 		new BatchPreparedStatementSetter() {
 			public int getBatchSize() {
 			        return jsonArr.size();
@@ -260,9 +257,7 @@ public String deletePhoneuser(HttpServletRequest request){
 			public void setValues(PreparedStatement pstmt, int i)
 					throws SQLException {
 				   JSONObject item = (JSONObject)jsonArr.get(i);
-				   
-			       pstmt.setString(1, item.getString("id"));    
-			       pstmt.setString(2, item.getString("rest_id"));    
+			       pstmt.setString(1, item.getString("id"));
 			       //ut.log(" ****************  id = "+item.getString("id"));
 			}
 	});
@@ -318,8 +313,8 @@ public String addFoodcategory(HttpServletRequest request){
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	String id = request.getParameter("id").trim();
 	
-	List data = jdbcTemplate.queryForList("select * from td_food_category where rest_id = ? and category_id = ? ",
-			new Object[]{user.getRest_id(),id});
+	List data = jdbcTemplate.queryForList("select * from td_food_category where category_id = ? ",
+			new Object[]{id});
 	if(data.size()>0){
 		return ut.err("菜品类别 ["+id+"] 已存在!添加失败！");	
 	}
@@ -330,8 +325,8 @@ public String addFoodcategory(HttpServletRequest request){
 		level = "2";
 	}
 	String name = request.getParameter("name").trim();
-	jdbcTemplate.update("insert into td_food_category (rest_id,category_id,parent_id,name,level) values (?,?,?,?,?)",
-		new Object[]{user.getRest_id(),id,parent_id,name,level});
+	jdbcTemplate.update("insert into td_food_category (category_id,parent_id,name,level) values (?,?,?,?)",
+		new Object[]{id,parent_id,name,level});
     return ut.suc("添加菜品类别成功");	
 }
 public String modifyFoodcategory(HttpServletRequest request){
@@ -339,8 +334,8 @@ public String modifyFoodcategory(HttpServletRequest request){
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	String id = request.getParameter("id");
 	String name = request.getParameter("name");
-	jdbcTemplate.update(" update td_food_category set name = ? where rest_id = ? and category_id = ?  ",
-		new Object[]{name,user.getRest_id(),id});
+	jdbcTemplate.update(" update td_food_category set name = ? where category_id = ?  ",
+		new Object[]{name,id});
     return ut.suc("修改菜品类别成功");	
 }
 public String deleteFoodcategory(HttpServletRequest request){
@@ -348,7 +343,7 @@ public String deleteFoodcategory(HttpServletRequest request){
 	final User user = (User)request.getSession().getAttribute(CC.USER_CONTEXT);
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	final JSONArray jsonArr = JSONArray.fromObject(jsonStr);
-	jdbcTemplate.batchUpdate( " delete  from td_food_category where rest_id = ? and category_id  = ? " , 
+	jdbcTemplate.batchUpdate( " delete  from td_food_category where category_id  = ? " ,
 		new BatchPreparedStatementSetter() {
 			public int getBatchSize() {
 			        return jsonArr.size();
@@ -356,8 +351,7 @@ public String deleteFoodcategory(HttpServletRequest request){
 			public void setValues(PreparedStatement pstmt, int i)
 					throws SQLException {
 				   JSONObject item = (JSONObject)jsonArr.get(i);
-			       pstmt.setString(1, user.getRest_id());
-			       pstmt.setString(2, item.getString("id"));  
+			       pstmt.setString(1, item.getString("id"));
 			       //ut.log(" ****************  id = "+item.getString("id"));
 			}
 	});
@@ -391,10 +385,10 @@ public String addFood(HttpServletRequest request){
 	String use_tag = request.getParameter("use_tag");
 	
 	
-	jdbcTemplate.update("insert into td_food (rest_id,food_id,food_name,abbr,price,unit,category,groups,"+
+	jdbcTemplate.update("insert into td_food (food_id,food_name,abbr,price,unit,category,groups,"+
 		    " printer,printer_sec,printer_start, printer_hurry,printer_back,print_count, cook_tag, cook_time, show_tag, use_tag, remark "+
-	        ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? ,?,?)",
-			new Object[]{user.getRest_id(), food_id,food_name,abbr.toUpperCase(),price,unit,category,groups,printer,printer_sec,printer_start,printer_hurry,printer_back,
+	        ") values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,? ,?,?)",
+			new Object[]{food_id,food_name,abbr.toUpperCase(),price,unit,category,groups,printer,printer_sec,printer_start,printer_hurry,printer_back,
 		        print_count, cook_tag, cook_time, show_tag, use_tag, remark});
     return ut.suc("添加成功");	
 }
@@ -426,9 +420,9 @@ public String modifyFood(HttpServletRequest request){
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	jdbcTemplate.update(" update td_food set food_name=?,abbr=?,price=?,unit=?,category=?,groups=?,printer=? , "+
 		    " printer_sec=?,printer_start=?,printer_hurry=?,printer_back=?,print_count=?,cook_tag=?,show_tag=?,remark = ?  "+
-	        " where food_id = ? and rest_id = ? ",
+	        " where food_id = ? ",
 			new Object[]{food_name,abbr.toUpperCase(),price,unit,category,groups,printer,printer_sec,printer_start, printer_hurry,printer_back,
-		        print_count, cook_tag, show_tag, remark ,food_id,user.getRest_id()});
+		        print_count, cook_tag, show_tag, remark ,food_id});
 	return ut.suc("修改成功");	
 }
 public String deleteFood(HttpServletRequest request){
@@ -436,7 +430,7 @@ public String deleteFood(HttpServletRequest request){
 	String jsonStr = request.getParameter("jsonStr");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	final JSONArray jsonArr = JSONArray.fromObject(jsonStr);
-	jdbcTemplate.batchUpdate( " delete  from td_food where rest_id = ? and food_id  = ? " , 
+	jdbcTemplate.batchUpdate( " delete  from td_food where food_id  = ? " ,
 		new BatchPreparedStatementSetter() {
 			public int getBatchSize() {
 			        return jsonArr.size();
@@ -444,8 +438,7 @@ public String deleteFood(HttpServletRequest request){
 			public void setValues(PreparedStatement pstmt, int i)
 					throws SQLException {
 				   JSONObject item = (JSONObject)jsonArr.get(i);
-			       pstmt.setString(1, user.getRest_id());    
-			       pstmt.setString(2, item.getString("id"));    
+			       pstmt.setString(1, item.getString("id"));
 			       //ut.log(" ****************  id = "+item.getString("id"));
 			}
 	});
@@ -504,7 +497,7 @@ public String modifyBanInfo(HttpServletRequest request){
     return ut.suc("修改成功");	
 }
 
-public String setOrleRight(HttpServletRequest request){
+public String setRoleRight(HttpServletRequest request){
 	final String role_id = request.getParameter("role_id");
 	String jsonStr = request.getParameter("jsonStr");
 	JdbcTemplate jdbcTemplate = getJDBC(request);

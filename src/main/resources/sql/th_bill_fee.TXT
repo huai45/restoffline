@@ -1,0 +1,14 @@
+CREATE TABLE "th_bill_fee" (
+"CHARGE_ID"  varchar(100) NOT NULL,
+"BILL_ID"  varchar(100) NOT NULL,
+"MODE_ID"  varchar(100) NOT NULL DEFAULT '',
+"MODE_NAME"  varchar(100) NOT NULL DEFAULT '',
+"FEE"  varchar(10) NOT NULL DEFAULT '0',
+"TRADE_ID"  varchar(100) NOT NULL DEFAULT '',
+"USER_ID"  varchar(100) NOT NULL DEFAULT '',
+"OPER_STAFF_ID"  varchar(100) NOT NULL DEFAULT '',
+"OPER_STAFF_NAME"  varchar(100) NOT NULL DEFAULT '',
+"OPER_TIME"  varchar(20) NOT NULL DEFAULT '',
+PRIMARY KEY ("CHARGE_ID" ASC)
+);
+

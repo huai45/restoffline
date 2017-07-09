@@ -56,7 +56,7 @@ public class MonitorServiceImpl implements MonitorService {
 				itemList.add(item);
 			}
 			// state    0 ： 未打单   1 ： 已打单但未上菜   2 ： 已上菜
-			baseDao.jdbcTemplate.batchUpdate( "update tf_bill_item set state = '2' , end_time = ? where barcode = ? and rest_id = ? and state not in ('0','2') " , 
+			baseDao.jdbcTemplate.batchUpdate( "update tf_bill_item set state = '2' , end_time = ? where barcode = ? and state not in ('0','2') " ,
 					new BatchPreparedStatementSetter() {
 					public int getBatchSize() {
 					        return itemList.size();
@@ -67,7 +67,6 @@ public class MonitorServiceImpl implements MonitorService {
 //						ut.log(item);
 					    pstmt.setString(1, ""+item.get("time"));
 					    pstmt.setString(2, item.get("barcode").toString());
-					    pstmt.setString(3, param.getString("rest_id"));
 					}
 			});
 		} catch (Exception e) {
@@ -94,8 +93,8 @@ public class MonitorServiceImpl implements MonitorService {
 		result.put("success", "true");
 		User user = (User)param.get("user");
 		String table_id = param.getString("table_id");
-		List billList = baseDao.jdbcTemplate.queryForList("select * from tf_bill where table_id = ? and rest_id = ? and pay_type = '0' ",
-			new Object[]{ table_id,user.getRestId() });
+		List billList = baseDao.jdbcTemplate.queryForList("select * from tf_bill where table_id = ? and pay_type = '0' ",
+			new Object[]{ table_id });
 	    String bill_id = "";
 		if(billList.size()>0){
 			bill_id = ((Map)billList.get(0)).get("BILL_ID").toString();

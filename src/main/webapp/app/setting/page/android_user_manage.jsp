@@ -2,14 +2,12 @@
 com.huai.common.util.*,com.mongodb.BasicDBObject,org.springframework.jdbc.core.JdbcTemplate,
 javax.sql.DataSource,com.huai.common.domain.User" pageEncoding="UTF-8"%>
 <%
-String table_name = "phone_user";
+String table_name = "android_user";
 User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
-String sql = " select user_id,username,password from td_phone_user where REST_ID = ? order by USER_ID asc  ";
+String sql = " select user_id,username,password from td_android_user where 1 = 1 order by USER_ID asc  ";
 ut.log(" sql :" +sql);
-ut.log(" user.getRest_id() :" +user.getRest_id());
-String rest_id = user.getRest_id();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List users = jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id()});
+List users = jdbcTemplate.queryForList(sql,new Object[]{ });
 ut.log(" details.size() :" +users.size());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -198,7 +196,6 @@ $(document).ready(function(){
 		$("#show_list .user_tr_select").each(function(){
 		    var user = {};
 		    user.id=$(this).attr("id");
-		    user.rest_id ='<%=rest_id %>';
 		    users.push(user);
 		});
 		if(confirm("确定要删除选定的"+users.length+"条记录吗?")){

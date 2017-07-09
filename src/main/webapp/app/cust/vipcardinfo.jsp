@@ -9,9 +9,6 @@
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
 String user_id = request.getParameter("user_id");
 ut.p("user_id:"+user_id);
-String rest_id = user.getRest_id();
-ut.p("rest_id:"+rest_id);
-
 QueryDao queryDao = (QueryDao)GetBean.getBean("queryDao");
 IData param = new IData();
 param.put("user_id",user_id);
@@ -75,13 +72,10 @@ $(document).ready(function(){
 	        <image src="/resource/image/icon/black/edit.png" class="title_btn_image"/>
 	         编辑
 	    </div>
-	    
-	    <% if(!rest_id.equals("kl")){ %>
 	    <div id="payfeebtn" class="title_btn" style="" >
 	        <image src="/resource/image/icon/black/add.png" class="title_btn_image"/>
 	         充值
 	    </div>
-	    <% } %>
     </div>
     <div style="font-size:18px;padding-left:20px;">
         <div style="line-height:24px;font-size:12px;font-weight:bold;margin-top:10px;">会员卡号</div>

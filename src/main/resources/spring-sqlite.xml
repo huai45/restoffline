@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"  
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xmlns:p="http://www.springframework.org/schema/p"  
+        xmlns:context="http://www.springframework.org/schema/context"  
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans   
+           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+           http://www.springframework.org/schema/context   
+           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="location" value="classpath:restoff.properties"/>
+	</bean>
+
+	  <bean id="yydb" name="centerdb" class="org.springframework.jdbc.datasource.DriverManagerDataSource" scope="singleton">
+		  <property name="driverClassName" value="${jdbc.driverClassName}" />
+		  <property name="url" value="${jdbc.url}" />
+		  <property name="username" value="${jdbc.username}" />
+		  <property name="password" value="${jdbc.password}" />
+	  </bean>
+	  
+	  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+	      <property name="dataSource" ref="yydb" />
+	  </bean>
+
+	  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	      <property name="dataSource" ref="yydb" />  
+	  </bean>
+
+	<bean id="localdb" name="localdb" class="org.springframework.jdbc.datasource.DriverManagerDataSource" scope="singleton">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.bak.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<bean id="jdbcTemplate2" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="localdb" />
+	</bean>
+
+	<bean id="transactionManager2" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="localdb" />
+	</bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="yydb" />
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+	</bean>
+
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0">
+            <ref bean="sqlSessionFactory" />
+        </constructor-arg>
+    </bean>
+
+    <!--动态代理实现 不用写dao的实现 -->
+    <bean id="MapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 这里的basePackage 指定了dao层接口路劲，这里的dao接口不用自己实现 -->
+        <property name="basePackage" value="com.huai.user.dao" />
+        <!-- 如果只有一个数据源的话可以不用指定，但是如果有多个数据源的话必须要指定 -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        <!--直接制定了sqlsessionTemplate名称，这个和上面的其实是一样的 -->
+        <property name="sqlSessionTemplateBeanName" value="sqlSession" />
+    </bean>
+
+    <tx:annotation-driven />
+      
+            
+  </beans>  
+  

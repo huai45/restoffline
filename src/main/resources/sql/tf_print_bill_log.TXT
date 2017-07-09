@@ -1,0 +1,13 @@
+CREATE TABLE "tf_print_bill_log" (
+"PRINT_ID"  varchar(100) NOT NULL,
+"STATE"  varchar(10) NOT NULL DEFAULT '0',
+"PRINTER"  varchar(100) NOT NULL DEFAULT '',
+"BILL_ID"  varchar(100) NOT NULL,
+"OPER_TIME"  varchar(20) NOT NULL DEFAULT '',
+"OPER_STAFF_ID"  varchar(100) NOT NULL DEFAULT '',
+"OPER_STAFF_NAME"  varchar(100) NOT NULL DEFAULT '',
+"PRINT_TIME"  varchar(20) NOT NULL DEFAULT '',
+"REMARK"  varchar(2000) NOT NULL DEFAULT '',
+PRIMARY KEY ("PRINT_ID" ASC)
+);
+

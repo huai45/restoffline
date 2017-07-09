@@ -1,0 +1,26 @@
+CREATE TABLE "th_bill" (
+"BILL_ID"  varchar(100) NOT NULL,
+"TABLE_ID"  varchar(100) NOT NULL,
+"PAY_TYPE"  varchar(10) NOT NULL DEFAULT '0',
+"NOP"  varchar(5) NOT NULL DEFAULT '1',
+"BILL_FEE"  varchar(20) NOT NULL DEFAULT '0.00',
+"SPAY_FEE"  varchar(20) NOT NULL DEFAULT '0',
+"RECV_FEE"  varchar(20) NOT NULL DEFAULT '0',
+"REDUCE_FEE"  varchar(20) NOT NULL DEFAULT '0',
+"DERATE_FEE"  varchar(20) NOT NULL DEFAULT '0',
+"INVOICE_FEE"  varchar(20) NOT NULL DEFAULT '0',
+"OPEN_STAFF_ID"  varchar(100) NOT NULL DEFAULT '',
+"OPEN_STAFF_NAME"  varchar(100) NOT NULL DEFAULT '',
+"OPEN_DATE"  varchar(50) NOT NULL DEFAULT '',
+"OPEN_TIME"  varchar(50) NOT NULL DEFAULT '',
+"CLOSE_DATE"  varchar(50) NOT NULL DEFAULT '',
+"CLOSE_TIME"  varchar(50) NOT NULL DEFAULT '',
+"REOPEN"  varchar(10) NOT NULL DEFAULT '0',
+"REMARK"  varchar(200) DEFAULT '',
+"PARAM1"  varchar(50) DEFAULT '',
+"PARAM2"  varchar(50) DEFAULT '',
+"PARAM3"  varchar(50) DEFAULT '',
+"PARAM4"  varchar(50) DEFAULT '',
+PRIMARY KEY ("BILL_ID" ASC)
+);
+

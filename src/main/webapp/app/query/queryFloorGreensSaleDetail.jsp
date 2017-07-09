@@ -6,10 +6,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
-//User user = (User)session.getAttribute( CC.USER_CONTEXT );
-//String rest_id = user.getRest_id();
-//JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
 System.out.println("start_date:"+start_date);
@@ -24,11 +20,6 @@ if(end_date==null){
 	end_date = "";
 	show_end_date = ut.currentDate(-1);
 }
-//String sql = "  ";
-//List details = new ArrayList();
-//if(!start_date.equals("")&&!end_date.equals("")){
-//	details = jdbcTemplate.queryForList(sql,new Object[]{rest_id,start_date+" 00:00:00",end_date+" 23:59:59"});
-//}
 %>
 <!DOCTYPE>
 <html>

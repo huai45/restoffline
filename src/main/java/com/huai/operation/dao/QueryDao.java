@@ -6,11 +6,11 @@ import com.huai.common.domain.IData;
 
 public interface QueryDao {
 
-	public IData queryCustById(IData param);
+	IData queryCustById(IData param);
 
-	public IData queryCustByCardNo(IData param);
+	IData queryCustByCardNo(IData param);
 
-	public List queryCustList(IData param);	
+	List queryCustList(IData param);
 	
 
 	

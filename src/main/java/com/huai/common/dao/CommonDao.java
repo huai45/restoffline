@@ -10,6 +10,4 @@ public interface CommonDao {
 
 	public IData queryCommonParam();
 	
-	public IData queryRestParam(IData p);
-	
 }

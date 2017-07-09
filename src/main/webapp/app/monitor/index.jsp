@@ -8,10 +8,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List tables = jdbcTemplate.queryForList(" select * from td_table where rest_id = ? ",new Object[]{rest_id});
-List foods = jdbcTemplate.queryForList(" select * from td_food where rest_id = ?  ",new Object[]{rest_id});
+List tables = jdbcTemplate.queryForList(" select * from td_table where 1 = 1 ",new Object[]{});
+List foods = jdbcTemplate.queryForList(" select * from td_food where 1 = 1 ",new Object[]{});
 %>
 <!DOCTYPE>
 <html>

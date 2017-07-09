@@ -75,9 +75,9 @@ $(document).ready(function(){
 		            var food_div = '<div style="height:65px;margin-left:20px;"  >'+
                        '  <div class="food_info_logo_div"><div>('+(i+1)+')</div></div>'+
                        '  <div>'+
-                       '    <div><span class="query_foodname" >'+food.food_name+'</span></div>'+
+                       '    <div><span class="query_foodname" >'+food.FOOD_NAME+'</span></div>'+
                        '    <div class="food_info_item">'+
-                       '      <div>单价:￥'+food.price+'</div>'+
+                       '      <div>单价:￥'+food.PRICE+'</div>'+
                        '      <div style="color:#000;">出库数量  :  '+(food.count-food.back_count)+'</div>'+
                        '      <div style="color:#000;">点菜数量  :  '+food.count+'</div>'+
                        '      <div style="color:#'+(food.back_count>0?"38A2DB":"000")+';">退菜数量  :  '+food.back_count+'</div>'+

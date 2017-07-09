@@ -35,7 +35,7 @@
 
 
       <aop:aspectj-autoproxy />
-      <import resource="spring-mysql.xml"/>
+      <import resource="spring-sqlite.xml"/>
             
   </beans>  
   

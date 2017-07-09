@@ -9,17 +9,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRestId();
 String today = ut.currentDate();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List tables = jdbcTemplate.queryForList(" select * from td_table where rest_id = ? and use_tag= '1' order by 0+table_id ",new Object[]{rest_id});
+List tables = jdbcTemplate.queryForList(" select * from td_table where use_tag= '1' order by 0+table_id ",new Object[]{ });
 ut.p("tables = "+tables.size());
 JSONArray ja = JSONArray.fromObject(tables);
 
-List foods = jdbcTemplate.queryForList(" select * from td_food where rest_id = ? and use_tag= '1' order by food_id ",new Object[]{rest_id});
+List foods = jdbcTemplate.queryForList(" select * from td_food where  use_tag= '1' order by food_id ",new Object[]{ });
 ut.p("foods = "+foods.size());
 
-List printers = jdbcTemplate.queryForList(" select * from td_printer where rest_id = ? and state= '1' order by printer ",new Object[]{rest_id});
+List printers = jdbcTemplate.queryForList(" select * from td_printer where  state= '1' order by printer ",new Object[]{ });
 ut.p("printers = "+printers.size());
 
 %>
@@ -45,30 +44,14 @@ var tables = <%= ja.toString() %>;
 var floors = [];
 height=0;
 window_tag=0;
-rest_id="<%= rest_id %>";
 table_patrn=/^[0-9]{1,4}$/; 
 food_patrn=/^[a-zA-Z]{1,20}$/;
 ajax_flag = 0;
 
-printtaskurl = "<%= user.getParam().getString("PARAM1") %>";
-printtasktime = <%= user.getParam().getString("PARAM2") %>;
-socketurl = "<%= user.getParam().getString("PARAM3") %>";
-default_printer = "<%= user.getParam().getString("PARAM4") %>";
-
-appid="<%= user.getInfo().getString("APPID") %>";
-queryfoodurl="<%= user.getParam().getString("PARAM9") %>";
-querybillurl="<%= user.getParam().getString("PARAM8") %>";
-querybillinfourl="<%= user.getParam().getString("PARAM7") %>";
-backurl="";
-ftime=<%= user.getParam().getString("PARAM5") %>;
-btime=<%= user.getParam().getString("PARAM6") %>;
-querytabletime=<%= user.getParam().getString("PARAM10") %>;
-
-cardsocketurl = "<%= user.getParam().getString("PARAM11") %>";
      
 </script> 
 <script src="/app/operation/js/start.js"></script>
-<script src="/app/operation/js/func.js"></script>
+<script src="/app/operation/js/func.js?v=1.01"></script>
 <script src="/app/operation/js/layout.js"></script>
 <script src="/app/operation/js/desktop.js"></script>
 <script src="/app/operation/js/opentable.js"></script>
@@ -233,7 +216,7 @@ Ext.onReady(function(){
 <div id="tableinfo_east" style="display:none;">
     <div style="background-color:#FFF;height:330px;width:260px;margin:5px;border:solid 1px #CCC;font-family:'Microsoft YaHei';">
         <div class="billitem" style="">当前桌号  ：    <span id="tableinfo_table_id"></span></div>
-        <div class="billitem" style="">账单流水  ：    <span id="tableinfo_bill_id"></span></div>
+        <div class="billitem" style="">账单流水  ：    <span id="show_tableinfo_bill_id"></span><span id="tableinfo_bill_id" style="display: none;"></span></div>
         <div class="billitem" style="display:none;">人数  ：    <span id="tableinfo_nop"></span></div>
         <div class="billitem" style="display:none;">班次  ：    <span id="tableinfo_ban"></span></div>
         <div class="billitem" style="">开台时间  ：    <span id="tableinfo_start_time"></span></div>

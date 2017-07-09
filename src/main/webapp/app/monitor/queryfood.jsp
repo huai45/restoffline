@@ -13,9 +13,9 @@ ut.log("food_name="+name);
 User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 List items = jdbcTemplate.queryForList(" select a.*,b.TABLE_ID,b.PAY_TYPE from tf_bill_item a, tf_bill b  "+
-	" where a.food_id = ? and b.rest_id = ? and a.bill_id = b.bill_id and b.pay_type in ('0','1') "+
+	" where a.food_id = ?  and a.bill_id = b.bill_id and b.pay_type in ('0','1') "+
 	"order by b.pay_type,a.state , a.oper_time ",
-	new Object[]{ id , user.getRest_id() });
+	new Object[]{ id  });
 ut.p(items.size());
 if(items.size()==0){
 	//out.print("<div style='margin:250px 0px 0px 370px;font-size:20px;'>目前还没有台位点此菜品</div>");

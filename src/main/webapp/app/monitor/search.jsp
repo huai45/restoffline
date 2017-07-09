@@ -26,8 +26,8 @@ public String queryTableBill(HttpServletRequest request){
 	User user = (User)request.getSession().getAttribute(CC.USER_CONTEXT);
 	String table_id = request.getParameter("table_id");
 	JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-	List billList = jdbcTemplate.queryForList("select * from tf_bill where table_id = ? and rest_id = ? and pay_type = '0' ",
-		new Object[]{ table_id,user.getRest_id() });
+	List billList = jdbcTemplate.queryForList("select * from tf_bill where table_id = ?  and pay_type = '0' ",
+		new Object[]{ table_id });
     String bill_id = "";
 	if(billList.size()>0){
 		bill_id = ((Map)billList.get(0)).get("BILL_ID").toString();

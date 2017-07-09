@@ -1,0 +1,16 @@
+CREATE TABLE "tf_user" (
+"USER_ID"  varchar(100) NOT NULL,
+"USER_TYPE"  varchar(10) NOT NULL,
+"CARD_NO"  varchar(100) NOT NULL,
+"LEVEL"  varchar(10) NOT NULL DEFAULT '0',
+"CUSTNAME"  varchar(200) NOT NULL,
+"PHONE"  varchar(40) NOT NULL DEFAULT '',
+"MONEY"  varchar(10) NOT NULL DEFAULT '0',
+"CREDIT"  varchar(10) NOT NULL DEFAULT '0',
+"OPER_STAFF_ID"  varchar(100) NOT NULL DEFAULT '',
+"OPER_STAFF_NAME"  varchar(100) NOT NULL DEFAULT '',
+"OPER_TIME"  varchar(20) NOT NULL DEFAULT '',
+"REMARK"  varchar(500) NOT NULL DEFAULT '',
+PRIMARY KEY ("USER_ID" ASC)
+);
+

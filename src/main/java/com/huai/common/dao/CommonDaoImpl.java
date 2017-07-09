@@ -12,7 +12,7 @@ public class CommonDaoImpl extends BaseDao implements CommonDao {
 	private static final Logger log = Logger.getLogger(CommonDaoImpl.class);
 	
 	public IData queryRestInfoById(IData param) {
-		List result = jdbcTemplate.queryForList("select * from td_restaurant where rest_id = ? ", new Object[]{ param.get("rest_id") });
+		List result = jdbcTemplate.queryForList("select * from td_restaurant where 1 = 1 ", new Object[]{  });
 		if(result.size()==0){
 			return null;
 		}
@@ -26,16 +26,6 @@ public class CommonDaoImpl extends BaseDao implements CommonDao {
 		for(int i=0;i<result.size();i++){
 			Map temp = (Map)result.get(i);
 			param.put(temp.get("NAME").toString(), temp.get("VALUE").toString());
-		}
-		return param;
-	}
-	
-	public IData queryRestParam(IData p) {
-		IData param = new IData();
-		List infos = jdbcTemplate.queryForList("select * from td_restaurant_para where rest_id = ? ", new Object[]{ p.get("rest_id") });
-		log.info(" queryRestParam  info : "+infos.size());
-		if(infos.size()>0){
-			param.putAll((Map)infos.get(0));
 		}
 		return param;
 	}

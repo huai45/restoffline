@@ -2,12 +2,12 @@
 com.huai.common.util.*,com.mongodb.BasicDBObject,org.springframework.jdbc.core.JdbcTemplate,
 javax.sql.DataSource,com.huai.common.domain.User" pageEncoding="UTF-8"%>
 <%
-String table_name = "phone_user";
+String table_name = "android_user";
 User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
 String id = request.getParameter("id");
-String sql = " select  user_id,username,password from td_phone_user a  where rest_id = ? and user_id = ?   ";
+String sql = " select  user_id,username,password from td_android_user a  where user_id = ?   ";
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List users = jdbcTemplate.queryForList(sql,new Object[]{user.getRest_id(),id});
+List users = jdbcTemplate.queryForList(sql,new Object[]{ id});
 Map tuser = new HashMap();
 if(users.size()>0){
 	tuser = (Map)users.get(0);

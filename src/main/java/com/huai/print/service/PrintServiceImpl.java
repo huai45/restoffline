@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
-import com.huai.common.dao.BaseDao;
 import com.huai.common.dao.CommonDao;
 import com.huai.common.domain.IData;
 import com.huai.operation.dao.OperationDao;
@@ -40,7 +39,6 @@ public class PrintServiceImpl implements PrintService {
 			result.put("msg", " 无餐厅信息 ");
 			return result;
 		}
-		param.put("rest_id", restinfo.getString("REST_ID"));
 		List foods = printDao.queryFoodPrintList(param);
 		ut.p("foods.size()="+foods.size());
 		result.put("foods", foods);
@@ -56,7 +54,6 @@ public class PrintServiceImpl implements PrintService {
 			result.put("msg", " 无餐厅信息 ");
 			return result;
 		}
-		param.put("rest_id", restinfo.getString("REST_ID"));
 		List bills = printDao.queryBillPrintList(param);
 		ut.p("bills.size()="+bills.size());
 		result.put("bills", bills);
@@ -72,8 +69,7 @@ public class PrintServiceImpl implements PrintService {
 			result.put("msg", " 无餐厅信息 ");
 			return result;
 		}
-		param.put("rest_id", restinfo.getString("REST_ID"));
-		IData bill = operationDao.queryBillByBillId(param.getString("bill_id"), restinfo.getString("REST_ID"));
+		IData bill = operationDao.queryBillByBillId(param.getString("bill_id") );
 		if(bill==null){
 			result.put("success", "false");
 			result.put("msg", " 无账单 ");
@@ -90,7 +86,7 @@ public class PrintServiceImpl implements PrintService {
 
 	private IData quqryPrintRestInfo(IData bill) {
 //		log.info("bill:"+bill);
-		IData table = tableDao.queryTableById(bill.getString("REST_ID"),bill.getString("TABLE_ID"));
+		IData table = tableDao.queryTableById( bill.getString("TABLE_ID"));
 //		log.info("table:"+table);
 		if(table!=null) {
         	bill.put("PRINTER", table.get("PRINTER"));
@@ -104,7 +100,7 @@ public class PrintServiceImpl implements PrintService {
 		IData restinfo = commonDao.queryRestInfoById(param);
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill = operationDao.queryBillByTable(param.getString("rest_id"), param.getString("table_id"));
+		IData bill = operationDao.queryBillByTable( param.getString("table_id"));
 		if(bill==null){
 			result.put("success", "false");
 			result.put("msg", " 无账单 ");
@@ -124,7 +120,7 @@ public class PrintServiceImpl implements PrintService {
 		IData restinfo = commonDao.queryRestInfoById(param);
 		Map result = new HashMap();
 		result.put("success", "true");
-		IData bill = operationDao.queryBillByBillId(param.getString("bill_id"), param.getString("rest_id"));
+		IData bill = operationDao.queryBillByBillId(  param.getString("bill_id"));
 		if(bill==null){
 			result.put("success", "false");
 			result.put("msg", " 无账单 ");
@@ -145,12 +141,12 @@ public class PrintServiceImpl implements PrintService {
 		Map result = new HashMap();
 		result.put("success", "true");
 		IData param = new IData();
-		IData bill = operationDao.queryBillByTable(null,table_id);
+		IData bill = operationDao.queryBillByTable(table_id);
 
 		log.info(" printBill  bill = "+bill);
 
 		param.put("table_id", bill.getString("table_id"));
-		Map table = tableDao.queryTableById(null,table_id);
+		Map table = tableDao.queryTableById(table_id);
 
 		log.info(" printBill  table = "+table);
 		param.put("bill_id", bill.get("BILL_ID"));
@@ -168,11 +164,11 @@ public class PrintServiceImpl implements PrintService {
 		Map result = new HashMap();
 		result.put("success", "true");
 		IData param = new IData();
-		IData bill = operationDao.queryBillByBillId(bill_id,null);
+		IData bill = operationDao.queryBillByBillId(bill_id);
 		log.info(" printBill  bill = "+bill);
 
 		param.put("table_id", bill.getString("TABLE_ID"));
-		Map table = tableDao.queryTableById(null,bill.getString("TABLE_ID"));
+		Map table = tableDao.queryTableById(bill.getString("TABLE_ID"));
 
 		log.info(" printBill  table = "+table);
 		param.put("bill_id", bill.get("BILL_ID"));

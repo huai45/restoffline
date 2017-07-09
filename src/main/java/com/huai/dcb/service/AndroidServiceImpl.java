@@ -26,9 +26,9 @@ public class AndroidServiceImpl implements AndroidService {
 	public BaseDao baseDao;
 
 
-	public Map getPhoneUser(String rest_id, String user_id) {
+	public Map getPhoneUser( String user_id) {
 		Map phoneInfo = null;
-		List list = baseDao.jdbcTemplate.queryForList(" select rest_id,user_id,username,password,remark from td_android_user  where rest_id = ? and user_id = ?  ", new Object[]{rest_id,user_id});
+		List list = baseDao.jdbcTemplate.queryForList(" select user_id,username,password,remark from td_android_user  where  user_id = ?  ", new Object[]{ user_id});
 		if(list.size()>0){
 			phoneInfo = (Map)list.get(0);
 		}
@@ -38,10 +38,10 @@ public class AndroidServiceImpl implements AndroidService {
 
 	public String printQueryBill(User user, Map param) {
 		String print_sql = "insert into tf_print_bill_log " +
-			" (PRINT_ID,REST_ID,STATE,PRINTER,BILL_ID,OPER_TIME,OPER_STAFF_ID,OPER_STAFF_NAME,PRINT_TIME) " +
-			" values ( ?,?,'0',?,?,?,?,?,'') ";
+			" (PRINT_ID,STATE,PRINTER,BILL_ID,OPER_TIME,OPER_STAFF_ID,OPER_STAFF_NAME,PRINT_TIME) " +
+			" values ( ?,'0',?,?,?,?,?,'') ";
 		String print_id = baseDao.getNewID("print_id");
-		baseDao.jdbcTemplate.update(print_sql , new Object[]{print_id,param.get("rest_id"),param.get("printer"),
+		baseDao.jdbcTemplate.update(print_sql , new Object[]{print_id,param.get("printer"),
 				param.get("bill_id"),param.get("phone"),param.get("phone"),ut.currentTime()});
 		return ut.suc("打印任务提交成功！");
 	}

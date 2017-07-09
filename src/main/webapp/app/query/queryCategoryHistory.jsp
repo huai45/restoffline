@@ -7,7 +7,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 
 String start_date = request.getParameter("start_date");
@@ -25,10 +24,10 @@ if(end_date==null){
 	show_end_date = ut.currentDate(-1);
 }
 String sql = " select category, groups, ROUND(sum(price*(count-back_count)),2) count, ROUND(sum(price*(count-back_count-free_count)*pay_rate/100),2) real_count "+ 
-  " from th_bill_item a where rest_id = ? and oper_time >= ? and oper_time <= ? group by category , groups order by count DESC ; ";
+  " from th_bill_item a where oper_time >= ? and oper_time <= ? group by category , groups order by count DESC ; ";
 List details = new ArrayList();
 if(!start_date.equals("")&&!end_date.equals("")){
-	details = jdbcTemplate.queryForList(sql,new Object[]{rest_id,start_date+" 00:00:00",end_date+" 23:59:59"});
+	details = jdbcTemplate.queryForList(sql,new Object[]{start_date+" 00:00:00",end_date+" 23:59:59"});
 }
 %>
 <!DOCTYPE>

@@ -15,7 +15,6 @@ public class CommonServiceImpl implements CommonService {
 	public IData queryRestParam(IData param) {
 		IData data = new IData();
 		data.putAll(commonDao.queryCommonParam());
-		data.putAll(commonDao.queryRestParam(param));
 		return data;
 	}
 

@@ -7,10 +7,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
-String rest_id = user.getRest_id();
 CommonService commonService = (CommonService)GetBean.getBean("commonService");
 IData p = new IData();
-p.put("rest_id",rest_id);
 IData param = commonService.queryRestParam(p);
 %>
 <!DOCTYPE html>

@@ -68,7 +68,6 @@ public class QueryAction extends BaseController {
 		log.info(" card_no = "+card_no);
 		IData param = new IData();
 		param.put("card_no", card_no );
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = new HashMap();
 		Map vipuser = queryService.queryVipCardUserInfo(param);
@@ -91,7 +90,6 @@ public class QueryAction extends BaseController {
 		String card_no = request.getParameter("card_no");
 		IData param = new IData();
 		param.put("card_no", card_no );
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = queryService.queryVipCardUserList(param);
 		return result;
@@ -103,7 +101,6 @@ public class QueryAction extends BaseController {
 		log.info(" queryCreditUserList  ");
 		User user = this.getSessionUser(request);
 		IData param = new IData();
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = queryService.queryCreditUserList(param);
 		return result;
@@ -115,7 +112,6 @@ public class QueryAction extends BaseController {
 		log.info(" queryTodayData  ");
 		User user = this.getSessionUser(request);
 		IData param = new IData();
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = queryService.queryTodayData(param);
 		log.info(" result : "+result);
@@ -132,7 +128,6 @@ public class QueryAction extends BaseController {
 		log.info(" category = "+category);
 		IData param = new IData();
 		param.put("category", category);
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = queryService.queryCategoryData(param);
 		return result;
@@ -146,7 +141,6 @@ public class QueryAction extends BaseController {
 		String table_id = request.getParameter("table_id");
 		IData param = new IData();
 		param.put("table_id", table_id);
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = queryService.queryTodayBills(param);
 		return result;
@@ -159,7 +153,6 @@ public class QueryAction extends BaseController {
 		String bill_id = request.getParameter("bill_id");
 		IData param = new IData();
 		param.put("bill_id", bill_id);
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		IData bill = queryService.queryTodayBillById(param);
 		modelMap.put("msg", "true");
@@ -178,7 +171,6 @@ public class QueryAction extends BaseController {
 		String end_date = request.getParameter("end_date");
 		param.put("start_date", start_date);
 		param.put("end_date", end_date);
-		param.put("rest_id", user.getRestId());
 		param.put("user", user);
 		Map result = queryService.queryHistorySaleData(param);
 		log.info(" result : "+result);
