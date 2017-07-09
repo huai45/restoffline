@@ -58,7 +58,7 @@ public interface OperationDao {
 	
 	 String calculateData(IData param);
 
-	 String backupTodayBill(IData param);
+	 String backupTodayBill(IData param) throws Exception;
 
 	 String backupPrintLog(IData param);
 

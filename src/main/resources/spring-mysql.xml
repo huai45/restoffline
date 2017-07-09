@@ -14,10 +14,7 @@
            http://www.springframework.org/schema/tx
            http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="ignoreUnresolvablePlaceholders" value="true" />
-		<property name="location" value="classpath:restoff.properties"/>
-	</bean>
+
 
 	  <bean id="yydb" name="centerdb" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close" scope="singleton"> 
 			<property name="driverClass"><value>com.mysql.jdbc.Driver</value></property> 

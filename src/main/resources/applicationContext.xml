@@ -30,11 +30,27 @@
       -->
 	  </context:component-scan>
 
+
       <task:annotation-driven scheduler="pqScheduler" mode="proxy"/>
       <task:scheduler id="pqScheduler" pool-size="10"/>
 
 
       <aop:aspectj-autoproxy />
+
+    <bean id="prop" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations"><!-- 这里是PropertiesFactoryBean类，它也有个locations属性，也是接收一个数组，跟上面一样  -->
+            <array>
+                <value>classpath:restoff.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true" />
+        <property name="location" value="classpath:restoff.properties"/>
+    </bean>
+
+
       <import resource="spring-sqlite.xml"/>
             
   </beans>  

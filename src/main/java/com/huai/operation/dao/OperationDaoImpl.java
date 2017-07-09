@@ -11,6 +11,10 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,10 +24,23 @@ import com.huai.common.domain.IData;
 import com.huai.common.domain.User;
 import com.huai.common.util.*;
 
+import javax.annotation.PostConstruct;
+
 @Component("operationDao")
-public class OperationDaoImpl extends BaseDao implements OperationDao {
+public class OperationDaoImpl extends BaseDao implements OperationDao  {
 
 	private static final Logger log = Logger.getLogger(OperationDaoImpl.class);
+
+	@Value("#{prop.backupPath}")
+	private String backupPath;
+
+	/**
+	 * 初始化方法
+	 */
+	@PostConstruct
+	public void init(){
+		log.info(" backupPath = "+backupPath);
+	}
 	
 	String add_sql = "insert into tf_bill_item (item_id,bill_id,item_type,call_type," +
 		" state,food_id,food_name,price,unit,category,groups,cook_tag,cook_time,count,oper_time," +
@@ -92,8 +109,7 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 	}
     
 	public List queryTableList(IData param) {
-		List tables = jdbcTemplate.queryForList("select * from td_table where  use_tag = '1' order by 0+table_id desc ",
-			new Object[]{  });
+		List tables = jdbcTemplate.queryForList("select * from td_table  where  use_tag = '1' order by 0+table_id desc ", new Object[]{  });
 		return tables;
 	}
     
@@ -595,8 +611,50 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 		return "";
 	}
 
-	public String backupTodayBill(IData param) {
+	public String backupTodayBill(IData param) throws Exception {
 		User user = (User)param.get("user");
+		String path =	backupPath + ut.currentYear()+ut.currentMonth()+ut.currentDay()+"\\";
+		log.info(" path = "+path);
+		File restdoc = new File(path);
+		if(!restdoc.exists()){
+			restdoc.mkdirs();
+		}
+		String billName = "bill_"+ut.currentFileTime()+".bak";
+		File billFile = new File(path+billName);
+		List result = jdbcTemplate.queryForList("select * from tf_bill where 1 = 1  ", new Object[]{ });
+		FileWriter fileWriter= new FileWriter(billFile);
+		for(int i=0;i<result.size();i++){
+			Map bill = (Map)result.get(i);
+			JSONObject obj = JSONObject.fromObject(bill);
+			fileWriter.write(obj.toString()+"\r\n");
+		}
+		fileWriter.flush();
+		fileWriter.close();
+
+		String billItemName = "bill_item_"+ut.currentFileTime()+".bak";
+		File billItemFile = new File(path+billItemName);
+		result = jdbcTemplate.queryForList("select * from tf_bill_item where 1 = 1  ", new Object[]{ });
+		fileWriter= new FileWriter(billItemFile);
+		for(int i=0;i<result.size();i++){
+			Map bill = (Map)result.get(i);
+			JSONObject obj = JSONObject.fromObject(bill);
+			fileWriter.write(obj.toString()+"\r\n");
+		}
+		fileWriter.flush();
+		fileWriter.close();
+
+		String billFeeName = "bill_fee_"+ut.currentFileTime()+".bak";
+		File billFeeFile = new File(path+billFeeName);
+		result = jdbcTemplate.queryForList("select * from tf_bill_fee where 1 = 1  ", new Object[]{ });
+		fileWriter= new FileWriter(billFeeFile);
+		for(int i=0;i<result.size();i++){
+			Map bill = (Map)result.get(i);
+			JSONObject obj = JSONObject.fromObject(bill);
+			fileWriter.write(obj.toString()+"\r\n");
+		}
+		fileWriter.flush();
+		fileWriter.close();
+
 		long t1 = System.currentTimeMillis();
 		jdbcTemplate.update(" insert into th_bill select * from tf_bill where 1 = 1  ",new Object[]{ });
 		jdbcTemplate.update(" insert into th_bill_fee select * from tf_bill_fee where 1 = 1 ",new Object[]{ });
@@ -614,7 +672,8 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 
 	public String backupUserMoney(IData param) throws Exception {
 		User user = (User)param.get("user");
-		String path = GetBean.getContext().getServletContext().getRealPath("/")+"backup\\";
+		String path =	backupPath + ut.currentYear()+ut.currentMonth()+ut.currentDay()+"\\";
+		log.info(" path = "+path);
 		File restdoc = new File(path);
 		if(!restdoc.exists()){
 			restdoc.mkdirs();
@@ -646,7 +705,8 @@ public class OperationDaoImpl extends BaseDao implements OperationDao {
 
 	public String backupSysParam(IData param) throws Exception {
 		User user = (User)param.get("user");
-		String path = GetBean.getContext().getServletContext().getRealPath("/")+"backup\\";
+		String path =	backupPath + ut.currentYear()+ut.currentMonth()+ut.currentDay()+"\\";
+		log.info(" path = "+path);
 		File restdoc = new File(path);
 		if(!restdoc.exists()){
 			restdoc.mkdirs();

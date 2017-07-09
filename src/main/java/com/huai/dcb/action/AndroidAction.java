@@ -88,7 +88,13 @@ public class AndroidAction extends BaseController {
 			IData param = new IData();
 
 			List tables = operationService.queryTableList(param);
+
+			log.info(" ****************  AndroidController  getData  ***********************  tables.size() : "+tables.size());
+
+
 			List foods = foodService.queryFoodList(param);
+
+			log.info(" ****************  AndroidController  getData  ***********************  foods.size() : "+foods.size());
 
 			JSONArray jsonArr = new JSONArray();
 			JSONObject j = new JSONObject();

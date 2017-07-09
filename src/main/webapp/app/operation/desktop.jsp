@@ -58,7 +58,7 @@ ajax_flag = 0;
 <script src="/app/operation/js/addfood.js"></script>
 
 <script src="/app/operation/js/event.js"></script>
-<script src="/app/operation/js/task.js"></script>
+<script src="/app/operation/js/task.js?v=1.01"></script>
 <script>
 Ext.onReady(function(){
     

@@ -59,25 +59,25 @@ Ext.onReady(function(){
 		        
 		    }
 		},
-		interval : querytabletime
+		interval : 2000
 	}
 	Ext.TaskManager.start(queryTableStateTask);
 	
-	var printTask = {
-		run : function() {
-		     $.ajax({  
-		         type: "Get",  
-		         url: printtaskurl+"?appid="+appid+"&queryfoodurl="+queryfoodurl+"&querybillurl="+querybillurl+"&backurl="+backurl+"&ftime="+ftime+"&btime="+btime+"&querybillinfourl="+querybillinfourl,
-		         cache: false,  
-		         jsonp: "callback",  
-		         dataType: "jsonp",  
-		         success: function (result) {  
-		             //alert(result.msg);   
-		         }
-		     });
-		},
-		interval : printtasktime
-	}
-	Ext.TaskManager.start(printTask);
+	// var printTask = {
+	// 	run : function() {
+	// 	     $.ajax({
+	// 	         type: "Get",
+	// 	         url: printtaskurl+"?appid="+appid+"&queryfoodurl="+queryfoodurl+"&querybillurl="+querybillurl+"&backurl="+backurl+"&ftime="+ftime+"&btime="+btime+"&querybillinfourl="+querybillinfourl,
+	// 	         cache: false,
+	// 	         jsonp: "callback",
+	// 	         dataType: "jsonp",
+	// 	         success: function (result) {
+	// 	             //alert(result.msg);
+	// 	         }
+	// 	     });
+	// 	},
+	// 	interval : printtasktime
+	// }
+	// Ext.TaskManager.start(printTask);
 	
 });
