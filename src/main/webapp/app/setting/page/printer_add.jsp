@@ -52,7 +52,7 @@ String table_name = "printer";
 ajax_flag = 0;
 $(document).ready(function(){
 
-    $("#phoneUsermanagepage").addClass("left_menu_sel");
+    $("#printermanagepage").addClass("left_menu_sel");
     
     $("#submitBtn").click( function(){
         if(ajax_flag > 0){

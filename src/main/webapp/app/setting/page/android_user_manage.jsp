@@ -259,9 +259,9 @@ $(document).ready(function(){
 	            <div style="float:left;padding-top:1px;width:40px;text-align:center;" >
 	                <input type="checkbox" id="allpick" value="checkbox" ></input>
 	            </div>
-	            <div style="width:150px;" >用户ID</div>
-	            <div style="width:310px;" >用户名称</div>
-	            <div style="width:310px;" >密码</div>
+	            <div style="width:300px;" >用户ID(即 ： 手机点菜APP登录用户名)</div>
+	            <div style="width:200px;" >用户姓名</div>
+	            <div style="width:200px;" >密码</div>
 	        </div>
 	        <div id="show_list">
             <% for(int i=0;i<users.size();i++){
@@ -271,9 +271,9 @@ $(document).ready(function(){
                 <div style="float:left;padding-top:1px;width:40px;text-align:center;" >
 	                <input type="checkbox" class="checkbox" value="checkbox" ></input>
 	            </div>
-	            <div class="bluefont1 bluefont" style="width:150px;" ><%= tuser.get("user_id") %></div>
-	            <div class="bluefont1 bluefont" style="width:310px;" ><%= tuser.get("username") %></div>
-	            <div class="" style="width:310px;" ><%= tuser.get("password") %></div>
+	            <div class="bluefont1 bluefont" style="width:300px;" ><%= tuser.get("user_id") %></div>
+	            <div class="bluefont1 bluefont" style="width:200px;" ><%= tuser.get("username") %></div>
+	            <div class="" style="width:200px;" ><%= tuser.get("password") %></div>
 	        </div>
 	        <% } %>
 	        </div>

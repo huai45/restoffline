@@ -16,6 +16,8 @@ try{
 		out.print(addTable(request));	
 	}else if(trade_type_code.equals("table_mod")){
 		out.print(modifyTable(request));	
+	}else if(trade_type_code.equals("table_delete")){
+		out.print(deleteTable(request));
 	}else if(trade_type_code.equals("floor_add")){
 		out.print(addFloor(request));	
 	}else if(trade_type_code.equals("floor_mod")){
@@ -124,8 +126,8 @@ public String addTable(HttpServletRequest request){
 	String printer = request.getParameter("printer");
 	String queue_tag = request.getParameter("queue_tag");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-	jdbcTemplate.update("insert into to_table (table_id,table_name,floor_order,floor,size,limit_money,printer,queue_tag) values (?,?,?,?,?,?,?,?)",
-			new Object[]{table_id,table_name,floor_order,floor,size,limit_money,printer,queue_tag});
+	jdbcTemplate.update("insert into td_table (table_id,table_name,floor_order,floor,floor1,size,limit_money,printer,queue_tag) values (?,?,?,?,?,?,?,?,?)",
+			new Object[]{table_id,table_name,floor_order,floor,floor,size,limit_money,printer,queue_tag});
     return ut.suc("添加成功");	
 }
 public String modifyTable(HttpServletRequest request){
@@ -138,15 +140,15 @@ public String modifyTable(HttpServletRequest request){
 	String printer = request.getParameter("printer");
 	String queue_tag = request.getParameter("queue_tag");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-	jdbcTemplate.update(" update to_table set table_name=?,floor_order=?,floor=?,size=?,limit_money=?,printer=?,queue_tag=? where table_id = ?  ",
-			new Object[]{table_name,floor_order,floor,size,limit_money,printer,queue_tag,table_id});
+	jdbcTemplate.update(" update td_table set table_name=?,floor_order=?,floor=?,floor1=?,size=?,limit_money=?,printer=?,queue_tag=? where table_id = ?  ",
+			new Object[]{table_name,floor_order,floor,floor,size,limit_money,printer,queue_tag,table_id});
     return ut.suc("修改成功");	
 }
 public String deleteTable(HttpServletRequest request){
 	String jsonStr = request.getParameter("jsonStr");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	final JSONArray jsonArr = JSONArray.fromObject(jsonStr);
-	jdbcTemplate.batchUpdate( " delete  from to_table where table_id  = ? " , 
+	jdbcTemplate.batchUpdate( " delete  from td_table where table_id  = ? " ,
 		new BatchPreparedStatementSetter() {
 			public int getBatchSize() {
 			        return jsonArr.size();

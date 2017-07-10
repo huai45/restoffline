@@ -60,7 +60,7 @@ if(printers.size()>0){
 ajax_flag = 0;
 $(document).ready(function(){
 
-    $("#phoneUsermanagepage").addClass("left_menu_sel"); 
+    $("#printermanagepage").addClass("left_menu_sel");
      
     $("#cancelBtn").click( function(){
         document.location.href = "/app/setting/page/<%= table_name %>_manage.jsp";

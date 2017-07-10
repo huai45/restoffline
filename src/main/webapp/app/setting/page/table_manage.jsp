@@ -1,14 +1,14 @@
 <%@ page language="java" import="java.util.*,
 com.huai.common.util.*,org.springframework.jdbc.core.JdbcTemplate,
-javax.sql.DataSource,com.huai.common.domain.User" pageEncoding="UTF-8"%>
+com.huai.common.domain.User" pageEncoding="UTF-8"%>
 <%
-String table_name = "printer";
+String table_name = "table";
 User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
-String sql = " select * from td_printer where 1 = 1 order by IP asc  ";
+String sql = " select * from td_table  order by table_id+0  ";
 ut.log(" sql :" +sql);
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List printers = jdbcTemplate.queryForList(sql,new Object[]{ });
-ut.log(" printers.size() :" +printers.size());
+List orders = jdbcTemplate.queryForList(sql,new Object[]{});
+ut.log(" details.size() :" +orders.size());
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -19,32 +19,32 @@ ut.log(" printers.size() :" +printers.size());
 <link rel="stylesheet" href="/app/setting/css/common.css"/>
 <link rel="stylesheet" href="/app/setting/css/index_head.css"/>
 <style>
-    .user_head {
-        width:97%;float:left;margin-left:30px;height:30px;line-height:30px;font-size:14px;cursor:pointer;
-    }
-    .user_head div{
-	    float:left;width:100px;text-align:left;
+	.user_head {
+		width:97%;float:left;margin-left:30px;height:30px;line-height:30px;font-size:14px;cursor:pointer;
 	}
-    .user_tr{
-	    width:97%;float:left;margin-left:10px;padding-left:20px;height:30px;line-height:30px;font-size:14px;color:#595959;cursor:pointer;
+	.user_head div{
+		float:left;width:100px;text-align:left;
+	}
+	.user_tr{
+		width:97%;float:left;margin-left:10px;padding-left:20px;height:30px;line-height:30px;font-size:14px;color:#595959;cursor:pointer;
 	}
 	.user_tr div{
-	    float:left;width:100px;text-align:left;
+		float:left;width:100px;text-align:left;
 	}
 	.user_tr_hover{
-	    background:#E2E2E2;
+		background:#E2E2E2;
 	}
 	.user_tr_select{
-	    background:#094AB2;color:#fff;
+		background:#094AB2;color:#fff;
 	}
 	.bluefont{
-	    color:#094AB2;
+		color:#094AB2;
 	}
 	.checkbox{
-	    height:30px;width:40px;text-align:center;
+		height:30px;width:40px;text-align:center;
 	}
 	#allpick{
-	    height:30px;width:40px;text-align:center;
+		height:30px;width:40px;text-align:center;
 	}
 </style>
 <script src="/resource/jquery-easyui-1.3.1/jquery-1.8.0.min.js"></script>
@@ -53,8 +53,8 @@ ut.log(" printers.size() :" +printers.size());
 ajax_flag = 0;
 $(document).ready(function(){
 
-     $("#printermanagepage").addClass("left_menu_sel");
-     
+    $("#tablemanagepage").addClass("left_menu_sel");
+
      $('#backBtn').click(function(event){
 	 });
 	
@@ -127,10 +127,6 @@ $(document).ready(function(){
 			$(this).children().eq(2).removeClass("bluefont");
         }
 	});
-	
-	
-    //alert($("#center-region-container").height()+" ; "+$("#center-region-container").width());	
-    
     
     $("#selectType").click(function(){
         if($("#selectType").text()=='直拨'){
@@ -163,18 +159,18 @@ $(document).ready(function(){
             $("#selectType").show();
         }
     });
-    
+
     $("#addBtn").click( function(){
         document.location.href = "/transPage?page=/setting/page/<%= table_name %>_add&time="+new Date();
     });
-    
+
     $("#refreshBtn").click( function(){
         document.location.href = "/transPage?page=/setting/page/<%= table_name %>_manage&time="+new Date();
     });
     
     $("#modifyBtn").click( function(){
 		if($("#show_list .user_tr_select").length!=1){
-		    alert('请先选择一条需要编辑的记录!');
+            alert('请先选择一条需要编辑的记录!');
 			return false;
 		}
 		var id = "";
@@ -185,42 +181,41 @@ $(document).ready(function(){
 	});	
 	
 	$("#cancelBtn").click( function(){
-	    if(ajax_flag > 0){
-	        return false;
-	    }
+        if(ajax_flag > 0){
+            return false;
+        }
 	    if($("#show_list .user_tr_select").length==0){
-		    alert('请先选择需要删除的记录!');
+            alert('请先选择需要删除的记录!');
 			return false;
 		}
-		var users = [];
+		var orders = [];
 		$("#show_list .user_tr_select").each(function(){
-		    var user = {};
-		    user.id=$(this).attr("id");
-		    users.push(user);
+		    var order = {};
+		    order.id=$(this).attr("id");
+		    orders.push(order);
 		});
-		if(confirm("确定要删除选定的"+users.length+"条记录吗?")){
-		    ajax_flag = 1;
-		    $.post("/app/setting/setting_service.jsp", {
-			        TRADE_TYPE_CODE : '<%= table_name %>_delete',
-			        jsonStr : JSON.stringify(users)
-			    }, function (result) {
-			        ajax_flag = 0;
-					var obj = $.parseJSON(result);
-					if(obj.success=='true'){
-					    $("#show_list .user_tr_select").remove();
-                        resetCheckBox();
-                        alert(obj.msg);
-					}else{
-					    alert(obj.msg);
-					}
-			}).error(function(){
-			    ajax_flag = 0;
-			    alert("系统异常"); 
-			});
-		
+		if(confirm("确定要删除选定的"+orders.length+"条记录吗?")){
+            ajax_flag = 1;
+            $.post("/app/setting/setting_service.jsp", {
+                TRADE_TYPE_CODE : '<%= table_name %>_delete',
+                jsonStr : JSON.stringify(orders)
+            }, function (result) {
+                ajax_flag = 0;
+                var obj = $.parseJSON(result);
+                if(obj.success=='true'){
+                    $("#show_list .user_tr_select").remove();
+                    resetCheckBox();
+                    alert(obj.msg);
+                }else{
+                    alert(obj.msg);
+                }
+            }).error(function(){
+                ajax_flag = 0;
+                alert("系统异常");
+            });
         }
         
-	});
+	});	
 	
 });
 </script>
@@ -230,37 +225,48 @@ $(document).ready(function(){
 <%@ include file="/app/setting/page/index_head.jsp" %>
 <%@ include file="/app/setting/page/index_west.jsp" %>
 <div id="center" data-options="region:'center',buser:false,style:{buserWidth:0}" style="padding:0px;background:#FFF;">
-    <div id="north" style="height:50px;padding-left:20px;line-height:50px;buser-bottom:solid 0px #CCCCCC;font-size:20px;">
+    <div id="north" style="height:50px;padding-left:20px;line-height:50px;border-bottom:solid 0px #CCCCCC;font-size:20px;">
         <div id="" style="height:48px;width:100%;line-height:50px;">
             <div id="" style="float:right;">
-                <div id="addBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#FFFFFF;margin-top:8px;margin-right: 20px; " onselectstart='return false'> 添加 </div>
-		        <div id="modifyBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#FFFFFF;margin-top:8px;margin-right: 20px; " onselectstart='return false'> 编辑 </div>
-		        <div id="cancelBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#FFFFFF;margin-top:8px;margin-right: 20px; " onselectstart='return false'> 删除 </div>
-	            <div id="refreshBtn" align="center" class="btn" style="float:left;color:#595959;margin-top:8px;margin-right: 40px; " onselectstart='return false'> 刷新 </div>
+                <div id="addBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#FFFFFF;margin-top:8px;margin-right: 70px; " onselectstart='return false'> 添加 </div>
+		        <div id="modifyBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#FFFFFF;margin-top:8px;margin-right: 70px; " onselectstart='return false'> 编辑 </div>
+		        <div id="cancelBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#FFFFFF;margin-top:8px;margin-right: 70px; " onselectstart='return false'> 删除 </div>
+	            <div id="refreshBtn" align="center" class="btn" style="float:left;color:#595959;margin-top:8px;margin-right: 70px; " onselectstart='return false'> 刷新 </div>
 	        </div> 
-            <span>共 <span id="count"><%= printers.size() %></span> 条记录</span>
+            <span>餐台管理</span><span style="margin-left:50px;">共 <span id="count"><%= orders.size() %></span> 条记录</span>
         </div>
-        <div id="" style="line-height:1px;height:1px;width:97%;buser-bottom:solid 1px #CCCCCC;"></div>
+        <div id="" style="line-height:1px;height:1px;width:97%;border-bottom:solid 1px #CCCCCC;"></div>
     </div>
     <div id="center" style="">
-        <div id="audit_list" style="height:570px;width:1000px;overflow:auto;">
+		<div id="audit_list" style="height:570px;width:1000px;overflow:auto;">
             <div class="user_head" style="">
 	            <div style="float:left;padding-top:1px;width:40px;text-align:center;" >
 	                <input type="checkbox" id="allpick" value="checkbox" ></input>
 	            </div>
-	            <div style="width:150px;" >打印机名称</div>
-	            <div style="width:310px;" >IP地址</div>
+	            <div style="width:100px;" >编号</div>
+	            <div style="width:200px;" >名称</div>
+	            <div style="width:100px;" >楼层</div>
+	            <div style="width:100px;" >人数</div>
+	            <div style="width:100px;" >最低消费</div>
+	            <div style="width:200px;" >打印机IP</div>
+	            <div style="width:100px;display:none;" >是否可预定</div>
+
 	        </div>
 	        <div id="show_list">
-            <% for(int i=0;i<printers.size();i++){
-                   Map printer = (Map)printers.get(i);
+            <% for(int i=0;i<orders.size();i++){
+                   Map order = (Map)orders.get(i);
             %>
-            <div class="user_tr user" id="<%= printer.get("printer") %>" >
+            <div class="user_tr" id="<%= order.get("table_id") %>" >
                 <div style="float:left;padding-top:1px;width:40px;text-align:center;" >
 	                <input type="checkbox" class="checkbox" value="checkbox" ></input>
 	            </div>
-	            <div class="bluefont1 bluefont" style="width:150px;" ><%= printer.get("printer") %></div>
-	            <div class="" style="width:310px;" ><%= printer.get("IP") %></div>
+	            <div class="bluefont1 bluefont" style="width:100px;" ><%= order.get("table_id") %></div>
+	            <div class="bluefont1 bluefont" style="width:200px;" ><%= order.get("table_name") %></div>
+	            <div class="" style="width:100px;" ><%= order.get("floor") %></div>
+	            <div class="" style="width:100px;" ><%= order.get("size") %></div>
+	            <div class="" style="width:100px;" ><%= order.get("limit_money") %></div>
+	            <div class="" style="width:200px;" ><%= order.get("printer") %></div>
+	            <div class="" style="width:100px;display:none;" ><%= order.get("queue_tag") %></div>
 	        </div>
 	        <% } %>
 	        </div>
@@ -269,10 +275,9 @@ $(document).ready(function(){
         <div style="clear:both;"></div>
         <div id="hidden_list" style="display:none;"></div>
     </div>
-    
+
 </div>
-</div>    
-       
+</div>
+
 </body>
 </html>
-
