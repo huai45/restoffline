@@ -162,23 +162,23 @@ public String deleteTable(HttpServletRequest request){
 }
 public String addPrinter(HttpServletRequest request){
 	String ip = request.getParameter("ip");
-	String name = request.getParameter("name");
+	String printer = request.getParameter("printer");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-	jdbcTemplate.update("insert into td_printer (name,ip) values (?,?)",new Object[]{name,ip});
+	jdbcTemplate.update("insert into td_printer (PRINTER,ip) values (?,?)",new Object[]{printer,ip});
     return ut.suc("添加成功");	
 }
 public String modifyPrinter(HttpServletRequest request){
 	String ip = request.getParameter("ip");
-	String name = request.getParameter("name");
+	String printer = request.getParameter("printer");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-	jdbcTemplate.update(" update td_printer set ip = ? where name = ?  ",new Object[]{ip,name});
+	jdbcTemplate.update(" update td_printer set ip = ? where PRINTER = ?  ",new Object[]{ip,printer});
     return ut.suc("修改成功");	
 }
 public String deletePrinter(HttpServletRequest request){
 	String jsonStr = request.getParameter("jsonStr");
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	final JSONArray jsonArr = JSONArray.fromObject(jsonStr);
-	jdbcTemplate.batchUpdate( " delete  from td_printer where name  = ? " , 
+	jdbcTemplate.batchUpdate( " delete  from td_printer where PRINTER  = ? " ,
 		new BatchPreparedStatementSetter() {
 			public int getBatchSize() {
 			        return jsonArr.size();

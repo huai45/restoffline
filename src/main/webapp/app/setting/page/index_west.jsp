@@ -50,6 +50,9 @@ $(document).ready(function(){
     <div id="phoneUsermanagepage" class="left_menu" url="/transPage?page=/setting/page/android_user_manage" onselectstart='return false'>
   	    <span style="margin-left:20px;">手机点菜宝管理</span>
     </div>
+    <div id="printermanagepage" class="left_menu" url="/transPage?page=/setting/page/printer_manage" onselectstart='return false'>
+        <span style="margin-left:20px;">打印机管理</span>
+    </div>
     
 </div>  
 </div>
