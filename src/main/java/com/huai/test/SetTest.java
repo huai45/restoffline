@@ -24,14 +24,12 @@ public class SetTest {
         list.add(10);
         list.add(14);
         list.add(10);
+        list.addAll(set);
         it = list.iterator();
         while (it.hasNext())
         {
             System.out.print(it.next() + " ");
         }
-
-
-
 
     }
 
