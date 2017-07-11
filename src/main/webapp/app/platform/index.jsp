@@ -113,6 +113,10 @@ $(document).ready(function(){
 		        <image src="/app/platform/image/icon/renmai.jpg" class="appicon" />
 		        <div class="appname" style="font-family:Microsoft Yahei;">会员管理</div>
 		    </div>
+			<div class="app" url="/query/index.html" target="" title="统计查询" style="background-color:#80397B;">
+				<image src="/app/platform/image/icon/onenote.jpg" class="appicon" />
+				<div class="appname" style="font-family:Microsoft Yahei;">统计查询</div>
+			</div>
 		    <div style="clear:both;"></div>
 		   
 		    <div class="app big" style="background-color:#D24726;display:none;">

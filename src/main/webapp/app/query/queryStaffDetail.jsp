@@ -38,7 +38,7 @@ List details = new ArrayList();
 if(!start_date.equals("")&&!end_date.equals("")){
 	details = jdbcTemplate.queryForList(sql,new Object[]{staff_name,start_date+" 00:00:00",end_date+" 23:59:59"});
 }
-List staffList = jdbcTemplate.queryForList(" select username user_id ,username from td_phone_user where 1 = 1 union  select username user_id,username from td_android_user where 1 = 1 ",
+List staffList = jdbcTemplate.queryForList(" select username user_id,username from td_android_user where 1 = 1 ",
     new Object[]{} );
 
 %>
