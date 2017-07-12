@@ -4,7 +4,7 @@ import com.huai.common.domain.User;
 
 public interface UserService {
 
-	public User getMatchMember(String staff_id,String pwd);
+	User getMatchMember(String staff_id,String pwd);
 	
 	
 }

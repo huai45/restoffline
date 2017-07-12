@@ -2,7 +2,6 @@
 <%@ page language="java" import="org.springframework.jdbc.core.JdbcTemplate"%>
 <%@ page language="java" import="com.huai.common.domain.*"%>
 <%@ page language="java" import="com.huai.common.util.*"%>
-<%@ page language="java" import="com.huai.common.service.*"%>
 <%@ page language="java" import="net.sf.json.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -232,21 +231,21 @@ Ext.onReady(function(){
         <div class="tablebtn_split"></div>
         <div id="payByCardBtn" class="tablebtn">刷卡</div>
         <div class="tablebtn_split"></div>
-        <div id="payByChequePageBtn" class="tablebtn">支票</div>
+		<div id="reducefeeBtn" class="tablebtn">抹零</div>
     </div>
     <div class="tablebtn_group">
-        <div id="payByVipCardPageBtn" class="tablebtn">会员</div>
+		<div id="payByWechatBtn" class="tablebtn"><span style="">微信</span></div>
         <div class="tablebtn_split"></div>
         <div id="payByCreditUserPageBtn" class="tablebtn">挂账</div>
         <div class="tablebtn_split"></div>
-        <div id="reducefeeBtn" class="tablebtn">抹零</div>
+		<div id="printQueryBillBtn" class="tablebtn">打印</div>
     </div>
-    <div class="tablebtn_group">
-        <div id="printQueryBillBtn" class="tablebtn">打印</div>
+    <div class="tablebtn_group" style="display:none;">
+		<div id="payByChequePageBtn" class="tablebtn">支票</div>
         <div class="tablebtn_split"></div>
-        <div id="payByWechatBtn" class="tablebtn"><span style="">微信</span></div>
-        <div class="tablebtn_split"></div>
-        <div id="invoiceBtn" class="tablebtn"><span style="display:none;">开票</span></div>
+		<div id="payByVipCardPageBtn" class="tablebtn" style="display:none;">会员</div>
+        <div class="tablebtn_split" style="display:none;"></div>
+        <div id="invoiceBtn" class="tablebtn" style="display:none;">开票</div>
     </div>
     
     <div id="closeBillBtn" style="background-color:#C42140;height:45px;line-height:45px;width:260px;font-size:16px;text-align:center;
@@ -398,7 +397,7 @@ Ext.onReady(function(){
 			      <span id="paycash_backfee" style="width:300px;height:40px;line-height:40px;
 			          font-size:22px;margin:0px;margin-left:5px;border:solid 0px #C0C0C0;" >0</span>
 		    </div>
-		    <div style="margin-top:40px;height:50px;line-height:50px;background:#3366FF;">
+		    <div style="margin-top:30px;height:50px;line-height:50px;background:#3366FF;">
 		        <div id="cancelRecvFeeBtn" onselectstart='return false'  style="float:left;height:50px;line-height:50px;width:249px;background:#3366FF;color:#FFF;text-align:center;cursor:pointer;">取消</div>
 		        <div style="float:left;height:34px;line-height:34px;width:0px;margin-top:8px;border-left:solid 1px #FFF;"></div>
 		        <div id="recvfeeBtn" onselectstart='return false' style="float:left;height:50px;line-height:50px;width:249px;background:#3366FF;color:#FFF;text-align:center;cursor:pointer;">收取</div>
