@@ -18,7 +18,7 @@ String staff_name = request.getParameter("staff_name");
 if(staff_name==null){
 	staff_name="";
 }
-staff_name = new String(staff_name.getBytes("ISO-8859-1"),"UTF-8");
+//staff_name = new String(staff_name.getBytes("ISO-8859-1"),"UTF-8");
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
 String show_start_date = start_date;

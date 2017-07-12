@@ -50,18 +50,19 @@ $(document).ready(function(){
     <div id="categoryquerypage" class="left_menu" url="/transPage?page=/query/queryCategoryHistory" onselectstart='return false'>
   	    <span style="margin-left:20px;">档口统计</span>
     </div>
+
+    <!--
     <div id="categorydetailpage" class="left_menu" url="/transPage?page=/query/queryCategoryDetail" onselectstart='return false'>
   	    <span style="margin-left:20px;">档口销售明细</span>
     </div>
-    
-    <!-- @yuanyl@2014/08/13  begin-->
+    @yuanyl@2014/08/13  begin
     <div id="floorgreensaildetailpage" class="left_menu" url="/transPage?page=/query/queryFloorGreensSaleDetail" onselectstart='return false'>
   	    <span style="margin-left:20px;">档口楼层菜品销售明细</span>
     </div>
-    <!-- @yuanyl@2014/08/13  end-->
-    
-    
-     <!-- @yuanyl@2014/08/09  begin-->
+     @yuanyl@2014/08/13  end
+    -->
+    <!-- @yuanyl@2014/08/09  begin-->
+
     <div id="floorsaildetailpage" class="left_menu" url="/transPage?page=/query/queryFloorSaleDetail" onselectstart='return false'>
   	    <span style="margin-left:20px;">档口楼层销售统计</span>
     </div>

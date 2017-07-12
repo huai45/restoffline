@@ -18,7 +18,6 @@ String food_name = request.getParameter("food_name");
 if(food_name==null){
 	food_name="";
 }
-food_name = new String(food_name.getBytes("ISO-8859-1"),"UTF-8");
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
 String show_start_date = start_date;
@@ -175,7 +174,7 @@ $(document).ready(function(){
 <div id="center" data-options="region:'center',border:false,style:{borderWidth:0}" style="padding:0px;background:#FFF;">
     <div id="" style="height:50px;width:95%;padding-left:0px;line-height:50px;border-bottom:solid 0px #CCCCCC;font-size:20px;">
         <div id="" style="height:50px;width:100%;line-height:50px;border-bottom:solid 1px #CCCCCC;font-size:20px;">
-            <div id="" style="height:50px;width:100%;line-height:50px;border-bottom:solid 1px #CCCCCC;font-size:20px;">
+
             <div style="float:left;height:50px;line-height:50px;margin-left:10px;margin-right:15px;">
 	                菜品
 	        </div>
@@ -197,8 +196,8 @@ $(document).ready(function(){
 	        </div>
             <div id="" style="float:left;">
 		        <div id="queryBtn" align="center" class="btn" style="float:left;background:#80397B;color:#FFFFFF;margin-top:8px;margin-left: 20px; " onselectstart='return false'> 查询 </div>
-	        </div> 
-            
+	        </div>
+
         </div>
     </div>
     

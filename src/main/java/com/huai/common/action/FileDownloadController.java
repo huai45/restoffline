@@ -246,21 +246,21 @@ public class FileDownloadController extends BaseController {
     	param.put("start_date", start_date);
     	param.put("end_date", end_date);
     	ut.log(" param :" +param);
-    	String sql = "select tmp.groups,tmp.floor,tmp.money from ((select a.groups groups ,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
+    	String sql = "select tmp.groups,tmp.floor,tmp.money from ( select a.groups groups ,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
     		+ "from th_bill_item a, th_bill b , td_table c  "
     		+ "where a.bill_id = b.bill_id  "
     		+ " and b.table_id = c.table_id "
     		+ " and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?  "
     		+ " and a.groups in ('海鲜','鲍参翅','川菜','粤菜','本地菜','凉菜','烧腊','面点') "
-    		+ " group by c.floor1 , a.groups order by a.groups ,c.floor1 ) "
+    		+ " group by c.floor1 , a.groups "
     		+ "UNION ALL "
-    		+ "(select a.category groups,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
+    		+ "select a.category groups,c.floor1 floor, FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "
     		+ "from th_bill_item a, th_bill b , td_table c   "
     		+ "where a.bill_id = b.bill_id "
     		+ " and b.table_id = c.table_id "
     		+ " and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?   "
     		+ " and a.category in ('酒水') "
-    		+ " group by c.floor1 , a.category order by a.category ,c.floor1  )) tmp "
+    		+ " group by c.floor1 , a.category ) tmp "
     		+"  order by tmp.groups,tmp.floor ";
 		ut.log(" sql :" +sql);
 		List datas =jdbcTemplate.queryForList(sql,new Object[]{ start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date, start_date+" 00:00:00",end_date+" 23:59:59",start_date,end_date});
@@ -306,7 +306,7 @@ public class FileDownloadController extends BaseController {
 	          +" max(case tmp.floor when '二楼新区' then tmp.money else 0 end ) f2n, "
 	          +" max(case tmp.floor when '二楼老区' then tmp.money else 0 end ) f2o, "
 	          +" max(case tmp.floor when '三楼新区' then tmp.money else 0 end ) f3n, "
-	          +"max(case tmp.floor when '三楼老区' then tmp.money else 0 end ) f3o, "
+	          +" max(case tmp.floor when '三楼老区' then tmp.money else 0 end ) f3o, "
 	          +" max(case tmp.floor when '外卖' then tmp.money else 0 end ) w "
 	          +"from ((select a.groups  groups ,c.floor1 floor,  "
 	          +"       FORMAT(sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ),2) money "

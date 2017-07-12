@@ -12,7 +12,6 @@ String staff_name = request.getParameter("staff_name");
 if(staff_name==null){
 	staff_name="";
 }
-staff_name = new String(staff_name.getBytes("ISO-8859-1"),"UTF-8");
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
 String show_start_date = start_date;
@@ -25,7 +24,7 @@ if(end_date==null){
 	end_date = "";
 	show_end_date = ut.currentDate(-1);
 }
-String sql = " select substring(oper_time,1,10) oper_date , ROUND(sum(price*(count-back_count)),2) count, ROUND(sum(price*(count-back_count-free_count)*pay_rate/100),2) real_count "+ 
+String sql = " select substr(oper_time,1,10) oper_date , ROUND(sum(price*(count-back_count)),2) count, ROUND(sum(price*(count-back_count-free_count)*pay_rate/100),2) real_count "+
   " from th_bill_item a where oper_time >= ? and oper_time <= ? and oper_staff_name = ? group by oper_date order by oper_date DESC ; ";
 ut.log(" sql :" +sql);
 List details = new ArrayList();
