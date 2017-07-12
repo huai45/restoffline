@@ -128,7 +128,7 @@ $(document).ready(function(){
 		        <div class="appname" style="font-family:Microsoft Yahei;">排位</div>
 		    </div>
 		    <div style="clear:both;"></div>
-		    <div class="app big" url="/monitor/loading.html" target="" title="监控" style="background-color:#217346;">
+		    <div class="app big" url="/monitor/loading.html" target="" title="监控" style="background-color:#217346;display:none;">
 		        <image src="/app/platform/image/icon/excel.jpg" class="appicon" style="left:86px;"/>
 		        <div class="appname" style="font-family:Microsoft Yahei;">后厨监控</div>
 		    </div>

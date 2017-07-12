@@ -15,7 +15,7 @@ List tables = jdbcTemplate.queryForList(" select * from td_table where use_tag= 
 ut.p("tables = "+tables.size());
 JSONArray ja = JSONArray.fromObject(tables);
 
-List foods = jdbcTemplate.queryForList(" select * from td_food where  use_tag= '1' order by food_id ",new Object[]{ });
+List foods = jdbcTemplate.queryForList(" select * from td_food where  use_tag in ('1','Y') order by food_id ",new Object[]{ });
 ut.p("foods = "+foods.size());
 
 List printers = jdbcTemplate.queryForList(" select * from td_printer where  state= '1' order by printer ",new Object[]{ });

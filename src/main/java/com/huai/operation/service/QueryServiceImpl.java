@@ -169,7 +169,8 @@ public class QueryServiceImpl implements QueryService {
 				" where  a.bill_id = b.bill_id and b.open_date >= ? and b.open_date <= ?  group by mode_id,mode_name order by  mode_id ";
 		List data_recv = baseDao.jdbcTemplate.queryForList(sql_recv,new Object[]{  param.get("start_date"), param.get("end_date") });
 		result.put("recv_data", data_recv);
-		
+		log.info(" data_recv  : " + data_recv);
+
 		long t2 = System.currentTimeMillis();
 		log.info(" data_recv  use : "+ (t2-t1)+" ms ");
 		

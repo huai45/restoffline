@@ -26,12 +26,12 @@ if(end_date==null){
 	show_end_date = ut.currentDate(-1);
 }
 String sql = "select tmp.groups,tmp.floor,tmp.money from ("
-		+ "select a.groups groups ,c.floor1 floor, sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ) money "
+		+ "select a.category groups ,c.floor1 floor, sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ) money "
 		+ "from th_bill_item a, th_bill b , td_table c  "
 		+ "where a.bill_id = b.bill_id  "
 		+ " and b.table_id = c.table_id "
 		+ " and a.oper_time >= ? and a.oper_time <= ? and b.open_date >= ? and b.open_date <= ?  "
-		+ " and a.groups in ('海鲜','鲍参翅','川菜','粤菜','本地菜','凉菜','烧腊','面点') "
+		+ " and a.category in ('热菜','凉菜','面点') "
 		+ " group by c.floor1 , a.groups "
 		+ " UNION ALL "
 		+ "select a.category groups,c.floor1 floor, sum( a.price* (a.count-a.back_count-a.free_count)*pay_rate/100 ) money "
