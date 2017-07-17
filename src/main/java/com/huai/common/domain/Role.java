@@ -15,9 +15,9 @@ public class Role {
 	private String dataright = "";
 	private String remark = "";
 	
-	private List nodeList = new ArrayList();
+	private List<String> nodeList = new ArrayList();
 	
-	private Map rightMap = new HashMap();
+	private Map<String,String> rightMap = new HashMap();
 	
 	public String getCtrlright() {
 		if(ctrlright==null){
