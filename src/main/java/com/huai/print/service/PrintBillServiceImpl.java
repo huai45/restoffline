@@ -62,13 +62,12 @@ public class PrintBillServiceImpl implements PrintBillService {
 	private boolean printBill(IData bill) {
 		log.info(" 正在打印账单 bill = "+bill);
 		boolean result = false;
-//		if(bill.getString("PAY_TYPE").equals("1")){
-//			result = printFinishBill(bill);
-//		}else{
-//			result = printQueryBill(bill);
-//		}
-		return true;
-//		return result;
+		if(bill.getString("PAY_TYPE").equals("1")){
+			result = printFinishBill(bill);
+		}else{
+			result = printQueryBill(bill);
+		}
+		return result;
 	}
 
 	/**
@@ -324,13 +323,13 @@ public class PrintBillServiceImpl implements PrintBillService {
 			// 打印饭店信息
 			PrinterUtil.setFont( socketWriter , 0);
 			socketWriter.println(" ----------------------------------------—--");
-			PrinterUtil.setFont( socketWriter , 1);
-			socketWriter.println("          "+bill.get("RESTNAME").toString() +"欢迎您的光临");
-			PrinterUtil.setFont( socketWriter , 0);
-			socketWriter.println(" ");
-			socketWriter.println("  地址 :  "+bill.get("ADDRESS").toString());
-			socketWriter.println("  电话 :  "+bill.get("TELEPHONE").toString());
-			socketWriter.println(" ----------------------------------------—--");
+//			PrinterUtil.setFont( socketWriter , 1);
+//			socketWriter.println("          "+bill.get("RESTNAME").toString() +"欢迎您的光临");
+//			PrinterUtil.setFont( socketWriter , 0);
+//			socketWriter.println(" ");
+//			socketWriter.println("  地址 :  "+bill.get("ADDRESS").toString());
+//			socketWriter.println("  电话 :  "+bill.get("TELEPHONE").toString());
+//			socketWriter.println(" ----------------------------------------—--");
 			// 打印完毕自动走纸
 			PrinterUtil.pushPaper(socketWriter);
 			// 打印完毕自动切纸
@@ -591,13 +590,13 @@ public class PrintBillServiceImpl implements PrintBillService {
 			// 打印饭店信息
 			PrinterUtil.setFont( socketWriter , 0);
 			socketWriter.println(" ----------------------------------------—--");
-			PrinterUtil.setFont( socketWriter , 1);
-			socketWriter.println("          "+bill.get("RESTNAME").toString() +"欢迎您的光临");
-			PrinterUtil.setFont( socketWriter , 0);
-			socketWriter.println(" ");
-			socketWriter.println("  地址 :  "+bill.get("ADDRESS").toString());
-			socketWriter.println("  电话 :  "+bill.get("TELEPHONE").toString());
-			socketWriter.println(" ----------------------------------------—--");
+//			PrinterUtil.setFont( socketWriter , 1);
+//			socketWriter.println("          "+bill.get("RESTNAME").toString() +"欢迎您的光临");
+//			PrinterUtil.setFont( socketWriter , 0);
+//			socketWriter.println(" ");
+//			socketWriter.println("  地址 :  "+bill.get("ADDRESS").toString());
+//			socketWriter.println("  电话 :  "+bill.get("TELEPHONE").toString());
+//			socketWriter.println(" ----------------------------------------—--");
 			// 打印完毕自动走纸
 			PrinterUtil.pushPaper(socketWriter);
 			// 打印完毕自动切纸

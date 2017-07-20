@@ -76,15 +76,15 @@ public class PrintFoodServiceImpl implements PrintFoodService {
 			// call_type --  0 ： 叫起    1 ： 即起   2：  起菜   3：  催菜   4:   退菜
 			if(call_type.equals("2")){
 				printCount = 1;
-				printer = food.getString("PRINTER_START");
+				printer = food.getString("IP_START");
 			}
 			if(call_type.equals("3")){
 				printCount = 1;
-				printer = food.getString("PRINTER_HURRY");
+				printer = food.getString("IP_HURRY");
 			}
 			if(call_type.equals("4")){
 				printCount = 1;
-				printer = food.getString("PRINTER_BACK");
+				printer = food.getString("IP_BACK");
 			}
 			log.info(" 正在打印菜单 printer = "+printer);
 			Socket client = new java.net.Socket();
@@ -164,28 +164,28 @@ public class PrintFoodServiceImpl implements PrintFoodService {
 				}
 				PrinterUtil.setFont( socketWriter , 1);    //设置字体
 				socketWriter.println( "-----------------------------------------" );
-				log.info(" call_type = "+call_type);
-				// 只有即起和叫起的菜单打印条码，   起菜、催菜和退菜的都不打印条码,只打编号
-				log.info(" barcode = "+barcode);
-				socketWriter.println("No. "+ barcode );
-				// call_type --  0 ： 叫起    1 ： 即起   2：  起菜   3：  催菜   4:   退菜
-				if(call_type.equals("0")||call_type.equals("1")){
-
-					//设置条码编码方式
-					socketWriter.write(0x1d);
-					socketWriter.write('k');
-					socketWriter.write(70);  //设置条码编码方式为69  CODE39
-					socketWriter.write(12);   //设置条码位数为6位
-					char[] chars = barcode.toCharArray();
-					for(int n = 0;n<chars.length;n++){
-//						log.info(chars[n]+" : "+(int)chars[n]);
-						socketWriter.write((int)chars[n]);
-					}
-					log.info(" end chars ....  ");
-					socketWriter.println( barcode );
-				}else{
+//				log.info(" call_type = "+call_type);
+//				// 只有即起和叫起的菜单打印条码，   起菜、催菜和退菜的都不打印条码,只打编号
+//				log.info(" barcode = "+barcode);
+//				socketWriter.println("No. "+ barcode );
+//				// call_type --  0 ： 叫起    1 ： 即起   2：  起菜   3：  催菜   4:   退菜
+//				if(call_type.equals("0")||call_type.equals("1")){
+//
+//					//设置条码编码方式
+//					socketWriter.write(0x1d);
+//					socketWriter.write('k');
+//					socketWriter.write(70);  //设置条码编码方式为69  CODE39
+//					socketWriter.write(12);   //设置条码位数为6位
+//					char[] chars = barcode.toCharArray();
+//					for(int n = 0;n<chars.length;n++){
+////						log.info(chars[n]+" : "+(int)chars[n]);
+//						socketWriter.write((int)chars[n]);
+//					}
+//					log.info(" end chars ....  ");
+//					socketWriter.println( barcode );
+//				}else{
 					socketWriter.println(" ");
-				}
+//				}
 				// 打印完毕自动走纸
 				PrinterUtil.pushPaper(socketWriter);
 				// 打印完毕自动切纸

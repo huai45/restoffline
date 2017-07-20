@@ -768,33 +768,14 @@ Ext.onReady(function() {
     });
     
     $('#printCategoryBtn').click(function(){
-        $.post("/query/queryTodayData.html", {
+        $.post("/query/queryTodayData", {
 	            
 	        }, function (result) {
 				var obj = Ext.decode(result);
 				if (obj.success == "true") {
-				    var data = {};
-				    data.type="printcategory";
-				    obj.printer = default_printer;
-				    data.data = obj;
-				    var socket = new WebSocket(socketurl); 
-					    // 打开Socket 
-						socket.onopen = function(event) { 
-							// 发送一个初始化消息
-							socket.send(JSON.stringify(data)); 
-							// 监听消息
-							socket.onmessage = function(event) { 
-							    socket.close();
-						}; 
-						// 监听Socket的关闭
-						socket.onclose = function(event) { 
-						    //alert("Client notified socket has closed");
-						};
-						socket.onerror = function(event) { 
-						    //alert(" onerror  ");
-						    //socket.close();
-						};
-				    };
+
+				}else{
+					alert(obj.msg);
 				}
 				return false;
 		}).error(function(){
@@ -802,36 +783,16 @@ Ext.onReady(function() {
 		    alert("系统异常");
 		});
 	});
-    
-    
+
     $('#printTodayMoneyBtn').click(function(){
-        $.post("/query/queryTodayData.html", {
+        $.post("/query/queryTodayData", {
 	            
 	        }, function (result) {
 				var obj = Ext.decode(result);
 				if (obj.success == "true") {
-				    var data = {};
-				    data.type="printtoday";
-				    obj.printer = default_printer;
-				    data.data = obj;
-				    var socket = new WebSocket(socketurl); 
-					    // 打开Socket 
-						socket.onopen = function(event) { 
-							// 发送一个初始化消息
-							socket.send(JSON.stringify(data)); 
-							// 监听消息
-							socket.onmessage = function(event) { 
-							    socket.close();
-						}; 
-						// 监听Socket的关闭
-						socket.onclose = function(event) { 
-						    //alert("Client notified socket has closed");
-						};
-						socket.onerror = function(event) { 
-						    //alert(" onerror  ");
-						    //socket.close();
-						};
-				    };
+
+				}else{
+					alert(obj.msg);
 				}
 				return false;
 		}).error(function(){
@@ -839,10 +800,6 @@ Ext.onReady(function() {
 		    alert("系统异常");
 		});
 	});
-    
-    
-    
-    
-    
-    
+
+
 });
