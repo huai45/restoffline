@@ -74,6 +74,8 @@ try{
 		out.print(stopFoodPackageById(request));	
 	}else if(trade_type_code.equals("food_package_save")){
 		out.print(saveFoodPackage(request));	
+	}else if(trade_type_code.equals("restinfo_mod")){
+		out.print(modifyRestInfo(request));
 	}else{
 		out.print(ut.err("无效操作类型！"));
 	}
@@ -84,6 +86,16 @@ try{
 }
 %>
 <%!
+
+public String modifyRestInfo(HttpServletRequest request) {
+	JdbcTemplate jdbcTemplate = getJDBC(request);
+
+
+
+
+	return ut.suc("修改成功");
+}
+
 public String addFloor(HttpServletRequest request){
 	String id = request.getParameter("id");
 	String name = request.getParameter("name");
