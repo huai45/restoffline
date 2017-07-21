@@ -5,7 +5,16 @@ String table_name = "restinfo";
 String sql = " select  *  from td_restaurant ";
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
 List result = jdbcTemplate.queryForList(sql,new Object[]{ });
-IData info = new IData((Map)result.get(0));
+Map info = new HashMap();
+info.put("restname","");
+info.put("address","");
+info.put("printer","");
+info.put("telephone","");
+if(result.size()>0){
+	info = (Map)result.get(0);
+}
+ut.p(info);
+
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
@@ -54,7 +63,7 @@ IData info = new IData((Map)result.get(0));
 ajax_flag = 0;
 $(document).ready(function(){
 
-    $("#phoneUsermanagepage").addClass("left_menu_sel"); 
+    $("#restinfopage").addClass("left_menu_sel");
      
     $("#cancelBtn").click( function(){
         document.location.href = "/app/setting/page/<%= table_name %>_mod.jsp";
@@ -67,38 +76,44 @@ $(document).ready(function(){
 	    if(ajax_flag > 0){
 	        return false;
 	    }
-	    var user_id= $.trim($("#user_id").val());
-	    var user_name= $.trim($("#user_name").val());
-	    var user_password= $.trim($("#user_password").val());
+	    var restname= $.trim($("#restname").val());
+	    var address= $.trim($("#address").val());
+	    var telephone= $.trim($("#telephone").val());
+        var printer= $.trim($("#printer").val());
 	   
-	    if(user_id==''){
-	        alert('请填写用户ID!');
+	    if(restname==''){
+	        alert('请填写餐厅名称!');
 			return false;
 		}
 		
-	    if(user_name==''){
-	        alert('请填写用户名!');
+	    if(address==''){
+	        alert('请填写地址!');
 			return false;
 		}
-	    if(user_password==''){
-		    alert('请填写密码!');
+	    if(telephone==''){
+		    alert('请填写餐厅电话!');
 			return false;
 		}
+        if(printer==''){
+            alert('请填写结班信息打印机IP地址!');
+            return false;
+        }
 		
 		ajax_flag = 1;
 		$.post("/app/setting/setting_service.jsp", {
 		        TRADE_TYPE_CODE : '<%= table_name %>_mod',
-		        user_id : user_id,
-			    user_name : user_name,
-			    user_password : user_password
+                restname : restname,
+                address : address,
+                telephone : telephone,
+		        printer : printer
 		    }, function (result) {
 		        ajax_flag = 0;
 				var obj = $.parseJSON(result);
+                alert(obj.msg);
 				if(obj.success=='true'){
-				    alert(obj.msg);
 				    reloadPage();
 				}else{
-				    alert(obj.msg);
+
 				}
 		}).error(function(){
 		    ajax_flag = 0;
@@ -121,7 +136,7 @@ $(document).ready(function(){
     <div id="north" style="height:50px;padding-left:20px;line-height:50px;border-bottom:solid 0px #CCCCCC;font-size:20px;">
         <div style="height:48px;width:100%;line-height:50px;">
             <div style="float:right;">
-	            <div id="cancelBtn" align="center" class="btn" style="float:left;color:#595959;margin-top:8px;margin-right: 70px; " onselectstart='return false'> 取消 </div>
+	            <div id="cancelBtn" align="center" class="btn" style="float:left;color:#595959;margin-top:8px;margin-right: 70px; " onselectstart='return false'> 刷新 </div>
 	        </div>
             <span>编辑餐厅信息</span>
         </div>
@@ -131,24 +146,26 @@ $(document).ready(function(){
         <div style="float:left;width:500px;background:#fff;margin-left:0px;margin-top:0px;">
 	    
 		    <div style="margin-left:100px;padding-top:5px;margin-bottom:0px;font-size:20px;font-weight:bold;">&nbsp;</div>
-		    <div style="margin-left:100px;margin-bottom:5px;font-size:18px;">用户ID</div>
+		    <div style="margin-left:100px;margin-bottom:5px;font-size:18px;">餐厅名称</div>
 		    <div style="margin-left:100px;margin-bottom:15px;">
-	            <input id="user_id" type="text" value="<%= info.get("user_id") %>" readonly style="border:solid 1px #CCCCCC;padding:0px;margin:0px;line-height:32px;width:300px; height:32px;font-size:20px; " />
+	            <input id="restname" type="text" value="<%= info.get("restname") %>" style="border:solid 1px #CCCCCC;padding:0px;margin:0px;line-height:32px;width:500px; height:32px;font-size:20px; " />
 	        </div>
-		    <div style="margin-left:100px;margin-bottom:5px;font-size:18px;">用户名称</div>
+		    <div style="margin-left:100px;margin-bottom:5px;font-size:18px;">餐厅地址</div>
 		    <div style="margin-left:100px;margin-bottom:15px;">
-	            <input id="user_name" type="text" value="<%= info.get("username") %>" style="border:solid 1px #CCCCCC;padding:0px;margin:0px;line-height:32px;width:300px; height:32px;font-size:20px; " />
+	            <input id="address" type="text" value="<%= info.get("address") %>" style="border:solid 1px #CCCCCC;padding:0px;margin:0px;line-height:32px;width:500px; height:32px;font-size:20px; " />
 	        </div>
-	        <div style="margin-left:100px;margin-bottom:5px;font-size:18px;">密码</div>
+	        <div style="margin-left:100px;margin-bottom:5px;font-size:18px;">餐厅电话</div>
 		    <div style="margin-left:100px;margin-bottom:15px;">
-	            <input id="user_password" type="text" value="<%= info.get("password") %>" style="border:solid 1px #CCCCCC;padding:0px;margin:0px;line-height:32px;width:300px; height:32px;font-size:20px; " />
+	            <input id="telephone" type="text" value="<%= info.get("telephone") %>" style="border:solid 1px #CCCCCC;padding:0px;margin:0px;line-height:32px;width:500px; height:32px;font-size:20px; " />
 	        </div>
-
+			<div style="margin-left:100px;margin-bottom:5px;font-size:18px;">结班信息打印机IP地址</div>
+			<div style="margin-left:100px;margin-bottom:15px;">
+				<input id="printer" type="text" value="<%= info.get("printer") %>" style="border:solid 1px #CCCCCC;padding:0px;margin:0px;line-height:32px;width:300px; height:32px;font-size:20px; " />
+			</div>
 	        <div style="clear:both;"></div>
 	        
 	        <div id="" style="margin-top:35px;margin-left:120px;margin-bottom:65px;height:50px;width:500px;line-height:50px;">
-	            <div id="submitBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#fff;margin-top: 8px;margin-right: 18px; " onselectstart='return false'> 确定 </div>
-	            <div id="backBtn" align="center" class="btn" style="float:left;background:#D5D5D5;color:#3D3D3D;margin-top: 8px;margin-right: 5px; " onselectstart='return false'> 取消 </div>
+	            <div id="submitBtn" align="center" class="btn" style="float:left;background:#094AB2;color:#fff;margin-top: 8px;margin-right: 18px; " onselectstart='return false'> 保存 </div>
 	        </div>
         
         </div>

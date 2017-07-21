@@ -89,11 +89,17 @@ try{
 
 public String modifyRestInfo(HttpServletRequest request) {
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-
-
-
-
-	return ut.suc("修改成功");
+	String printer = request.getParameter("printer");
+	String restname = request.getParameter("restname");
+	String address = request.getParameter("address");
+	String telephone = request.getParameter("telephone");
+	List result = jdbcTemplate.queryForList("select * from td_restaurant ");
+	if(result.size()==0){
+		jdbcTemplate.update(" insert into td_restaurant ( rest_id,restname,address,telephone,printer ) values ( ?,?,?,?,?) ",new Object[]{restname,restname,address,telephone,printer});
+	}else{
+		jdbcTemplate.update(" update td_restaurant  set restname = ? ,  address = ? , telephone = ? , printer = ?  where  1 = 1 ",new Object[]{restname,address,telephone,printer});
+	}
+	return ut.suc("修改餐厅信息成功");
 }
 
 public String addFloor(HttpServletRequest request){
@@ -508,7 +514,7 @@ public String modifyBanInfo(HttpServletRequest request){
 	JdbcTemplate jdbcTemplate = getJDBC(request);
 	jdbcTemplate.update(" update td_system set value = ?  where name = ?  ",new Object[]{ban,"ban"});
 	ut.log("  update ban  ");
-    return ut.suc("修改成功");	
+    return ut.suc("修改成功");
 }
 
 public String setRoleRight(HttpServletRequest request){

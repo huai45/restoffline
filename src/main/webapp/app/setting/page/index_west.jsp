@@ -41,6 +41,9 @@ $(document).ready(function(){
     <div id="indexpage" class="left_menu" url="/setting/index.html" onselectstart='return false'>
   	    <span style="margin-left:20px;">首页</span>
     </div>
+    <div id="restinfopage" class="left_menu" url="/transPage?page=/setting/page/restinfo_mod" onselectstart='return false'>
+        <span style="margin-left:20px;">餐厅信息管理</span>
+    </div>
     <div id="tablemanagepage" class="left_menu" url="/transPage?page=/setting/page/table_manage" onselectstart='return false'>
         <span style="margin-left:20px;">台位管理</span>
     </div>
