@@ -195,7 +195,8 @@ public class PrintServiceImpl implements PrintService {
 		IData data = new IData(queryService.queryTodayData(param));
 
 		IData restinfo = commonDao.queryRestInfoById(param);
-		data.put("printer", restinfo.getString("PARAM1"));
+
+		data.put("printer", restinfo.getString("PRINTER"));
 
 		PrinterUtil.printCategory(data);
 		return result;
@@ -210,7 +211,7 @@ public class PrintServiceImpl implements PrintService {
 		IData data = new IData(queryService.queryTodayData(param));
 
 		IData restinfo = commonDao.queryRestInfoById(param);
-		data.put("printer", restinfo.getString("PARAM1"));
+		data.put("printer", restinfo.getString("PRINTER"));
 
 		PrinterUtil.printTodayMoney(data);
 		return result;
