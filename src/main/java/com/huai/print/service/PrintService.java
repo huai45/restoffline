@@ -1,22 +1,26 @@
 package com.huai.print.service;
 
-import java.util.List;
 import java.util.Map;
 import com.huai.common.domain.IData;
 
 public interface PrintService {
 
-	public Map queryFoodPrintList(IData param);
+	Map queryFoodPrintList(IData param);
 
-	public Map queryBillPrintList(IData param);
+	Map queryBillPrintList(IData param);
 
-	public Map queryPrintBillInfo(IData param);
+	Map queryPrintBillInfo(IData param);
 
-	public Map queryPrintBillInfoByTable(IData param);
+	Map queryPrintBillInfoByTable(IData param);
 
-	public Map queryPrintBillInfoByBillId(IData param);
+	Map queryPrintBillInfoByBillId(IData param);
 
-	public Map printBill(String bill_id);
+	Map printBill(String bill_id);
 
     Map printBillByBillId(String bill_id);
+
+	Map printCategory();
+
+	Map printTodayMoney();
+
 }

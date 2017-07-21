@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+
+import com.huai.operation.service.QueryService;
+import com.huai.print.util.PrinterUtil;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import com.huai.common.dao.CommonDao;
@@ -29,6 +32,9 @@ public class PrintServiceImpl implements PrintService {
 	
 	@Resource(name="tableDao")
 	public TableDao tableDao;
+
+	@Resource(name="queryService")
+	public QueryService queryService;
 
 	public Map queryFoodPrintList(IData param) {
 		IData restinfo = printDao.queryRestByAppId(param.getString("appid"));
@@ -181,6 +187,34 @@ public class PrintServiceImpl implements PrintService {
 		return result;
 	}
 
+	@Override
+	public Map printCategory() {
+		Map result = new HashMap();
+		result.put("success", "true");
+		IData param = new IData();
+		IData data = new IData(queryService.queryTodayData(param));
+
+		IData restinfo = commonDao.queryRestInfoById(param);
+		data.put("printer", restinfo.getString("PARAM1"));
+
+		PrinterUtil.printCategory(data);
+		return result;
+	}
+
+	@Override
+	public Map printTodayMoney() {
+		Map result = new HashMap();
+		result.put("success", "true");
+
+		IData param = new IData();
+		IData data = new IData(queryService.queryTodayData(param));
+
+		IData restinfo = commonDao.queryRestInfoById(param);
+		data.put("printer", restinfo.getString("PARAM1"));
+
+		PrinterUtil.printTodayMoney(data);
+		return result;
+	}
 
 }
 

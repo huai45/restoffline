@@ -1,10 +1,7 @@
 package com.huai.print.dao;
 
 import java.util.List;
-import java.util.Map;
-
 import com.huai.common.domain.IData;
-import com.huai.common.domain.User;
 
 public interface PrintDao {
 
@@ -16,9 +13,11 @@ public interface PrintDao {
 
 	IData quqryPrintRestInfo(IData bill);
 
-	public boolean printBillFinish(String printId ,String status);
+	IData queryPrintRestInfo(IData bill);
 
-	public boolean printFoodFinish(String printId ,String status);
+	boolean printBillFinish(String printId ,String status);
+
+	boolean printFoodFinish(String printId ,String status);
 
     int addPrintBillLog(IData param);
 }

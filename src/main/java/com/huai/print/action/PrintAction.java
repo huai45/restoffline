@@ -99,5 +99,21 @@ public class PrintAction extends BaseController {
 		log.info(" result : "+result);
 		return result;
     }
+
+	@RequestMapping(value = "/printCategory")
+	@ResponseBody
+	public Object printCategory(HttpServletRequest request, HttpServletResponse response)  {
+		log.info("  ************  printCategory   ");
+		Map result = printService.printCategory();
+		return result;
+	}
+
+	@RequestMapping(value = "/printTodayMoney")
+	@ResponseBody
+	public Object printTodayMoney(HttpServletRequest request, HttpServletResponse response)  {
+		log.info("  ************  printTodayMoney   ");
+		Map result = printService.printTodayMoney();
+		return result;
+	}
 	
 }

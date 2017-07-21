@@ -1,12 +1,9 @@
 package com.huai.print.service;
 
-import com.huai.common.util.ut;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * Created by huai23 on 2017/5/30.

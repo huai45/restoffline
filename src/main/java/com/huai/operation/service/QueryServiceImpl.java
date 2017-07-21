@@ -78,8 +78,7 @@ public class QueryServiceImpl implements QueryService {
 	
 	public Map queryTodayData(IData param) {
 		Map result = new HashMap();
-		User user = (User)param.get("user");
-		log.info(" queryTodayData , user.getStaffId() = "+user.getStaffId());
+		log.info(" queryTodayData  ");
 		result.put("success", "true");
 		String sql_recv = " select mode_id,mode_name , sum(fee) recv_fee from tf_bill_fee where 1 = 1 group by mode_id,mode_name order by  mode_id ";
 		List data_recv = baseDao.jdbcTemplate.queryForList(sql_recv,new Object[]{  });

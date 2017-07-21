@@ -768,7 +768,7 @@ Ext.onReady(function() {
     });
     
     $('#printCategoryBtn').click(function(){
-        $.post("/query/queryTodayData", {
+        $.post("/localprint/printCategory", {
 	            
 	        }, function (result) {
 				var obj = Ext.decode(result);
@@ -785,7 +785,7 @@ Ext.onReady(function() {
 	});
 
     $('#printTodayMoneyBtn').click(function(){
-        $.post("/query/queryTodayData", {
+        $.post("/localprint/printTodayMoney", {
 	            
 	        }, function (result) {
 				var obj = Ext.decode(result);

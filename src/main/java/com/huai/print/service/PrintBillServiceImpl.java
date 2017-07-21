@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.huai.common.dao.CommonDao;
 import com.huai.common.util.BillUtil;
 import com.huai.operation.dao.OperationDao;
 import com.huai.print.dao.PrintDao;
@@ -18,6 +19,8 @@ import com.huai.common.util.GetBean;
 import com.huai.common.util.ut;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service("printBillService")
 public class PrintBillServiceImpl implements PrintBillService {
 
@@ -28,6 +31,9 @@ public class PrintBillServiceImpl implements PrintBillService {
 
 	@Autowired
 	public OperationDao operationDao;
+
+	@Resource(name="commonDao")
+	public CommonDao commonDao;
 
 	public boolean printOneBill() {
 		//1. 查询一条打印记录
@@ -46,6 +52,12 @@ public class PrintBillServiceImpl implements PrintBillService {
 		operationDao.queryBillInfo(bill);
 		bill.put("PRINT_ID",printId);
 		bill.put("PRINTER",printer);
+
+		IData restinfo = commonDao.queryRestInfoById(param);
+		bill.put("RESTNAME", restinfo.getString("RESTNAME"));
+		bill.put("ADDRESS", restinfo.getString("ADDRESS"));
+		bill.put("TELEPHONE", restinfo.getString("TELEPHONE"));
+
 		//2. 打印账单
 		boolean result = printBill(bill);
 		//3. 更新打印结果
@@ -323,13 +335,13 @@ public class PrintBillServiceImpl implements PrintBillService {
 			// 打印饭店信息
 			PrinterUtil.setFont( socketWriter , 0);
 			socketWriter.println(" ----------------------------------------—--");
-//			PrinterUtil.setFont( socketWriter , 1);
-//			socketWriter.println("          "+bill.get("RESTNAME").toString() +"欢迎您的光临");
-//			PrinterUtil.setFont( socketWriter , 0);
-//			socketWriter.println(" ");
-//			socketWriter.println("  地址 :  "+bill.get("ADDRESS").toString());
-//			socketWriter.println("  电话 :  "+bill.get("TELEPHONE").toString());
-//			socketWriter.println(" ----------------------------------------—--");
+			PrinterUtil.setFont( socketWriter , 1);
+			socketWriter.println("          "+bill.get("RESTNAME") +"欢迎您的光临");
+			PrinterUtil.setFont( socketWriter , 0);
+			socketWriter.println(" ");
+			socketWriter.println("  地址 :  "+bill.get("ADDRESS"));
+			socketWriter.println("  电话 :  "+bill.get("TELEPHONE"));
+			socketWriter.println(" ----------------------------------------—--");
 			// 打印完毕自动走纸
 			PrinterUtil.pushPaper(socketWriter);
 			// 打印完毕自动切纸
@@ -590,13 +602,13 @@ public class PrintBillServiceImpl implements PrintBillService {
 			// 打印饭店信息
 			PrinterUtil.setFont( socketWriter , 0);
 			socketWriter.println(" ----------------------------------------—--");
-//			PrinterUtil.setFont( socketWriter , 1);
-//			socketWriter.println("          "+bill.get("RESTNAME").toString() +"欢迎您的光临");
-//			PrinterUtil.setFont( socketWriter , 0);
-//			socketWriter.println(" ");
-//			socketWriter.println("  地址 :  "+bill.get("ADDRESS").toString());
-//			socketWriter.println("  电话 :  "+bill.get("TELEPHONE").toString());
-//			socketWriter.println(" ----------------------------------------—--");
+			PrinterUtil.setFont( socketWriter , 1);
+			socketWriter.println("          "+bill.get("RESTNAME") +"欢迎您的光临");
+			PrinterUtil.setFont( socketWriter , 0);
+			socketWriter.println(" ");
+			socketWriter.println("  地址 :  "+bill.get("ADDRESS"));
+			socketWriter.println("  电话 :  "+bill.get("TELEPHONE"));
+			socketWriter.println(" ----------------------------------------—--");
 			// 打印完毕自动走纸
 			PrinterUtil.pushPaper(socketWriter);
 			// 打印完毕自动切纸

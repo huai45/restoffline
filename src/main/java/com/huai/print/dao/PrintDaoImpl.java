@@ -16,7 +16,7 @@ public class PrintDaoImpl extends BaseDao implements PrintDao {
 	private static final Logger log = Logger.getLogger(PrintDaoImpl.class);
 
 	public IData queryRestByAppId(String appid) {
-		List result = jdbcTemplate.queryForList("select * from td_restaurant where appid = ? ", new Object[]{ appid });
+		List result = jdbcTemplate.queryForList("select * from td_restaurant where 1 = 1  ", new Object[]{ });
 		if(result.size()==0){
 			return null;
 		}
@@ -30,7 +30,7 @@ public class PrintDaoImpl extends BaseDao implements PrintDao {
 				" (select ip from td_printer d where d.printer = a.printer_hurry) IP_HURRY , " +
 				" (select ip from td_printer e where e.printer = a.printer_back) IP_BACK , " +
 				" (select ip from td_printer f where f.printer = a.printer_sec) IP_SEC  " +
-				" from tf_print_log a where 1 = 1 and a.state in ('0') " +
+				" from tf_print_log a where a.state in ('0') " +
 				" order by a.print_id limit 0 , 10 ";
 		List result = jdbcTemplate.queryForList(sql, new Object[]{ });
 		return result;
@@ -67,7 +67,7 @@ public class PrintDaoImpl extends BaseDao implements PrintDao {
 	}
 
 	public List queryBillPrintList(final IData param) {
-		String sql = " select * from tf_print_bill_log where 1=1 and state in ('0') order by print_id asc limit 0 , 10 ";
+		String sql = " select * from tf_print_bill_log where state in ('0') order by print_id asc limit 0 , 10 ";
 		List result = jdbcTemplate.queryForList(sql, new Object[]{ });
 		return result;
 	}
@@ -83,15 +83,17 @@ public class PrintDaoImpl extends BaseDao implements PrintDao {
 	}
 
 	public IData quqryPrintRestInfo(IData bill) {
-		List list = jdbcTemplate.queryForList("select * from td_table where table_id = ?  ", new Object[]{ bill.getString("TABLE_ID") });
-		if(list.size()>0) {
-        	Map table = (Map)list.get(0);
-        	bill.put("PRINTER", table.get("PRINTER"));
-        }
-		return null;
+		return queryPrintRestInfo(bill);
 	}
 
-	
+	public IData queryPrintRestInfo(IData bill) {
+		List list = jdbcTemplate.queryForList("select * from td_table where table_id = ?  ", new Object[]{ bill.getString("TABLE_ID") });
+		if(list.size()>0) {
+			Map table = (Map)list.get(0);
+			bill.put("PRINTER", table.get("PRINTER"));
+		}
+		return null;
+	}
 	
 	
 
