@@ -3,6 +3,7 @@
 <%@ page language="java" import="com.huai.common.domain.*"%>
 <%@ page language="java" import="com.huai.common.util.*"%>
 <%@ page language="java" import="net.sf.json.*"%>
+<%@ page import="com.huai.common.dao.FoodDao" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
@@ -10,14 +11,15 @@
 User user = (User)session.getAttribute( CC.USER_CONTEXT );
 String today = ut.currentDate();
 JdbcTemplate jdbcTemplate = (JdbcTemplate)GetBean.getBean("jdbcTemplate");
-List tables = jdbcTemplate.queryForList(" select * from td_table where use_tag= '1' order by 0+table_id ",new Object[]{ });
+FoodDao foodDao = (FoodDao)GetBean.getBean("foodDao");
+List tables = jdbcTemplate.queryForList(" select * from td_table where 1 = 1 order by 0+table_id ",new Object[]{ });
 ut.p("tables = "+tables.size());
 JSONArray ja = JSONArray.fromObject(tables);
 
-List foods = jdbcTemplate.queryForList(" select * from td_food where  use_tag in ('1','Y') order by food_id ",new Object[]{ });
+List foods = foodDao.queryFoodList(null);
 ut.p("foods = "+foods.size());
 
-List printers = jdbcTemplate.queryForList(" select * from td_printer where  state= '1' order by printer ",new Object[]{ });
+List printers = jdbcTemplate.queryForList(" select * from td_printer where  1 = 1  order by printer ",new Object[]{ });
 ut.p("printers = "+printers.size());
 
 %>
