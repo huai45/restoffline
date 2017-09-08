@@ -39,7 +39,7 @@ public class BillUtil {
 			if(item.get("PACKAGE_ID")!=null&&!item.get("PACKAGE_ID").toString().equals("")){
 				continue;
 			}
-			int price = Integer.parseInt(item.get("price").toString());
+			double price = Double.parseDouble(item.get("price").toString());
 			double count = ut.doubled(item.get("COUNT").toString());
 			double back_count = ut.doubled(item.get("BACK_COUNT").toString());
 			double free_count = ut.doubled(item.get("FREE_COUNT").toString());
