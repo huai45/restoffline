@@ -103,12 +103,10 @@ $(document).ready(function(){
                 <td style="text-align:right;">
                     <div id="printHistoryBillBtn"  style="float:right;background:#FFF;border:solid 1px #007AFF;width:110px;height:26px;line-height:26px;cursor:pointer;
                         margin-top:0px;border-radius:4px;font-size:12px;color:#007AFF;text-align:center;margin-right:30px;" onselectstart='return false'>补打账单</div>
-                <% if(user.getRole_id().equals("1")&&pay_type.equals("1")){ 
-		        %>
-                    
+
                     <div id="openBillBtn" style="float:right;background:#FFF;border:solid 1px #CC2B56;width:110px;height:26px;line-height:26px;cursor:pointer;
                         margin-top:0px;border-radius:4px;font-size:12px;color:#CC2B56;text-align:center;margin-right:30px;" onselectstart='return false'>激活账单</div>
-                <% }%>&nbsp;
+                &nbsp;
                 </td>
             </tr>
         </table>

@@ -20,17 +20,12 @@ if(food_name==null){
 }
 String start_date = request.getParameter("start_date");
 String end_date = request.getParameter("end_date");
-String show_start_date = start_date;
-String show_end_date = end_date;
 if(start_date==null){
 	start_date = ut.currentDate(-1);
-	show_start_date = ut.currentDate(-1);
 }
 if(end_date==null){
 	end_date = ut.currentDate(-1);
-	show_end_date = ut.currentDate(-1);
 }
-
 
 String sql = " select oper_staff_name , price , ROUND(sum(count),2) count, ROUND(sum(back_count),2) back, ROUND(sum(count-back_count),2) real_count, ROUND(sum(price*(count-back_count-free_count)*pay_rate/100),2) real_total "+ 
   " from th_bill_item a where   food_id = ?   and oper_time >= ? and oper_time <= ? group by oper_staff_name ,price  order by count DESC ; ";
@@ -172,8 +167,8 @@ $(document).ready(function(){
 <%@ include file="/app/query/page/index_head.jsp" %>
 <%@ include file="/app/query/page/index_west.jsp" %>
 <div id="center" data-options="region:'center',border:false,style:{borderWidth:0}" style="padding:0px;background:#FFF;">
-    <div id="" style="height:50px;width:95%;padding-left:0px;line-height:50px;border-bottom:solid 0px #CCCCCC;font-size:20px;">
-        <div id="" style="height:50px;width:100%;line-height:50px;border-bottom:solid 1px #CCCCCC;font-size:20px;">
+    <div style="height:50px;width:95%;padding-left:0px;line-height:50px;border-bottom:solid 0px #CCCCCC;font-size:20px;">
+        <div style="height:50px;width:100%;line-height:50px;border-bottom:solid 1px #CCCCCC;font-size:20px;">
 
             <div style="float:left;height:50px;line-height:50px;margin-left:10px;margin-right:15px;">
 	                菜品
@@ -201,8 +196,8 @@ $(document).ready(function(){
         </div>
     </div>
     
-    <div id="center">
-	    
+    <div>
+
 	    <div style="margin-left:10px;margin-top:20px;margin-bottom:0px;font-size:22px;"><%= "菜品("+food_name+")销售查询" %>
 	        <span style="font-size:16px;margin-left:15px;">(  <%= start_date %>  至  <%= end_date %> )</span>
 	    </div>
