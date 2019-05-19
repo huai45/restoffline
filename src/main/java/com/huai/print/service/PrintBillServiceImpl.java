@@ -47,6 +47,7 @@ public class PrintBillServiceImpl implements PrintBillService {
 		String printer = bill.getString("PRINTER");
 		bill = operationDao.queryBillByBillId(bill.getString("BILL_ID"));
 		if(bill==null){
+			printDao.printBillFinish(printId,"9");
 			return false;
 		}
 		operationDao.queryBillInfo(bill);
