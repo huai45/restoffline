@@ -252,7 +252,7 @@ public String addPhoneuser(HttpServletRequest request){
 	String password = request.getParameter("user_password");
 	User user = (User) request.getSession().getAttribute(CC.USER_CONTEXT);
 	JdbcTemplate jdbcTemplate = getJDBC(request);
-	jdbcTemplate.update("insert into td_android_user (user_id,username,password) values (?,?,?,?)",new Object[]{user_id,username,password});
+	jdbcTemplate.update("insert into td_android_user (user_id,username,password) values (?,?,?)",new Object[]{user_id,username,password});
     return ut.suc("添加成功");	
 }
 
