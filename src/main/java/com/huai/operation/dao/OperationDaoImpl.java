@@ -587,14 +587,14 @@ public class OperationDaoImpl extends BaseDao implements OperationDao  {
 				Map item = (Map)items.get(i);
 				try{
 					String price = item.get("PRICE").toString();
-					int price_int = Integer.parseInt(price);
+					double price_int = Double.parseDouble(price);
 				}catch (Exception e){
 					e.printStackTrace();
 					jdbcTemplate.update(" update tf_bill_item set price = 999 where ITEM_ID = ? ",new Object[]{item.get("ITEM_ID")});
 				}
 				try{
 					String count = item.get("count").toString();
-					int count_int = Integer.parseInt(count);
+					double count_int = Double.parseDouble(count);
 				}catch (Exception e){
 					e.printStackTrace();
 					jdbcTemplate.update(" update tf_bill_item set COUNT = 999 where ITEM_ID = ? ",new Object[]{item.get("ITEM_ID")});
