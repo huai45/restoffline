@@ -583,6 +583,23 @@ public class OperationDaoImpl extends BaseDao implements OperationDao  {
 	public IData queryBillInfo(IData bill) {
 		if(bill!=null&&bill.containsKey("BILL_ID")){
 			List items =  this.queryBillItemByBillId(bill.getString("BILL_ID"));
+			for (int i = 0; i < items.size(); i++) {
+				Map item = (Map)items.get(i);
+				try{
+					String price = item.get("PRICE").toString();
+					int price_int = Integer.parseInt(price);
+				}catch (Exception e){
+					e.printStackTrace();
+					jdbcTemplate.update(" update tf_bill_item set price = 999 where ITEM_ID = ? ",new Object[]{item.get("ITEM_ID")});
+				}
+				try{
+					String count = item.get("count").toString();
+					int count_int = Integer.parseInt(count);
+				}catch (Exception e){
+					e.printStackTrace();
+					jdbcTemplate.update(" update tf_bill_item set COUNT = 999 where ITEM_ID = ? ",new Object[]{item.get("ITEM_ID")});
+				}
+			}
 			List fees =   this.queryBillFeeByBillId(bill.getString("BILL_ID"));
 			bill.put("FEELIST", fees);
 			bill.put("ITEMLIST", items);
