@@ -318,86 +318,35 @@ Ext.onReady(function() {
         $("#tableinfo_hidden_input")[0].focus();
 	});
 	
-	var isReading = 0;
-	
     $("#payByVipCardPageBtn").click(function(){
-        //if (isReading==0) {
-        if (true) {
-            isReading = 1;
-		    var data = {};
-		    data.type="readcard";
-		    var socket = new WebSocket(cardsocketurl); 
-			    // 打开Socket 
-				socket.onopen = function(event) { 
-					// 发送一个初始化消息
-					socket.send(JSON.stringify(data)); 
-					// 监听消息
-					socket.onmessage = function(event) { 
-					    var card_no = event.data;
-					    //socket.close();
-					    isReading = 0;
-					    if(card_no == 'RETRY'){
-				            alert( '请重新将卡放在读卡器上读卡！' );
-				            return false;
-				        }else if(card_no.length==32){
-				            card_no = card_no.substr((32-4) , 32);
-				            if(ajax_flag > 0){
-						        return false;
-						    }
-					        ajax_flag = 1;
-					        $.post("/query/queryVipCardUserList.html", {
-					                card_no : card_no 
-					            },function (result) {
-								var obj = Ext.decode(result);
-								ajax_flag = 0;
-								if (obj.success == "true") {
-								    if (obj.data.length > 0) {
-								        initSelectVipCardPage(obj.data);
-						                Ext.getCmp('viewport').getLayout().setActiveItem('selectvipcardpage');
-								    }else{
-								        alert("查无此卡：卡号："+card_no);
-								    }
-								}else{
-								    alert(obj.msg);
-								}
-							}).error(function(){
-							    ajax_flag = 0;
-							    alert("系统异常"); 
-							});
-				        }else{
-				            alert( card_no );
-				        }
-				}; 
-				// 监听Socket的关闭
-				socket.onclose = function(event) { 
-				    //alert("Client notified socket has closed");
-				};
-				socket.onerror = function(event) { 
-				    //alert(" onerror  ");
-				    //socket.close();
-				};
-		    };
+		var card_no=prompt("请输入会员卡号","")
+    	// alert("card_no="+card_no);
+		// card_no = "2695734290";
+		// card_no = card_no + '123';
+		if(ajax_flag > 0){
+			return false;
 		}
-		return false;
-        /*
-        if(ajax_flag > 0){
-	        return false;
-	    }
-        ajax_flag = 1;
-        $.post("/query/queryVipCardUserList.html", {},function (result) {
+		ajax_flag = 1;
+		$.post("/query/queryVipCardUserList.html", {
+			card_no : card_no
+		},function (result) {
 			var obj = Ext.decode(result);
 			ajax_flag = 0;
 			if (obj.success == "true") {
-                initSelectVipCardPage(obj.data);
-	            Ext.getCmp('viewport').getLayout().setActiveItem('selectvipcardpage');
+				if (obj.data.length > 0) {
+					initSelectVipCardPage(obj.data);
+					Ext.getCmp('viewport').getLayout().setActiveItem('selectvipcardpage');
+				}else{
+					alert("查无此卡：卡号："+card_no);
+				}
 			}else{
-			    alert(obj.msg);
+				alert(obj.msg);
 			}
 		}).error(function(){
-		    ajax_flag = 0;
-		    alert("系统异常"); 
+			ajax_flag = 0;
+			alert("系统异常");
 		});
-		*/
+		return false;
     });
     
     $("#backFromSelectVipBtn").click(function(){

@@ -49,7 +49,7 @@ $(document).ready(function(){
     
     $("#addvipcardpage").addClass("left_menu_sel");
         
-    $("#custname")[0].focus();
+    $("#card_no")[0].focus();
     
     $("#resetBtn").live("click",function(){
         $("#card_no").val('');
@@ -57,7 +57,7 @@ $(document).ready(function(){
         $("#phone").val('');
         $("#credit").val('');
         $("#remark").val('');
-        $("#custname")[0].focus();
+        $("#card_no")[0].focus();
     });  
     
     var isReading = 0;
@@ -192,7 +192,7 @@ $(document).ready(function(){
     </div>
     <div style="font-size:18px;padding-left:20px;">
         <div style="line-height:24px;font-size:12px;font-weight:bold;margin-top:15px;">卡号</div>
-        <div style="line-height:30px;"><input id="card_no" type="text" class="cust_input" readonly/><span id="card_no_err" class="err_msg"></span></div>
+        <div style="line-height:30px;"><input id="card_no" type="text" class="cust_input"/><span id="card_no_err" class="err_msg"></span></div>
         <div style="line-height:24px;font-size:12px;font-weight:bold;margin-top:15px;">客户姓名</div>
         <div style="line-height:30px;"><input id="custname" type="text" class="cust_input"/><span id="custname_err" class="err_msg"></span></div>
         <div style="line-height:24px;font-size:12px;font-weight:bold;margin-top:15px;">联系电话</div>
@@ -207,7 +207,7 @@ $(document).ready(function(){
         <div style="margin-top:20px;margin-left:0px;">
             <div id="submitBtn" class="btn_m" style="float:left;">提&nbsp;&nbsp;交</div>
             <div id="resetBtn" class="btn_s" style="float:left;margin-left:30px;">重&nbsp;&nbsp;置</div>
-            <div id="readcardBtn" class="btn_s" style="float:left;margin-left:30px;">读&nbsp;&nbsp;卡</div>
+<%--            <div id="readcardBtn" class="btn_s" style="float:left;margin-left:30px;">读&nbsp;&nbsp;卡</div>--%>
 	    </div>
 	    
     </div>

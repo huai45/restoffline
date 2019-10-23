@@ -84,30 +84,7 @@ $(document).ready(function(){
 				var obj = $.parseJSON(result);
 				alert(obj.msg);
 				if (obj.success == "true") {
-					var data = {};
-				    data.type="printvippay";
-				    data.data = obj.info;
-				    data.data.printer = default_printer;
-				    var socket = new WebSocket(socketurl); 
-					    // 打开Socket 
-						socket.onopen = function(event) { 
-							// 发送一个初始化消息
-							socket.send(JSON.stringify(data)); 
-							// 监听消息
-							socket.onmessage = function(event) { 
-							    socket.close();
-							    document.location.href="/cust/vipcardinfo.html?user_id="+user_id+"&time="+new Date();
-						}; 
-						// 监听Socket的关闭
-						socket.onclose = function(event) { 
-						    //alert("Client notified socket has closed");
-						};
-						socket.onerror = function(event) { 
-						    //alert(" onerror  ");
-						    //socket.close();
-						};
-				    };
-	                
+                    document.location.href="/cust/vipcardinfo.html?user_id="+user_id+"&time="+new Date();
 				}else{
 				    ajax_flag = 0;
 				}

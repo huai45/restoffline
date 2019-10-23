@@ -100,7 +100,12 @@ $(document).ready(function(){
         var user_id = $(this).attr("user_id");
         document.location.href="/cust/vipcardinfo.html?user_id="+user_id+"&time="+new Date();
     });
-    
+
+    $("#resetBtn").live("click",function(){
+        $("#query_input").val('');
+        $("#query_input")[0].focus();
+    });
+
     $("#backBtn").live("click",function(){
         $("#resulttable").hide();
         $("#querytable").show();
@@ -171,7 +176,8 @@ $(document).ready(function(){
 	    <div style="clear:both;width:800px;height:0px;line-height:0px;margin-top:30px;margin-left:0px;border-top:solid 1px #CCC;"></div>
         <div style="margin-top:40px;margin-left:0px;">
             <div id="queryBtn" class="btn_m" style="float:left;">查&nbsp;&nbsp;询</div>
-            <div id="readcardBtn" class="btn_s" style="float:left;margin-left:30px;">读&nbsp;&nbsp;卡</div>
+            <div id="resetBtn" class="btn_s" style="float:left;margin-left:30px;">重&nbsp;&nbsp;置</div>
+        <%--            <div id="readcardBtn" class="btn_s" style="float:left;margin-left:30px;">读&nbsp;&nbsp;卡</div>--%>
 	    </div>
     </div>
     

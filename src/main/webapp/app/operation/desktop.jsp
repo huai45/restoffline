@@ -58,7 +58,7 @@ ajax_flag = 0;
 <script src="/app/operation/js/opentable.js"></script>
 <script src="/app/operation/js/addfood.js"></script>
 
-<script src="/app/operation/js/event.js"></script>
+<script src="/app/operation/js/event.js?v=1.01"></script>
 <script src="/app/operation/js/task.js?v=1.01"></script>
 <script>
 Ext.onReady(function(){
@@ -242,11 +242,11 @@ Ext.onReady(function(){
         <div class="tablebtn_split"></div>
 		<div id="printQueryBillBtn" class="tablebtn">打印</div>
     </div>
-    <div class="tablebtn_group" style="display:none;">
+    <div class="tablebtn_group" style="">
 		<div id="payByChequePageBtn" class="tablebtn">支票</div>
         <div class="tablebtn_split"></div>
-		<div id="payByVipCardPageBtn" class="tablebtn" style="display:none;">会员</div>
-        <div class="tablebtn_split" style="display:none;"></div>
+		<div id="payByVipCardPageBtn" class="tablebtn" style="">会员</div>
+        <div class="tablebtn_split" style=""></div>
         <div id="invoiceBtn" class="tablebtn" style="display:none;">开票</div>
     </div>
     
