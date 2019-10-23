@@ -47,6 +47,9 @@ $(document).ready(function(){
     <div id="addvipcardpage" class="left_menu" url="/cust/addvipcardpage.html" onselectstart='return false'>
   	    <span style="margin-left:20px;">新建会员</span>
     </div>
+    <div id="vipcardlistpage" class="left_menu" url="/cust/vipcardlistpage.html" onselectstart='return false'>
+        <span style="margin-left:20px;">会员卡管理</span>
+    </div>
 <%--    <div id="writevipcardpage" class="left_menu" url="/cust/writevipcardpage.html" onselectstart='return false'>--%>
 <%--  	    <span style="margin-left:20px;">制作会员卡</span>--%>
 <%--    </div>--%>

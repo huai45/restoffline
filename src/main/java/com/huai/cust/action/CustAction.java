@@ -230,5 +230,10 @@ public class CustAction extends BaseController {
     public ModelAndView writevipcardpage(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
     	return new ModelAndView("/cust/writevipcard");
     }
-	
+
+	@RequestMapping(value = "/vipcardlistpage.html")
+	public ModelAndView vipcardlistpage(HttpServletRequest request, HttpServletResponse response,ModelMap modelMap)  {
+		return new ModelAndView("/cust/card_manage");
+	}
+
 }
