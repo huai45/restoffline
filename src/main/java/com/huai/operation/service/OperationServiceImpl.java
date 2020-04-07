@@ -9,8 +9,10 @@ import javax.annotation.Resource;
 import com.huai.print.service.PrintService;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +30,10 @@ import com.huai.common.util.*;
 public class OperationServiceImpl implements OperationService {
     
 	private static final Logger log = Logger.getLogger(OperationServiceImpl.class);
-	
+
+	@Value("#{prop.adminPwd}")
+	private String adminPwd;
+
 	@Resource(name="baseDao")
 	public BaseDao baseDao;
 	
@@ -779,6 +784,13 @@ public class OperationServiceImpl implements OperationService {
 
 	public Map reopenBill(IData param) {
 		Map result = new HashMap();
+		String pwd = param.getString("pwd");
+		log.info("  adminPwd = " + adminPwd);
+		if(StringUtils.isEmpty(pwd) || !adminPwd.equals(pwd)){
+			result.put("success", "false");
+			result.put("msg", "密码错误，无法激活账单！");
+			return result;
+		}
 		result.put("success", "true");
 		IData bill =  operationDao.queryBillByBillId(param.getString("bill_id"));
 		param.put("bill", bill);

@@ -364,8 +364,10 @@ public class OperationAction extends BaseController {
 		log.info(" reopenBill  ");
 		User user = this.getSessionUser(request);
 		String bill_id = request.getParameter("bill_id");
+		String pwd = request.getParameter("pwd");
 		IData param = new IData();
 		param.put("bill_id", bill_id);
+		param.put("pwd", pwd);
 		param.put("user", user);
 		Map result = operationService.reopenBill(param);
 		return result;

@@ -48,9 +48,11 @@ socketurl = "<%= user.getParam().getString("PARAM3") %>";
 default_printer = "<%= user.getParam().getString("PARAM4") %>";
 $(document).ready(function(){
 
+    // $.messager.defaults = { ok: "提交", cancel: "取消" };
+
     $(document).keydown(function(event){
         if(event.keyCode==8){
-            return false;
+            // return false;
         }
         if(event.keyCode==27){
             window.close();
@@ -61,26 +63,41 @@ $(document).ready(function(){
 	    if(ajax_flag > 0){
 	        return false;
 	    }
-	    ajax_flag = 1;
-	    $.post("/operation/reopenBill.html", { bill_id : '<%= bill.get("BILL_ID") %>' }, function (result) {
-			var obj = $.parseJSON(result);
-			ajax_flag = 0;
-			if (obj.success == "true" ) {
-			    $('#openBillBtn').hide();
-			    $('#printHistoryBillBtn').hide();
-			}else{
-                
-			}
-			alert(obj.msg);
-		}).error(function(){
-		    alert("系统异常"); 
-		    ajax_flag = 0;
-		});
+        $('#win').window('open');
+        $("#pwd").val('');
+        $("#pwd").focus();
+        return false;
+
 	});
 	
 	$('#printHistoryBillBtn').click(function() {
         printBillByBillId("<%= bill.get("BILL_ID") %>");
 	});
+
+    $('#submitReopen').click(function() {
+        ajax_flag = 1;
+        $.post("/operation/reopenBill.html", { bill_id : '<%= bill.get("BILL_ID") %>',pwd: $("#pwd").val()}, function (result) {
+            var obj = $.parseJSON(result);
+            ajax_flag = 0;
+            $('#win').window('close');
+            $("#pwd").val('');
+            if (obj.success == "true" ) {
+                $('#openBillBtn').hide();
+                $('#printHistoryBillBtn').hide();
+            }else{
+
+            }
+            alert(obj.msg);
+        }).error(function(){
+            alert("系统异常");
+            ajax_flag = 0;
+        });
+    });
+
+    $('#closeWin').click(function() {
+        $("#pwd").val('');
+        $('#win').window('close');
+    });
 	
 });
 </script>
@@ -88,7 +105,7 @@ $(document).ready(function(){
 <body style="">
 <div id="cc" class="easyui-layout" data-options="fit:true,border:false" style="">
 <div id="north" data-options="region:'north',collapsible:false,split:false,border:false,style:{borderWidth:0}" style="height:87px;background-color:#FFF;position:relative;">
-    <div style="height:36px;line-height:36px;width:100%;font-size:16x;color:#111;margin-top:5px;border-bottom:solid 1px #CCC;">
+    <div style="height:36px;line-height:36px;width:100%;font-size:16px;color:#111;margin-top:5px;border-bottom:solid 1px #CCC;">
   	    <div style="float:left;margin-left:10px;font-size:18px;">账单明细信息</div>
     </div>
     <div style="margin-top:0px;border-top:solid 0px #ccc;border-bottom:solid 1px #ccc;background:#FFF;font-size:14px;">
@@ -113,16 +130,28 @@ $(document).ready(function(){
     </div>
 </div>
 
+<div id="win" class="easyui-window" title="请输入激活密码" style="width:400px;height:200px;"
+     data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false">
+    <input style="display:none" type="text" name="fakeusernameremembered"/>
+    <input style="display:none" type="password" name="fakepasswordremembered"/>
+<%--    <input class="easyui-passwordbox" prompt="Password" iconWidth="28" style="width:100%;height:34px;padding:10px">--%>
+    <input id="pwd" class="easyui-textbox" type="password" data-options="iconCls:'icon-search'" style="margin:10px;margin-top:30px;width:94%;height:40px;padding:5px">
+    <div style="margin-top:20px;text-align:center;">
+        <a id="submitReopen" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">提交</a>
+        <a id="closeWin" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'" style="margin-left:40px;">取消</a>
+    </div>
+</div>
+
 <div id="center" data-options="region:'center',border:false,style:{borderWidth:0}" style="padding:0px;background:#FFF;font-size:14px;">
     <div style="display:none;background-color:#F3F3F3;height:60px;line-height:60px;margin-top:0px;border-bottom:solid 1px #999;text-align:center;">
         <table style="width:100%;" border="0" cellspacing="0" cellpadding="0" >
             <tr>
                 <td>
-                    <div id="" style="float:right;background:#FFF;border:solid 1px #007AFF;width:240px;height:32px;line-height:32px;cursor:pointer;
+                    <div style="float:right;background:#FFF;border:solid 1px #007AFF;width:240px;height:32px;line-height:32px;cursor:pointer;
 	                    margin-top:14px;border-radius:4px 0px 0px 4px;font-size:16px;color:#007AFF;text-align:center;margin-right:0px;font-weight:bold;">账单信息</div>
                 </td>
                 <td>
-                    <div id="" style="float:left;background:#007AFF;width:240px;height:32px;line-height:32px;cursor:pointer;font-weight:bold;
+                    <div style="float:left;background:#007AFF;width:240px;height:32px;line-height:32px;cursor:pointer;font-weight:bold;
 	            margin-top:14px;border-radius:0px 4px 4px 0px;font-size:16px;color:#FFF;text-align:center;margin-right:20px;">菜品信息</div>
                 </td>
             </tr>
@@ -135,7 +164,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">桌号</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("TABLE_ID") %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("TABLE_ID") %></span>
                 </td>
             </tr>
             <tr style="display:none;">
@@ -143,7 +172,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">开台员工</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("OPEN_STAFF_NAME") %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("OPEN_STAFF_NAME") %></span>
                 </td>
             </tr>
             <tr style="display:none;">
@@ -151,7 +180,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">消费日期</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("OPEN_DATE") %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("OPEN_DATE") %></span>
                 </td>
             </tr>
             <tr>
@@ -159,7 +188,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">就餐时间</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("OPEN_TIME") %> - <%= bill.get("CLOSE_TIME") %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= bill.get("OPEN_TIME") %> - <%= bill.get("CLOSE_TIME") %></span>
                 </td>
             </tr>
             <tr>
@@ -167,7 +196,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">是否激活过</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= reopen_str %>    </span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= reopen_str %>    </span>
                 </td>
             </tr>
             <tr>
@@ -175,7 +204,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">消费金额</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= ut.getBillFee(packages,items) %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= ut.getBillFee(packages,items) %></span>
                 </td>
             </tr>
             <tr style="display:none;">
@@ -183,7 +212,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">押金</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥0</span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥0</span>
                 </td>
             </tr>
             <tr>
@@ -191,7 +220,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">抹零</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= bill.get("REDUCE_FEE") %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= bill.get("REDUCE_FEE") %></span>
                 </td>
             </tr>
             <tr>
@@ -199,7 +228,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">打折金额</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= ut.getRateFee(items) %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= ut.getRateFee(items) %></span>
                 </td>
             </tr>
             <tr>
@@ -207,7 +236,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">已收金额</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= bill.get("RECV_FEE") %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" >￥<%= bill.get("RECV_FEE") %></span>
                 </td>
             </tr>
             <tr>
@@ -215,7 +244,7 @@ $(document).ready(function(){
                     <span style="margin-left:45px;height:36px;line-height:36px;font-weight:bold;color:#444;">收款明细</span>
                 </td>
                 <td style="text-align:left;">
-                    <span id="" style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= recv_str %></span>
+                    <span style="height:36px;line-height:36px;margin-left:0px;color:#666;" ><%= recv_str %></span>
                 </td>
             </tr>
         </table>
@@ -261,6 +290,7 @@ $(document).ready(function(){
 		    <% }%>
 	    </div>
     </div>
+</div>
 </div>
 </body>
 </html>
